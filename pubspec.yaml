@@ -1,0 +1,61 @@
+name: fap_mobile
+description: "Fuel Auto Pay (FAP) — Flutter mobile client for ANPR-based automated fuel payment."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+  flutter: '>=3.44.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^3.3.0
+  riverpod_annotation: ^4.0.3
+
+  # Routing
+  go_router: ^17.0.0
+
+  # HTTP
+  dio: ^5.10.0
+
+  # Secure Storage
+  flutter_secure_storage: ^10.3.0
+
+  # Passkeys / WebAuthn
+  passkeys: ^2.22.0
+
+  # Maps
+  google_maps_flutter: ^2.17.0
+
+  # Push Notifications
+  firebase_messaging: ^16.4.0
+  firebase_core: ^4.12.0
+
+  # Social Auth (OAuth2)
+  flutter_appauth: ^12.0.0
+
+  # Data Classes & JSON
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
+
+  # Icons
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # Code Generation
+  freezed: ^3.2.6-dev.1
+  json_serializable: ^6.8.0
+  riverpod_generator: ^4.0.4
+  build_runner: ^2.4.0
+
+  # Linting
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

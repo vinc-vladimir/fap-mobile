@@ -1,0 +1,53 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "deepseek/deepseek-reasoner",
+  "small_model": "deepseek/deepseek-chat",
+  "autoupdate": true,
+  "permission": {
+    "edit": "allow",
+    "bash": "allow"
+  },
+  "formatter": {
+    "prettier": {
+      "disabled": true
+    }
+  },
+  "watcher": {
+    "ignore": [
+      "target/**",
+      ".git/**",
+      ".idea/**",
+      ".vscode/**",
+      "*.log",
+      "*.tmp",
+      "build/**",
+      "dist/**",
+      "out/**",
+      ".dart_tool/**",
+      ".packages",
+      ".pub-cache/**",
+      "android/**",
+      "ios/**",
+      "*.g.dart",
+      "*.freezed.dart",
+      ".DS_Store",
+      ".AppleDouble",
+      ".LSOverride"
+    ]
+  },
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true,
+      "headers": {
+        "CONTEXT7_API_KEY": "ctx7sk-e6459ed6-c8b0-413e-b1f2-3f0ebe50dd0b"
+      }
+    }
+  },
+  "instructions": [
+    "AGENTS.md",
+    "FAP_MOBILE_PROJECT_BRIEF.md",
+    "J_RAG_REFERENCE.md"
+  ]
+}
