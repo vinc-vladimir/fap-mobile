@@ -1,0 +1,205 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Sign In (Velocity Light) - Fuel Auto Pay</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface": "#f7f9fb",
+                "surface-dim": "#d8dadc",
+                "surface-bright": "#f7f9fb",
+                "surface-container-lowest": "#ffffff",
+                "surface-container-low": "#f2f4f6",
+                "surface-container": "#eceef0",
+                "surface-container-high": "#e6e8ea",
+                "surface-container-highest": "#e0e3e5",
+                "on-surface": "#191c1e",
+                "on-surface-variant": "#3a494a",
+                "outline": "#6a7a7b",
+                "outline-variant": "#b9caca",
+                "primary": "#00696e",
+                "on-primary": "#ffffff",
+                "primary-container": "#00f5ff",
+                "on-primary-container": "#006c71",
+                "secondary": "#565e74",
+                "on-secondary": "#ffffff",
+                "secondary-container": "#dae2fd",
+                "on-secondary-container": "#5c647a",
+                "tertiary": "#505f76",
+                "on-tertiary": "#ffffff",
+                "tertiary-container": "#cedff9",
+                "on-tertiary-container": "#536279",
+                "error": "#ba1a1a",
+                "on-error": "#ffffff",
+                "error-container": "#ffdad6",
+                "on-error-container": "#93000a",
+                "background": "#f7f9fb",
+                "on-background": "#191c1e"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "stack-lg": "24px",
+                "margin-main": "20px",
+                "gutter": "16px",
+                "container-padding": "16px",
+                "stack-sm": "8px",
+                "stack-md": "16px"
+            },
+            "fontFamily": {
+                "label-sm": ["Inter"],
+                "body-sm": ["Inter"],
+                "label-md": ["Inter"],
+                "body-md": ["Inter"],
+                "headline-md": ["Inter"],
+                "body-lg": ["Inter"],
+                "headline-sm": ["Inter"],
+                "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                "label-sm": ["10px", {"lineHeight": "14px", "fontWeight": "500"}],
+                "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f7f9fb;
+            color: #191c1e;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 105, 110, 0.1);
+        }
+        .hero-gradient {
+            background: linear-gradient(to bottom, rgba(247, 249, 251, 0.1) 0%, rgba(247, 249, 251, 1) 90%);
+        }
+        .btn-active-state:active {
+            transform: scale(0.98);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen"><div class="fixed top-0 left-0 w-full h-[45vh] z-0 overflow-hidden">
+<img alt="Future City Background" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7L1ZefFaOCcyKt71CzElLEnlBJV8rPNBOXSvrnbyiOlj8WpFM0IPlyM-Ky2sJGd0rRT33yJzKVrPqzLLdoOPbLConQzRZrezXcPq0HGJCM6Jiu-6V--8h8pbwGx0wlEHd1qkZ3i4OVNJHHIHd-KhYd3B0bAaf9lc6n_1TVoQlmu9DQni6bN7CxdPooUwgvaS7e7MVQD8W8ih3k_Wda1IgjJFXAqWtB3OQts5PuQ45HTCfU3ZCCeLH1eYqWORdzbuJJqv3UUBauSw">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-surface/50 to-surface"></div>
+</div>
+<!-- Hero Background Section -->
+<!-- Main Content Canvas -->
+<main class="relative z-10 flex-grow flex flex-col pt-[35vh] px-margin-main pb-stack-lg">
+<!-- Header Section -->
+<div class="mb-stack-lg">
+<h1 class="font-headline-lg text-headline-lg text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-4xl text-primary">bolt</span>
+                Fuel Auto Pay
+            </h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 opacity-90">The fastest way to fuel your vehicle.</p>
+</div>
+<!-- Form Section -->
+<div class="glass-card rounded-xl p-container-padding shadow-xl flex flex-col gap-stack-md">
+<!-- Email Input -->
+<div class="flex flex-col gap-stack-sm">
+<label class="font-label-md text-label-md text-on-surface ml-1" for="email">Email Address</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">mail</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-xl py-3.5 pl-12 pr-4 text-on-surface font-body-md focus:outline-none focus:border-primary transition-all placeholder:text-outline/50" id="email" placeholder="name@velocity.com" type="email">
+</div>
+</div>
+<!-- Password Input -->
+<div class="flex flex-col gap-stack-sm">
+<div class="flex justify-between items-center px-1">
+<label class="font-label-md text-label-md text-on-surface" for="password">Password</label>
+<a class="font-label-md text-label-md text-primary hover:underline" href="#">Forgot password?</a>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">lock</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-xl py-3.5 pl-12 pr-12 text-on-surface font-body-md focus:outline-none focus:border-primary transition-all placeholder:text-outline/50" id="password" placeholder="••••••••" type="password">
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<!-- Login Button -->
+<button class="w-full bg-primary-container text-on-primary-container font-headline-sm text-headline-sm py-4 rounded-xl shadow-md btn-active-state transition-all hover:brightness-105 mt-stack-sm">
+                SIGN IN</button><button class="w-full mt-stack-sm flex items-center justify-center gap-stack-sm bg-surface-container border border-outline-variant rounded-xl py-4 font-headline-sm text-headline-sm text-on-surface btn-active-state hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined">fingerprint</span><span class="ml-1">BIOMETRIC SIGN IN</span></button>
+<!-- Divider -->
+<div class="flex items-center gap-stack-md my-stack-sm">
+<div class="h-px flex-grow bg-outline-variant"></div>
+<span class="font-label-md text-label-md text-outline">OR CONTINUE WITH</span>
+<div class="h-px flex-grow bg-outline-variant"></div>
+</div>
+<!-- Social Logins -->
+<div class="grid grid-cols-2 gap-gutter">
+<button class="flex items-center justify-center gap-stack-sm bg-surface-container border border-outline-variant rounded-xl py-3 font-label-md text-label-md text-on-surface btn-active-state hover:bg-surface-container-high transition-colors"><img alt="Google" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHRWNDURdaWXo-xrpfH0maL7-0Od1SK5MHNjXkOHW8200zgxC4JQfN_GCPGxHFN1K48uL2v2jxjN9Asv0BbYqOlBcfaLnrv95iDH5pNjBkN3XJIHgW6YMVS1L6WSqzt65c-e10Aqx3XPHHETBYhmQkjUkzYFW-Xeq43sqpHV3Z83EYFLSd9I3ziwGUFQFhFw8DlTJ-hPFjT3SIRioE9fZGD6_RE2MJcxykknQ8MWPZD46h57OHUt2v4kXqW5jGi14Zd4ZC1yv1dQwBdA">GOOGLE</button>
+<button class="flex items-center justify-center gap-stack-sm bg-surface-container border border-outline-variant rounded-xl py-3 font-label-md text-label-md text-on-surface btn-active-state hover:bg-surface-container-high transition-colors">
+<img alt="GitHub" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzJl1jahs8L8NeTp9RqMz0NM-gnYOelh9WdQ1fqR4kykIuMalEF_wnqt8lFcFp2ztWfn4bU1FMi3JbjTXzrgqx5zzcYxLJ2e46rUfJjEMzyp5LmJr628wjvfIbeA1C4spMG_s18o9MSdTn5B1K75aXi6xvyzyGUREZklffiIb-BtaYKtOFiDNdHwlpUHHl-fjyuTQB5K1R3a2NQ8x8PCjzLll79IDoRH-JxGIBCGKgwhk9-PQ6He6vmmETINTF5ABAo8s4sZ2Dh2opaA">
+                    GITHUB
+                </button>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="mt-auto py-stack-lg flex flex-col items-center gap-stack-sm">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Don't have an account? 
+                <a class="text-primary font-semibold hover:underline" href="#">Sign up now</a>
+</p>
+<div class="flex gap-stack-md mt-stack-md opacity-60">
+<a class="font-label-sm text-label-sm hover:text-on-surface transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm hover:text-on-surface transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</main>
+<script>
+        // Subtle parallax effect for the background
+        document.addEventListener('mousemove', (e) => {
+            const hero = document.querySelector('.hero-gradient').previousElementSibling;
+            const mouseX = (e.clientX / window.innerWidth) - 0.5;
+            const mouseY = (e.clientY / window.innerHeight) - 0.5;
+            hero.style.transform = `scale(1.1) translate(${mouseX * 15}px, ${mouseY * 15}px)`;
+        });
+
+        // Input focus styling for icons
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                const icon = input.parentElement.querySelector('.material-symbols-outlined');
+                if (icon) icon.style.color = '#00696e';
+            });
+            input.addEventListener('blur', () => {
+                const icon = input.parentElement.querySelector('.material-symbols-outlined');
+                if (icon) icon.style.color = '';
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+</body></html>
