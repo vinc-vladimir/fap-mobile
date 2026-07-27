@@ -4,13 +4,9 @@ import 'app_colors.dart';
 import 'app_dimensions.dart';
 import 'app_typography.dart';
 
-ThemeData get lightTheme => _buildTheme(
-      colorScheme: lightColorScheme,
-    );
+ThemeData get lightTheme => _buildTheme(colorScheme: lightColorScheme);
 
-ThemeData get darkTheme => _buildTheme(
-      colorScheme: darkColorScheme,
-    );
+ThemeData get darkTheme => _buildTheme(colorScheme: darkColorScheme);
 
 ThemeData _buildTheme({required ColorScheme colorScheme}) {
   return ThemeData(
@@ -56,9 +52,7 @@ ThemeData _buildTheme({required ColorScheme colorScheme}) {
       style: ElevatedButton.styleFrom(
         backgroundColor: vibrantCyan,
         foregroundColor: colorScheme.onPrimaryContainer,
-        textStyle: appTextTheme.displaySmall?.copyWith(
-          fontWeight: FontWeight.w600,
-        ),
+        textStyle: appTextTheme.displaySmall,
         padding: const EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
@@ -71,9 +65,7 @@ ThemeData _buildTheme({required ColorScheme colorScheme}) {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         foregroundColor: colorScheme.onSurface,
-        textStyle: appTextTheme.displaySmall?.copyWith(
-          fontWeight: FontWeight.w600,
-        ),
+        textStyle: appTextTheme.displaySmall,
         padding: const EdgeInsets.symmetric(vertical: 16),
         side: BorderSide(color: colorScheme.outlineVariant),
         shape: RoundedRectangleBorder(

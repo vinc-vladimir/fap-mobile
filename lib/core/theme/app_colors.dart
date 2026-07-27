@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 // ── Custom brand colors ──────────────────────────────────────────
 const vibrantCyan = Color(0xFF00F5FF);
+const brandPrimary = Color(0xFF00696E);
 const surfaceGlassLight = Color(0xD9FFFFFF); // rgba(255,255,255,0.85)
-const surfaceGlassDark = Color(0xB31A2130);  // rgba(26,33,48,0.7)
+const surfaceGlassDark = Color(0xB31A2130); // rgba(26,33,48,0.7)
+const glassBorderLight = Color(0x1A00696E); // rgba(0,105,110,0.10)
+const glassBorderDark = Color(0x14FFFFFF); // rgba(255,255,255,0.08)
 const successGlint = Color(0xFF97E5EB);
 const mapVoid = Color(0xFFECEEF0);
 

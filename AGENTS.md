@@ -112,6 +112,91 @@ Apply **Google Stitch** exports from `design/` directory:
 - Component specs → `lib/core/widgets/`
 - Screen layouts → each screen widget
 
+## Design Token Extraction Rule
+**All design tokens (colors, typography, spacing, radius) MUST be defined as named constants
+in `lib/core/theme/` files.** Widgets and screens MUST reference these constants rather than
+hardcoding raw values.
+
+| Token type | File | Example |
+|---|---|---|
+| Colors | `app_colors.dart` | `lightColorScheme.primary`, `vibrantCyan`, `glassBorderLight` |
+| Typography | `app_typography.dart` | `appTextTheme.bodyMedium` |
+| Spacing | `app_dimensions.dart` | `AppDimensions.stackMd` |
+| Border radius | `app_dimensions.dart` | `AppDimensions.radiusLg` |
+| Component-specific | `app_colors.dart` | `glassBorderLight`, `surfaceGlassLight` |
+
+**Anti-pattern (DO NOT):**
+```dart
+border: Border.all(color: const Color(0x1A00696E))
+```
+**Correct pattern (DO):**
+```dart
+border: Border.all(color: glassBorderLight)
+```
+
+If a new design value does not have a corresponding constant, add it to the appropriate
+theme file first, then reference it. Never embed raw design values in widget files.
+
+## Typography & Style Reuse Rules
+
+**Rule 1: Use appTextTheme styles directly.**
+Do NOT use `copyWith` to re-specify properties that already match the base style
+in `app_typography.dart`. The base style already defines fontSize, fontWeight,
+height, and letterSpacing for each text style.
+
+**Anti-pattern (DO NOT):**
+```dart
+style: theme.textTheme.displaySmall?.copyWith(fontWeight: FontWeight.w600)
+```
+**Correct pattern (DO):**
+```dart
+style: theme.textTheme.displaySmall
+```
+(displaySmall already has `fontWeight: FontWeight.w600` in app_typography.dart)
+
+**Rule 2: Use `copyWith` only for theme-adaptive or cross-theme overrides.**
+When you need different colors or decoration from the base style, `copyWith` is
+acceptable — but only override the properties that actually differ.
+
+✅ **Acceptable:**
+```dart
+style: theme.textTheme.displayLarge?.copyWith(color: brandPrimary)
+```
+(only color differs; fontSize, fontWeight, height all come from the base style)
+
+**Rule 3: Use named constants from `app_colors.dart` for cross-theme consistency.**
+For text that should appear the same in both light and dark themes (brand name,
+links, call-to-action text), use a named color constant like `brandPrimary` or
+`vibrantCyan`. Use `theme.colorScheme.onSurfaceVariant` only when the color
+should adapt to the current theme (e.g., secondary text).
+
+✅ **Cross-theme (same in both themes):**
+```dart
+style: theme.textTheme.bodySmall?.copyWith(color: brandPrimary)
+```
+✅ **Theme-adaptive (different in each theme):**
+```dart
+style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)
+```
+
+**Rule 4: Prefer theme-level button styles over per-screen overrides.**
+Button textStyle, foregroundColor, and backgroundColor should be defined in
+`app_theme.dart` `elevatedButtonTheme` / `outlinedButtonTheme` whenever possible.
+Per-screen overrides are acceptable only when a specific button instance needs
+a different style from the theme default.
+
+## Button Tier Convention
+
+| Tier | Widget | Background | Foreground | Used for |
+|---|---|---|---|---|
+| Primary | `ElevatedButton` | `vibrantCyan` | `colorScheme.onPrimaryContainer` | SIGN IN, SIGN UP, SAVE, CONFIRM (call-to-action) |
+| Secondary | `OutlinedButton` | `colorScheme.surfaceContainerLow` | `colorScheme.onSurface` | BIOMETRIC SIGN IN, social login, CANCEL, SKIP |
+| Text | `TextButton` | transparent | `colorScheme.primary` or `colorScheme.onSurface` | "Forgot password?", "Sign up now" (inline links) |
+
+**Rule:** All secondary `OutlinedButton` widgets MUST set
+`backgroundColor: theme.colorScheme.surfaceContainerLow` to match the input field fill color.
+Primary `ElevatedButton` widgets MUST use `vibrantCyan` background. Exceptions must be documented.
+
 ## Verification
 ```bash
 flutter analyze   # Zero errors
