@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
@@ -6,6 +7,8 @@ import '../widgets/glass_card.dart';
 import '../widgets/hero_background.dart';
 import '../widgets/or_divider.dart';
 import '../widgets/social_button.dart';
+import '../../data/validation_constants.dart';
+import 'forgot_password_screen.dart';
 import 'privacy_policy_screen.dart';
 import 'terms_of_service_screen.dart';
 
@@ -17,13 +20,6 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  static final _emailRegex = RegExp(
-    r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?|)+\.[a-zA-Z]{2,}$",
-  );
-  static final _passwordRegex = RegExp(
-    r'^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\s:])(\S){8,}$',
-  );
-
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -74,15 +70,15 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget _buildBrandHeader(ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Icon(Icons.bolt, color: vibrantCyan, size: 32),
             const SizedBox(width: AppDimensions.stackSm),
             Text(
-              'Fuel Auto Pay',
+              l10n.fuelAutoPay,
               style: theme.textTheme.displayLarge?.copyWith(
                 color: brandPrimary,
               ),
@@ -91,7 +87,7 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
         const SizedBox(height: AppDimensions.stackSm),
         Text(
-          'The fastest way to fuel your vehicle.',
+          l10n.tagline,
           style: theme.textTheme.bodyMedium?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),
@@ -125,20 +121,21 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget _buildEmailField(ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return TextFormField(
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        labelText: 'Email Address',
-        hintText: 'name@velocity.com',
+        labelText: l10n.emailAddress,
+        hintText: l10n.emailHint,
         prefixIcon: Icon(Icons.mail_outline, color: theme.colorScheme.outline),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter your email address';
+          return l10n.validationEmailRequired;
         }
-        if (!_emailRegex.hasMatch(value)) {
-          return 'Please enter a valid email address';
+        if (!emailRegex.hasMatch(value)) {
+          return l10n.validationEmailInvalid;
         }
         return null;
       },
@@ -146,6 +143,7 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget _buildPasswordField(ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -153,7 +151,7 @@ class _SignInScreenState extends State<SignInScreen> {
           controller: _passwordController,
           obscureText: _obscurePassword,
           decoration: InputDecoration(
-            labelText: 'Password',
+            labelText: l10n.password,
             prefixIcon: Icon(
               Icons.lock_outline,
               color: theme.colorScheme.outline,
@@ -169,24 +167,27 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter your password';
+              return l10n.validationPasswordRequired;
             }
-            if (!_passwordRegex.hasMatch(value)) {
-              return 'Please enter a valid password';
+            if (!passwordRegex.hasMatch(value)) {
+              return l10n.validationPasswordInvalid;
             }
             return null;
           },
         ),
         const SizedBox(height: AppDimensions.stackSm),
         TextButton(
-          onPressed: () {},
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const ForgotPasswordScreen()),
+          ),
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
             minimumSize: Size.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
           child: Text(
-            'Forgot password?',
+            l10n.forgotPassword,
             style: theme.textTheme.labelMedium?.copyWith(color: brandPrimary),
           ),
         ),
@@ -195,6 +196,7 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget _buildSignInButton(ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return ElevatedButton(
       onPressed: _onSignIn,
       style: ElevatedButton.styleFrom(
@@ -207,13 +209,14 @@ class _SignInScreenState extends State<SignInScreen> {
         elevation: 0,
       ),
       child: Text(
-        'SIGN IN',
+        l10n.signIn,
         style: theme.textTheme.displaySmall?.copyWith(color: brandPrimary),
       ),
     );
   }
 
   Widget _buildBiometricButton(ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return OutlinedButton(
       onPressed: () {},
       style: OutlinedButton.styleFrom(
@@ -230,7 +233,7 @@ class _SignInScreenState extends State<SignInScreen> {
         children: [
           Icon(Icons.fingerprint, color: theme.colorScheme.onSurface),
           const SizedBox(width: AppDimensions.stackSm),
-          Text('BIOMETRIC SIGN IN', style: theme.textTheme.displaySmall),
+          Text(l10n.biometricSignIn, style: theme.textTheme.displaySmall),
         ],
       ),
     );
@@ -257,26 +260,30 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget _buildFooter(ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Don't have an account? ",
+              l10n.noAccount,
               style: theme.textTheme.bodySmall?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const ForgotPasswordScreen()),
+              ),
               style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
               child: Text(
-                'Sign up now',
+                l10n.signUpNow,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: brandPrimary,
                   fontWeight: FontWeight.w600,
@@ -300,7 +307,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
               child: Text(
-                'Privacy Policy',
+                l10n.privacyPolicy,
                 style: theme.textTheme.labelSmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -318,7 +325,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
               child: Text(
-                'Terms of Service',
+                l10n.termsOfService,
                 style: theme.textTheme.labelSmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),

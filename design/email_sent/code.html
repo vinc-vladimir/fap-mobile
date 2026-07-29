@@ -1,0 +1,179 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<title>Velocity Flux | Email Sent</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-secondary-fixed": "#131b2e",
+                "on-surface": "#191c1e",
+                "tertiary-fixed": "#d4e3ff",
+                "inverse-surface": "#2d3133",
+                "primary-fixed": "#afedf2",
+                "secondary-fixed": "#dae2fc",
+                "secondary-fixed-dim": "#bec6e0",
+                "vibrant-cyan": "#00f5ff",
+                "surface-variant": "#e0e3e5",
+                "on-secondary-fixed-variant": "#3e465b",
+                "surface-container-highest": "#e0e3e5",
+                "outline-variant": "#bec9c9",
+                "on-tertiary-fixed": "#0c1c30",
+                "on-surface-variant": "#3e4949",
+                "inverse-primary": "#93d1d5",
+                "inverse-on-surface": "#eff1f3",
+                "on-primary-fixed": "#002022",
+                "surface-container-lowest": "#ffffff",
+                "surface-container-low": "#f2f4f6",
+                "secondary": "#565e74",
+                "on-secondary-container": "#5a6278",
+                "surface-dim": "#d8dadc",
+                "on-error": "#ffffff",
+                "map-void": "#eceef0",
+                "tertiary-container": "#505f76",
+                "tertiary-fixed-dim": "#b8c7e2",
+                "surface-container-high": "#e6e8ea",
+                "error": "#ba1a1a",
+                "outline": "#6f797a",
+                "on-background": "#191c1e",
+                "surface-tint": "#27676b",
+                "error-container": "#ffdad6",
+                "on-secondary": "#ffffff",
+                "background": "#f7f9fb",
+                "on-primary": "#ffffff",
+                "surface-glass": "rgba(255, 255, 255, 0.85)",
+                "tertiary": "#38475d",
+                "primary-fixed-dim": "#93d1d5",
+                "primary-container": "#27676b",
+                "on-primary-container": "#a5e3e7",
+                "on-tertiary-container": "#c9d9f4",
+                "surface-container": "#eceef0",
+                "on-tertiary-fixed-variant": "#39485e",
+                "surface-bright": "#f7f9fb",
+                "on-primary-fixed-variant": "#004f53",
+                "surface": "#f7f9fb",
+                "primary": "#004f53",
+                "success-glint": "#97e5eb",
+                "on-error-container": "#93000a",
+                "secondary-container": "#d7dff9",
+                "on-tertiary": "#ffffff"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "stack-md": "16px",
+                "stack-lg": "24px",
+                "gutter": "16px",
+                "stack-sm": "8px",
+                "container-padding": "16px",
+                "margin-main": "20px"
+            },
+            "fontFamily": {
+                "body-md": ["Inter"],
+                "label-md": ["Inter"],
+                "headline-lg": ["Inter"],
+                "body-sm": ["Inter"],
+                "body-lg": ["Inter"],
+                "headline-sm": ["Inter"],
+                "headline-md": ["Inter"],
+                "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "headline-md-mobile": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "label-sm": ["10px", {"lineHeight": "14px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 79, 83, 0.1);
+        }
+        .vibrant-glow {
+            text-shadow: 0 0 15px rgba(0, 245, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top AppBar (Identity & Navigation) -->
+
+<!-- Main Content Area -->
+<main class="relative z-10 flex-grow flex flex-col px-margin-main pb-stack-lg pt-[50vh]" style="display: flex; flex-direction: column;"><section class="fixed top-0 left-0 w-full z-0 overflow-hidden h-[60vh]"><div class="absolute inset-0 z-0"><img alt="Digital envelope with glowing cyan checkmark" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtksKXFboxn0iwi1RdTd0mT-BkC241veio_bsgUQ30W-UfGAPdIRPDNWiNhURj9U4N2UoRrBoa7x9mr649nC29sRzSBZtbLgprDHH04CG5_NDd1HUXaRJ4Yue033Hh2VAmne4RJX-59f2kxrdA3m8dcun_PwXb0PlSOXRJ2bInhiIAjHvQdzLuxxTyk-ef_VhISNDUqJyvRPRgyq4p7NPcZAxcrkYecWgwnbK4bLpnY2IJA14GfZ2p9FCA"><div class="absolute inset-0 bg-gradient-to-b from-transparent via-surface/50 to-surface"></div></div></section>
+<!-- Cinematic Background Anchor -->
+
+<!-- Content Container -->
+<div class="bg-surface-container-lowest rounded-lg shadow-xl min-h-[55vh] px-margin-main pb-8 flex flex-col py-4 relative -mt-10 flex-grow z-20 max-w-md mx-auto w-full" style="opacity: 1;"><div class="max-w-md mx-auto w-full"><h2 class="font-headline-md text-headline-md text-on-surface mb-stack-sm">Check Your Email</h2><p class="font-body-md text-body-md text-on-surface-variant mb-stack-lg leading-relaxed">We've sent a password reset link to your email address. Please check your inbox and follow the instructions to get back on the road.</p></div>
+<!-- Success Illustration Spacer -->
+
+<!-- Interaction Section -->
+<div class="w-full max-w-xs mt-auto pb-stack-lg flex flex-col gap-stack-md">
+<button class="w-full bg-vibrant-cyan font-headline-sm text-headline-sm py-4 rounded-lg shadow-lg active:scale-95 transition-all hover:opacity-90 tracking-wide uppercase text-primary" type="button" style="background-color: rgb(0, 245, 255); color: rgb(0, 79, 83); font-weight: 700; border-radius: 12px; text-transform: uppercase;">BACK TO SIGN IN</button>
+
+</div>
+<!-- Footer for transactional focus (Web view) -->
+<footer class="mt-auto py-8 w-full border-t border-outline-variant/10 hidden md:flex justify-between items-center text-on-surface-variant font-label-sm">
+<p class="">© 2024 Velocity Flux Inc.</p>
+<div class="flex gap-4">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+<a class="hover:text-primary" href="#">Contact</a>
+</div>
+</footer>
+</div>
+</main>
+<!-- Bottom Navigation Shell (Mobile Only) -->
+
+<!-- Micro-interaction Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simple animation for the container entrance
+            const container = document.querySelector('.bg-surface-container-lowest');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                container.style.transition = 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+
+            // Interaction for the primary button
+            const mainBtn = document.querySelector('button');
+            mainBtn.addEventListener('mousedown', () => {
+                mainBtn.classList.add('scale-95');
+            });
+            mainBtn.addEventListener('mouseup', () => {
+                mainBtn.classList.remove('scale-95');
+            });
+        });
+    </script>
+
+
+</body></html>

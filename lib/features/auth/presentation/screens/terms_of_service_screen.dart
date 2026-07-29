@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_dimensions.dart';
 
@@ -8,10 +9,11 @@ class TermsOfServiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Terms of Service', style: theme.textTheme.titleLarge),
+        title: Text(l10n.termsTitle, style: theme.textTheme.titleLarge),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -23,50 +25,34 @@ class TermsOfServiceScreen extends StatelessWidget {
           children: [
             _buildSection(
               theme,
-              'Acceptance of Terms',
-              'By creating an account or using the Fuel Auto Pay service, you agree to be '
-                  'bound by these Terms of Service. If you do not agree to these terms, please '
-                  'do not use the service.',
+              l10n.termsAcceptance,
+              l10n.termsAcceptanceBody,
             ),
             const SizedBox(height: AppDimensions.stackLg),
             _buildSection(
               theme,
-              'Service Description',
-              'Fuel Auto Pay provides an automated fuel payment system that uses Automatic '
-                  'Number Plate Recognition (ANPR) technology to identify vehicles and process '
-                  'payments at participating gas stations without requiring physical payment at '
-                  'the pump.',
+              l10n.termsServiceDesc,
+              l10n.termsServiceDescBody,
+            ),
+            const SizedBox(height: AppDimensions.stackLg),
+            _buildSection(theme, l10n.termsUserResp, l10n.termsUserRespBody),
+            const SizedBox(height: AppDimensions.stackLg),
+            _buildSection(
+              theme,
+              l10n.termsPaymentAuth,
+              l10n.termsPaymentAuthBody,
             ),
             const SizedBox(height: AppDimensions.stackLg),
             _buildSection(
               theme,
-              'User Responsibilities',
-              'You are responsible for maintaining the accuracy of your account information, '
-                  'including vehicle registration details and payment methods. You must notify '
-                  'us immediately of any unauthorized use of your account.',
+              l10n.termsLimitation,
+              l10n.termsLimitationBody,
             ),
             const SizedBox(height: AppDimensions.stackLg),
             _buildSection(
               theme,
-              'Payment Authorization',
-              'By registering a payment method, you authorize Fuel Auto Pay to charge the '
-                  'registered payment method for all fuel transactions initiated by vehicles '
-                  'registered to your account.',
-            ),
-            const SizedBox(height: AppDimensions.stackLg),
-            _buildSection(
-              theme,
-              'Limitation of Liability',
-              'Fuel Auto Pay shall not be liable for any indirect, incidental, or consequential '
-                  'damages arising from the use or inability to use the service, including but '
-                  'not limited to incorrect charges or service interruptions.',
-            ),
-            const SizedBox(height: AppDimensions.stackLg),
-            _buildSection(
-              theme,
-              'Termination',
-              'We reserve the right to suspend or terminate your access to the service at any '
-                  'time for violation of these terms or any applicable laws.',
+              l10n.termsTermination,
+              l10n.termsTerminationBody,
             ),
           ],
         ),
