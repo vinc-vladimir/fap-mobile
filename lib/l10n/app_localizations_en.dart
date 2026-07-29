@@ -21,7 +21,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailAddress => 'Email Address';
 
   @override
-  String get emailHint => 'name@velocity.com';
+  String get emailHint => 'name@fap.com';
 
   @override
   String get password => 'Password';
@@ -168,4 +168,46 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get termsTerminationBody =>
       'We reserve the right to suspend or terminate your access to the service at any time for violation of these terms or any applicable laws.';
+
+  @override
+  String get createAccountTitle => 'Create Your Account';
+
+  @override
+  String get createAccountSubtitle => 'Enter your details to get started';
+
+  @override
+  String get createPassword => 'Create Password';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get repeatPasswordHint => 'Repeat password';
+
+  @override
+  String get createAccount => 'CREATE ACCOUNT';
+
+  @override
+  String get alreadyHaveAccount => 'Already have an account? ';
+
+  @override
+  String get signInLink => 'Sign In';
+
+  @override
+  String get matchError => 'Passwords do not match.';
+
+  @override
+  String get passwordReqLength => '8+ characters';
+
+  @override
+  String get passwordReqUppercase => 'One uppercase letter';
+
+  @override
+  String get passwordReqLowercase => 'One lowercase letter';
+
+  @override
+  String get passwordReqDigit => 'One digit';
+
+  @override
+  String get passwordReqSpecial => 'One special character';
 }

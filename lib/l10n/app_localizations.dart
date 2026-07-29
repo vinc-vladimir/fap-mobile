@@ -125,7 +125,7 @@ abstract class AppLocalizations {
   /// No description provided for @emailHint.
   ///
   /// In en, this message translates to:
-  /// **'name@velocity.com'**
+  /// **'name@fap.com'**
   String get emailHint;
 
   /// No description provided for @password.
@@ -391,6 +391,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We reserve the right to suspend or terminate your access to the service at any time for violation of these terms or any applicable laws.'**
   String get termsTerminationBody;
+
+  /// No description provided for @createAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Your Account'**
+  String get createAccountTitle;
+
+  /// No description provided for @createAccountSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your details to get started'**
+  String get createAccountSubtitle;
+
+  /// No description provided for @createPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Password'**
+  String get createPassword;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// No description provided for @repeatPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat password'**
+  String get repeatPasswordHint;
+
+  /// No description provided for @createAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'CREATE ACCOUNT'**
+  String get createAccount;
+
+  /// No description provided for @alreadyHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? '**
+  String get alreadyHaveAccount;
+
+  /// No description provided for @signInLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get signInLink;
+
+  /// No description provided for @matchError.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match.'**
+  String get matchError;
+
+  /// No description provided for @passwordReqLength.
+  ///
+  /// In en, this message translates to:
+  /// **'8+ characters'**
+  String get passwordReqLength;
+
+  /// No description provided for @passwordReqUppercase.
+  ///
+  /// In en, this message translates to:
+  /// **'One uppercase letter'**
+  String get passwordReqUppercase;
+
+  /// No description provided for @passwordReqLowercase.
+  ///
+  /// In en, this message translates to:
+  /// **'One lowercase letter'**
+  String get passwordReqLowercase;
+
+  /// No description provided for @passwordReqDigit.
+  ///
+  /// In en, this message translates to:
+  /// **'One digit'**
+  String get passwordReqDigit;
+
+  /// No description provided for @passwordReqSpecial.
+  ///
+  /// In en, this message translates to:
+  /// **'One special character'**
+  String get passwordReqSpecial;
 }
 
 class _AppLocalizationsDelegate

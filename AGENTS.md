@@ -185,6 +185,30 @@ Button textStyle, foregroundColor, and backgroundColor should be defined in
 Per-screen overrides are acceptable only when a specific button instance needs
 a different style from the theme default.
 
+**Rule 5: Use `linkMedium` / `linkSmall` constants for all link text.**
+All clickable link text MUST use either `linkMedium` (inline action links)
+or `linkSmall` (footer/secondary links) from `app_typography.dart`. Color is
+applied via `copyWith` — `brandPrimary` for action links, `theme.colorScheme.onSurfaceVariant`
+for footer links.
+
+**Anti-pattern (DO NOT):**
+```dart
+style: theme.textTheme.bodySmall?.copyWith(
+  color: brandPrimary,
+  fontWeight: FontWeight.w600,
+)
+```
+
+**Correct pattern (DO):**
+```dart
+style: linkMedium.copyWith(color: brandPrimary)
+```
+
+**Footer links (Privacy Policy, Terms of Service):**
+```dart
+style: linkSmall.copyWith(color: theme.colorScheme.onSurfaceVariant)
+```
+
 ## Localization Rules
 
 **Rule 1: All user-facing strings MUST come from ARB files.**
@@ -228,17 +252,68 @@ For strings that need translation context, include `@keyName` metadata with a
 }
 ```
 
+## Card Component Convention
+
+**Rule: Use `GlassCard` for all card/container elements across the app.**
+Every form card, information card, or content container MUST use the `GlassCard`
+widget from `lib/features/auth/presentation/widgets/glass_card.dart`. This ensures
+consistent border radius (`AppDimensions.radiusLg` = 12px), glass backdrop effect,
+and border styling across all screens.
+
+**Anti-pattern (DO NOT):**
+```dart
+ClipRRect(
+  borderRadius: BorderRadius.only(
+    topLeft: Radius.circular(24),
+    topRight: Radius.circular(24),
+  ),
+  child: Container(
+    color: Colors.white,
+    child: ...
+  ),
+)
+```
+
+**Correct pattern (DO):**
+```dart
+GlassCard(
+  child: Form(
+    ...
+  ),
+)
+```
+
+Exceptions must be documented with a comment explaining why a custom card is necessary.
+
 ## Button Tier Convention
 
 | Tier | Widget | Background | Foreground | Used for |
 |---|---|---|---|---|
-| Primary | `ElevatedButton` | `vibrantCyan` | `colorScheme.onPrimaryContainer` | SIGN IN, SIGN UP, SAVE, CONFIRM (call-to-action) |
+| Primary | `ElevatedButton` | `vibrantCyan` | `brandPrimary` | SIGN IN, SIGN UP, SAVE, CONFIRM (call-to-action) |
 | Secondary | `OutlinedButton` | `colorScheme.surfaceContainerLow` | `colorScheme.onSurface` | BIOMETRIC SIGN IN, social login, CANCEL, SKIP |
-| Text | `TextButton` | transparent | `colorScheme.primary` or `colorScheme.onSurface` | "Forgot password?", "Sign up now" (inline links) |
+| Text | `TextButton` | transparent | `brandPrimary` | "Forgot password?", "Sign up now" (inline links) |
 
-**Rule:** All secondary `OutlinedButton` widgets MUST set
+**Rule 1: All primary `ElevatedButton` widgets MUST use the exact same style.**
+Every primary submit/action button in the app must have:
+```dart
+style: ElevatedButton.styleFrom(
+  backgroundColor: vibrantCyan,
+  foregroundColor: brandPrimary,
+  padding: const EdgeInsets.symmetric(vertical: 16),
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
+  ),
+  elevation: 0,
+),
+child: Text(
+  label,
+  style: theme.textTheme.displaySmall?.copyWith(color: brandPrimary),
+),
+```
+This ensures SIGN IN, CREATE ACCOUNT, RESET PASSWORD, SAVE, and CONFIRM buttons all look identical. Do NOT use `radiusFull` (pill shape) or custom text styles for primary buttons.
+
+**Rule 2:** All secondary `OutlinedButton` widgets MUST set
 `backgroundColor: theme.colorScheme.surfaceContainerLow` to match the input field fill color.
-Primary `ElevatedButton` widgets MUST use `vibrantCyan` background. Exceptions must be documented.
 
 ## Verification
 ```bash
