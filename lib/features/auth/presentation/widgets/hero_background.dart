@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class HeroBackground extends StatelessWidget {
-  const HeroBackground({super.key});
+  const HeroBackground({super.key, this.imagePath});
+
+  final String? imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class HeroBackground extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            'assets/images/sports_car_refueling.png',
+            imagePath ?? 'assets/images/sports_car_refueling.png',
             fit: BoxFit.cover,
           ),
           Positioned.fill(

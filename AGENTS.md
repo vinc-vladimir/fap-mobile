@@ -185,6 +185,49 @@ Button textStyle, foregroundColor, and backgroundColor should be defined in
 Per-screen overrides are acceptable only when a specific button instance needs
 a different style from the theme default.
 
+## Localization Rules
+
+**Rule 1: All user-facing strings MUST come from ARB files.**
+Never hardcode user-facing text in widgets. Every string must be defined in both
+`lib/l10n/app_en.arb` (English) and `lib/l10n/app_sr.arb` (Srpski) and accessed
+via `AppLocalizations.of(context)!`.
+
+**Anti-pattern (DO NOT):**
+```dart
+Text('SIGN IN')
+```
+
+**Correct pattern (DO):**
+```dart
+final l10n = AppLocalizations.of(context)!;
+...
+Text(l10n.signIn)
+```
+
+**Rule 2: Add new strings to both ARB files simultaneously.**
+When adding a new screen or UI string, always update `app_en.arb` and `app_sr.arb`
+in the same commit. The key name should follow camelCase convention and describe
+the string's purpose (e.g., `validationEmailRequired`, `forgotPasswordTitle`).
+
+**Rule 3: Regenerate after ARB changes.**
+After modifying `.arb` files, run `flutter pub get` (which triggers code generation
+via `flutter: generate: true` in pubspec.yaml). The generated output goes to
+`lib/l10n/app_localizations.dart`.
+
+**Rule 4: Use `@` metadata annotations in ARB for description context.**
+For strings that need translation context, include `@keyName` metadata with a
+`description` field to guide translators.
+
+**Example:**
+```json
+{
+  "resetPassword": "RESET PASSWORD",
+  "@resetPassword": {
+    "description": "Button label on the forgot password screen to send a reset email"
+  }
+}
+```
+
 ## Button Tier Convention
 
 | Tier | Widget | Background | Foreground | Used for |
