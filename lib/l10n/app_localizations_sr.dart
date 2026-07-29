@@ -21,7 +21,7 @@ class AppLocalizationsSr extends AppLocalizations {
   String get emailAddress => 'Email Adresa';
 
   @override
-  String get emailHint => 'ime@velocity.com';
+  String get emailHint => 'ime@fap.com';
 
   @override
   String get password => 'Lozinka';
@@ -168,4 +168,46 @@ class AppLocalizationsSr extends AppLocalizations {
   @override
   String get termsTerminationBody =>
       'Zadržavamo pravo da suspendujemo ili prekinemo vaš pristup usluzi u bilo kom trenutku zbog kršenja ovih uslova ili bilo kojih važećih zakona.';
+
+  @override
+  String get createAccountTitle => 'Kreirajte vaš nalog';
+
+  @override
+  String get createAccountSubtitle => 'Unesite vaše podatke da biste počeli';
+
+  @override
+  String get createPassword => 'Kreirajte lozinku';
+
+  @override
+  String get confirmPassword => 'Potvrdite lozinku';
+
+  @override
+  String get repeatPasswordHint => 'Ponovite lozinku';
+
+  @override
+  String get createAccount => 'KREIRAJTE NALOG';
+
+  @override
+  String get alreadyHaveAccount => 'Već imate nalog? ';
+
+  @override
+  String get signInLink => 'Prijavite se';
+
+  @override
+  String get matchError => 'Lozinke se ne poklapaju.';
+
+  @override
+  String get passwordReqLength => '8+ karaktera';
+
+  @override
+  String get passwordReqUppercase => 'Jedno veliko slovo';
+
+  @override
+  String get passwordReqLowercase => 'Jedno malo slovo';
+
+  @override
+  String get passwordReqDigit => 'Jedna cifra';
+
+  @override
+  String get passwordReqSpecial => 'Jedan specijalni karakter';
 }

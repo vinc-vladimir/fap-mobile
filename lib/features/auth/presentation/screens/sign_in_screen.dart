@@ -3,6 +3,7 @@ import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
+import '../../../../core/theme/app_typography.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/hero_background.dart';
 import '../widgets/or_divider.dart';
@@ -10,6 +11,7 @@ import '../widgets/social_button.dart';
 import '../../data/validation_constants.dart';
 import 'forgot_password_screen.dart';
 import 'privacy_policy_screen.dart';
+import 'sign_up_screen.dart';
 import 'terms_of_service_screen.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -48,7 +50,7 @@ class _SignInScreenState extends State<SignInScreen> {
           const HeroBackground(),
           SingleChildScrollView(
             padding: EdgeInsets.only(
-              top: screenHeight * 0.35,
+              top: screenHeight * 0.32,
               left: AppDimensions.marginMain,
               right: AppDimensions.marginMain,
               bottom: AppDimensions.stackLg + bottomInset,
@@ -80,7 +82,7 @@ class _SignInScreenState extends State<SignInScreen> {
             Text(
               l10n.fuelAutoPay,
               style: theme.textTheme.displayLarge?.copyWith(
-                color: brandPrimary,
+                color: vibrantCyan,
               ),
             ),
           ],
@@ -188,7 +190,7 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
           child: Text(
             l10n.forgotPassword,
-            style: theme.textTheme.labelMedium?.copyWith(color: brandPrimary),
+            style: linkMedium.copyWith(color: vibrantCyan),
           ),
         ),
       ],
@@ -275,7 +277,7 @@ class _SignInScreenState extends State<SignInScreen> {
             TextButton(
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const ForgotPasswordScreen()),
+                MaterialPageRoute(builder: (_) => const SignUpScreen()),
               ),
               style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,
@@ -284,10 +286,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               child: Text(
                 l10n.signUpNow,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: brandPrimary,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: linkMedium.copyWith(color: vibrantCyan),
               ),
             ),
           ],
@@ -308,7 +307,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               child: Text(
                 l10n.privacyPolicy,
-                style: theme.textTheme.labelSmall?.copyWith(
+                style: linkSmall.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
@@ -326,7 +325,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               child: Text(
                 l10n.termsOfService,
-                style: theme.textTheme.labelSmall?.copyWith(
+                style: linkSmall.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),

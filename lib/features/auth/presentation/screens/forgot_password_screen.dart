@@ -37,6 +37,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               l10n.fuelAutoPay,
               style: theme.textTheme.displayLarge?.copyWith(
                 color: brandPrimary,
+                shadows: [
+                  Shadow(
+                    color: vibrantCyan,
+                    offset: const Offset(0, 0),
+                    blurRadius: 5,
+                  ),
+                ],
               ),
             ),
           ],

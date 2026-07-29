@@ -48,3 +48,15 @@ final appTextTheme = GoogleFonts.interTextTheme(
     ),
   ),
 );
+
+const linkMedium = TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.w900,
+  height: 20 / 14,
+);
+
+const linkSmall = TextStyle(
+  fontSize: 10,
+  fontWeight: FontWeight.w900,
+  height: 14 / 10,
+);
