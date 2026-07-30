@@ -3,6 +3,7 @@ import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
+import '../../../../core/widgets/brand_title.dart';
 import '../../data/validation_constants.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/hero_background.dart';
@@ -33,27 +34,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         Row(
           children: [
             const SizedBox(width: AppDimensions.stackSm),
-            Text(
-              l10n.fuelAutoPay,
-              style: theme.textTheme.displayLarge?.copyWith(
-                color: brandPrimary,
-                shadows: [
-                  Shadow(
-                    color: vibrantCyan,
-                    offset: const Offset(0, 0),
-                    blurRadius: 5,
-                  ),
-                ],
-              ),
-            ),
+            BrandTitle(text: l10n.fuelAutoPay),
           ],
         ),
         const SizedBox(height: AppDimensions.stackSm),
-        Text(
-          l10n.tagline,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
+        BrandTitle(
+          text: l10n.tagline,
+          style: theme.textTheme.bodyMedium,
+          fillColor: vibrantCyan,
+          strokeWidth: 1,
         ),
       ],
     );

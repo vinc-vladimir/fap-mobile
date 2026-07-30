@@ -9,10 +9,10 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Fuel Auto Pay';
+  String get appTitle => 'FUEL AUTO PAY';
 
   @override
-  String get fuelAutoPay => 'Fuel Auto Pay';
+  String get fuelAutoPay => 'FUEL AUTO PAY';
 
   @override
   String get tagline => 'The fastest way to fuel your vehicle.';

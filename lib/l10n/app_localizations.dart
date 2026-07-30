@@ -101,13 +101,13 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'Fuel Auto Pay'**
+  /// **'FUEL AUTO PAY'**
   String get appTitle;
 
   /// No description provided for @fuelAutoPay.
   ///
   /// In en, this message translates to:
-  /// **'Fuel Auto Pay'**
+  /// **'FUEL AUTO PAY'**
   String get fuelAutoPay;
 
   /// No description provided for @tagline.
