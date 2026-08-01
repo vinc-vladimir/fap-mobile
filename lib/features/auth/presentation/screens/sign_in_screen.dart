@@ -10,6 +10,7 @@ import '../widgets/hero_background.dart';
 import '../widgets/or_divider.dart';
 import '../widgets/social_button.dart';
 import '../../data/validation_constants.dart';
+import '../../../home/presentation/screens/home_screen.dart';
 import 'forgot_password_screen.dart';
 import 'privacy_policy_screen.dart';
 import 'sign_up_screen.dart';
@@ -37,6 +38,10 @@ class _SignInScreenState extends State<SignInScreen> {
 
   void _onSignIn() {
     if (!_formKey.currentState!.validate()) return;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const HomeScreen()),
+    );
   }
 
   @override

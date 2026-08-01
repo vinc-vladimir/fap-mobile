@@ -210,4 +210,110 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get passwordReqSpecial => 'One special character';
+
+  @override
+  String get homeTitle => 'Home';
+
+  @override
+  String get pointsLabel => 'Points';
+
+  @override
+  String get bronzeLevel => 'Bronze Level';
+
+  @override
+  String pointsUntilSilver(Object points) {
+    return '$points points until Silver Status';
+  }
+
+  @override
+  String get nearbyStation => 'Nearby Station';
+
+  @override
+  String get viewMap => 'View Map';
+
+  @override
+  String distanceAway(Object distance) {
+    return '$distance km away';
+  }
+
+  @override
+  String get myRewards => 'My Rewards';
+
+  @override
+  String get seeAll => 'See All';
+
+  @override
+  String get redeemPoints => 'Redeem Points';
+
+  @override
+  String get navigate => 'Navigate';
+
+  @override
+  String get bottomNavHome => 'Home';
+
+  @override
+  String get bottomNavRefuel => 'Refuel';
+
+  @override
+  String get bottomNavActivity => 'Activity';
+
+  @override
+  String get bottomNavAccount => 'Account';
+
+  @override
+  String validUntil(Object date) {
+    return 'Valid until $date';
+  }
+
+  @override
+  String get newBadge => 'New';
+
+  @override
+  String get fuelSuper95 => 'Super 95';
+
+  @override
+  String get fuelDiesel => 'Diesel';
+
+  @override
+  String get fuelUltimate100 => 'Ultimate 100';
+
+  @override
+  String get percentOffPremium => '10% OFF Premium Fuels';
+
+  @override
+  String get freeDeluxeWash => 'Free Deluxe Wash';
+
+  @override
+  String afterRefuels(Object count) {
+    return 'After $count more refuels';
+  }
+
+  @override
+  String discountValidUntil(Object date) {
+    return 'Valid until $date';
+  }
+
+  @override
+  String get omvStationName => 'OMV City Central';
+
+  @override
+  String get omvStationAddress => 'Praterstraße 42, 1020 Wien';
+
+  @override
+  String get pointsValue => '1,240';
+
+  @override
+  String get accountTitle => 'Account';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
+  String get signOut => 'Sign Out';
+
+  @override
+  String get changePasswordSubtitle => 'Update your account password';
+
+  @override
+  String get signOutSubtitle => 'Sign out of your account';
 }
