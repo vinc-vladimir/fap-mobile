@@ -1,0 +1,290 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Velocity Blue - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#010f1f",
+                        "primary-fixed-dim": "#00dce5",
+                        "inverse-surface": "#d4e4fa",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#2c303b",
+                        "primary": "#e9feff",
+                        "on-surface": "#d4e4fa",
+                        "surface-variant": "#273647",
+                        "outline": "#849495",
+                        "on-surface-variant": "#b9caca",
+                        "secondary-fixed": "#dce2f7",
+                        "surface-tint": "#00dce5",
+                        "surface-dim": "#051424",
+                        "surface-container-high": "#1c2b3c",
+                        "on-tertiary-fixed": "#171c26",
+                        "error-container": "#93000a",
+                        "surface-container": "#122131",
+                        "tertiary-container": "#d9ddec",
+                        "surface-container-highest": "#273647",
+                        "surface": "#051424",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#dee2f1",
+                        "on-primary-fixed-variant": "#004f53",
+                        "tertiary-fixed-dim": "#c2c6d5",
+                        "on-tertiary-fixed-variant": "#424752",
+                        "on-primary-fixed": "#002021",
+                        "tertiary": "#faf9ff",
+                        "on-primary": "#003739",
+                        "inverse-on-surface": "#233143",
+                        "background": "#051424",
+                        "on-secondary-container": "#b1b8cc",
+                        "on-secondary-fixed-variant": "#404757",
+                        "inverse-primary": "#00696e",
+                        "primary-container": "#00f5ff",
+                        "on-background": "#d4e4fa",
+                        "on-primary-container": "#006c71",
+                        "error": "#ffb4ab",
+                        "secondary-container": "#42495a",
+                        "on-secondary-fixed": "#141b2a",
+                        "primary-fixed": "#63f7ff",
+                        "on-tertiary-container": "#5c616e",
+                        "secondary-fixed-dim": "#c0c6da",
+                        "outline-variant": "#3a494a",
+                        "surface-bright": "#2c3a4c",
+                        "on-secondary": "#293040",
+                        "surface-container-low": "#0d1c2d",
+                        "secondary": "#c0c6da"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-lg": "24px",
+                        "gutter": "16px",
+                        "stack-md": "16px",
+                        "container-padding": "16px",
+                        "margin-main": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-sm": ["10px", {"lineHeight": "14px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #051424;
+            color: #d4e4fa;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(26, 33, 48, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 py-4 bg-surface/80 backdrop-blur-md border-b border-white/5">
+<h1 class="font-headline-sm text-headline-sm text-on-surface">Home</h1>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-high text-on-surface transition-transform active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary-fixed-dim overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a modern tech professional with a clean-cut look, set against a dark navy atmospheric background. The lighting is dramatic and cinematic, highlighting facial features with a subtle cyan rim light to match a premium corporate tech aesthetic. The overall mood is sophisticated and reliable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLvo_8u5ELbssmEPZfbFWFSRudSARyYmOLcLbXAoWcWvRZu4lmFcdEr9GiZ5i0tAKNmfX2ADcUlnqDaM4A_2m9FXsX90I7KZC8touuL_kXNZ7bm9OJ1wbtUSyeBZm0i4FR7niEp1Sjpq69xMJDstmuOCxWIwgBM26-IC_xe_5ciaRnaVRNk3sS1fTz9juwK7ChU-uI5PbZ_2xTZfIZTJpmO7PAdFzfrWVu7JhtWCNSxiSFxOr09xEP">
+</div>
+</div>
+</header>
+<main class="mt-20 pb-32 px-margin-main flex flex-col gap-stack-lg">
+<!-- Points & Status Card -->
+<section class="glass-card rounded-[24px] p-6 flex flex-col items-center justify-center relative overflow-hidden">
+
+<div class="relative flex items-center justify-center w-48 h-48">
+<!-- Circular Progress -->
+<svg class="w-full h-full">
+<circle class="text-white/10" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary-fixed-dim progress-ring__circle" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-dasharray="502.6" stroke-dashoffset="150" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span class="font-headline-lg text-headline-lg text-on-surface">1,240</span>
+<span class="font-label-md text-label-md text-primary-fixed-dim tracking-[0.2em] uppercase">Points</span>
+</div>
+</div>
+<div class="mt-4 flex flex-col items-center gap-1">
+<div class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-highest border border-white/10">
+<span class="material-symbols-outlined text-secondary text-[18px]" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Bronze Level</span>
+</div>
+<p class="mt-2 font-body-sm text-body-sm text-on-surface-variant text-center">760 points until Silver Status</p>
+</div>
+</section>
+<!-- Nearby Station Card -->
+<section class="flex flex-col gap-stack-md">
+<div class="flex justify-between items-end">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Nearby Station</h2>
+<button class="font-label-md text-label-md text-primary-fixed-dim uppercase">View Map</button>
+</div>
+<div class="glass-card rounded-[24px] overflow-hidden flex flex-col">
+<div class="h-40 w-full relative">
+<img class="w-full h-full object-cover" data-alt="A futuristic, high-end gas station at twilight, featuring sleek architectural lines and vibrant cyan LED lighting. The pavement is wet, reflecting the neon glow and the deep navy sky. The environment is clean, professional, and technologically advanced, conveying a sense of premium service and reliability in a modern urban setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSLGDP2OmeRZTbDxII-swJGlQleexwKPYGVcm_qKwc65j6pXoIJwsXDZ32fqEsthabnkx5VltMnyWtLzQ2GZKE5HkQEM9wnn-SyMaMUfd7Gw38H5H67nqxXbFTcHQXzY5lBD__S2v2U1qMoPKhD212x6Tf5-LQ2U0NLbRUvoQobTkxttEX5TIwLW09Z1tYWssAaCWxIyTME464rjsfn8dwAGn8r-KGY68PiykQOq8-6KC9bn8_Ia3F">
+<div class="absolute top-4 left-4 px-3 py-1 bg-surface-container-highest/90 backdrop-blur-sm rounded-lg border border-white/10">
+<span class="font-label-md text-label-md text-primary-fixed-dim">0.8 km away</span>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">OMV City Central</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Praterstraße 42, 1020 Wien</p>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-2xl bg-primary-fixed-dim text-surface transition-all active:scale-95 shadow-[0_0_20px_rgba(0,220,229,0.3)]">
+<span class="material-symbols-outlined">directions</span>
+</button>
+</div>
+<div class="flex flex-wrap gap-2">
+<div class="px-3 py-1.5 rounded-xl bg-surface-container border border-white/5 flex flex-col items-start gap-0.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Super 95</span>
+<span class="font-body-md text-body-md text-on-surface">€1.649</span>
+</div>
+<div class="px-3 py-1.5 rounded-xl bg-surface-container border border-white/5 flex flex-col items-start gap-0.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Diesel</span>
+<span class="font-body-md text-body-md text-on-surface">€1.598</span>
+</div>
+<div class="px-3 py-1.5 rounded-xl bg-surface-container border border-white/5 flex flex-col items-start gap-0.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Ultimate 100</span>
+<span class="font-body-md text-body-md text-primary-fixed-dim">€1.824</span>
+</div>
+</div>
+<button class="w-full py-3.5 rounded-2xl bg-white/5 border border-white/10 font-label-md text-label-md text-on-surface uppercase tracking-[0.1em] transition-all hover:bg-white/10 active:scale-[0.98]">
+                        Navigate
+                    </button>
+</div>
+</div>
+</section>
+<!-- My Rewards Section -->
+<section class="flex flex-col gap-stack-md">
+<div class="flex justify-between items-end">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">My Rewards</h2>
+<button class="font-label-md text-label-md text-primary-fixed-dim uppercase">See All</button>
+</div>
+<div class="flex gap-4 overflow-x-auto no-scrollbar -mx-margin-main px-margin-main pb-4">
+<!-- Reward Card 1 -->
+<div class="min-w-[280px] glass-card rounded-[24px] overflow-hidden flex flex-col group transition-transform duration-300 hover:-translate-y-1">
+<div class="h-32 w-full relative">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-highest to-transparent z-10"></div>
+<img class="w-full h-full object-cover" data-alt="High-quality lifestyle photography of a coffee cup and premium pastry on a dark, textured surface. The scene is lit with warm, moody highlights that contrast against the cool cyan brand accents. The focus is sharp on the textures, suggesting freshness and quality in a high-end mobility cafe environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc6fgHpIzLDOW2dyVn0_DmfShJHSnDKcV3-q-h_v__ZiLIoMYNSf9MpvH0WKB6f5-h6p55z5RIGDmIdeXgncZ05KAkj7z0iy7nmc3d2ipdpZV92vM_Omjv8soPV2ml2KJMQDbJ2fJzZtFd1rjhP1ILiN79CFGD7_kWiOc18PqQVOR8yxOf75-WfiWMu6E9OKq1CiZiD0saAGg_yVN4Ru9Mo_ZrOsVwqnkop8sDVFfNmQl16aseV9vI">
+<div class="absolute top-4 right-4 z-20 px-2 py-1 bg-primary-fixed-dim text-surface font-label-sm text-label-sm rounded-lg uppercase font-bold">New</div>
+</div>
+<div class="p-5 flex flex-col gap-1">
+<h4 class="font-headline-sm text-[18px] text-on-surface">10% OFF Premium Fuels</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Valid until Oct 24, 2023</p>
+<div class="mt-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-fixed-dim text-[18px]">confirmation_number</span>
+<span class="font-label-md text-label-md text-primary-fixed-dim uppercase">Redeem Points</span>
+</div>
+</div>
+</div>
+<!-- Reward Card 2 -->
+<div class="min-w-[280px] glass-card rounded-[24px] overflow-hidden flex flex-col group transition-transform duration-300 hover:-translate-y-1">
+<div class="h-32 w-full relative">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-highest to-transparent z-10"></div>
+<img class="w-full h-full object-cover" data-alt="A modern car wash facility with soft, glowing blue brushes and crystalline water droplets suspended in air. The lighting is high-tech and atmospheric, using cool navy and bright cyan tones to emphasize a sense of cleanliness, luxury, and advanced care for a premium vehicle." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnoMcEb9cqHOTdBa25e2m301TBdUbcEM9VRyvi9vN3GX4flRmHABA15IvEAkf6L5cqUSfZHuIhmt8IAw3kRF2SbeNyy5Px3O9jFsf9ZEN6SNPPGoh5Ks13arnsXkEkJ2v1b1C82ClL5jmIxRu0TZLR90aWtp_szi-QTybZhstHc4lU58SwZUvmXJQrPyisHTnnMdcs3KRv2ubt0w2pysdc4pHMBBwOsdQAB0Qjp23X7us6veWiz0xJ">
+</div>
+<div class="p-5 flex flex-col gap-1">
+<h4 class="font-headline-sm text-[18px] text-on-surface">Free Deluxe Wash</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">After 5 more refuels</p>
+<div class="mt-3 w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary-fixed-dim h-full w-3/5"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-3 bg-surface/80 backdrop-blur-xl border-t border-white/5">
+<!-- Home (Active) -->
+<button class="flex flex-col items-center justify-center bg-primary-fixed-dim/10 text-primary-fixed-dim rounded-2xl px-5 py-2 transition-all active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-md text-[10px] uppercase mt-1">Home</span>
+</button>
+<!-- Refuel -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-2 transition-all active:scale-90 hover:text-primary-fixed-dim">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">local_gas_station</span>
+<span class="font-label-md text-[10px] uppercase mt-1">Refuel</span>
+</button>
+<!-- Activity -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-2 transition-all active:scale-90 hover:text-primary-fixed-dim">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">history</span>
+<span class="font-label-md text-[10px] uppercase mt-1">Activity</span>
+</button>
+<!-- Account -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-2 transition-all active:scale-90 hover:text-primary-fixed-dim">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-label-md text-[10px] uppercase mt-1">Account</span>
+</button>
+</nav>
+<script>
+        // Micro-interactions and subtle effects
+        document.querySelectorAll('.active\\:scale-90, .active\\:scale-95, .active\\:scale-\\[0\\.98\\]').forEach(button => {
+            button.addEventListener('touchstart', () => button.style.opacity = '0.8');
+            button.addEventListener('touchend', () => button.style.opacity = '1');
+        });
+
+        // Simple haptic feedback simulation (for browsers that support it)
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (window.navigator.vibrate) {
+                    window.navigator.vibrate(10);
+                }
+            });
+        });
+    </script>
+</body></html>

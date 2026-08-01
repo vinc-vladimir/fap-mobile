@@ -475,6 +475,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'One special character'**
   String get passwordReqSpecial;
+
+  /// No description provided for @homeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get homeTitle;
+
+  /// No description provided for @pointsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Points'**
+  String get pointsLabel;
+
+  /// No description provided for @bronzeLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Bronze Level'**
+  String get bronzeLevel;
+
+  /// No description provided for @pointsUntilSilver.
+  ///
+  /// In en, this message translates to:
+  /// **'{points} points until Silver Status'**
+  String pointsUntilSilver(Object points);
+
+  /// No description provided for @nearbyStation.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby Station'**
+  String get nearbyStation;
+
+  /// No description provided for @viewMap.
+  ///
+  /// In en, this message translates to:
+  /// **'View Map'**
+  String get viewMap;
+
+  /// No description provided for @distanceAway.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} km away'**
+  String distanceAway(Object distance);
+
+  /// No description provided for @myRewards.
+  ///
+  /// In en, this message translates to:
+  /// **'My Rewards'**
+  String get myRewards;
+
+  /// No description provided for @seeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See All'**
+  String get seeAll;
+
+  /// No description provided for @redeemPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Redeem Points'**
+  String get redeemPoints;
+
+  /// No description provided for @navigate.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate'**
+  String get navigate;
+
+  /// No description provided for @bottomNavHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get bottomNavHome;
+
+  /// No description provided for @bottomNavRefuel.
+  ///
+  /// In en, this message translates to:
+  /// **'Refuel'**
+  String get bottomNavRefuel;
+
+  /// No description provided for @bottomNavActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get bottomNavActivity;
+
+  /// No description provided for @bottomNavAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get bottomNavAccount;
+
+  /// No description provided for @validUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid until {date}'**
+  String validUntil(Object date);
+
+  /// No description provided for @newBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get newBadge;
+
+  /// No description provided for @fuelSuper95.
+  ///
+  /// In en, this message translates to:
+  /// **'Super 95'**
+  String get fuelSuper95;
+
+  /// No description provided for @fuelDiesel.
+  ///
+  /// In en, this message translates to:
+  /// **'Diesel'**
+  String get fuelDiesel;
+
+  /// No description provided for @fuelUltimate100.
+  ///
+  /// In en, this message translates to:
+  /// **'Ultimate 100'**
+  String get fuelUltimate100;
+
+  /// No description provided for @percentOffPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'10% OFF Premium Fuels'**
+  String get percentOffPremium;
+
+  /// No description provided for @freeDeluxeWash.
+  ///
+  /// In en, this message translates to:
+  /// **'Free Deluxe Wash'**
+  String get freeDeluxeWash;
+
+  /// No description provided for @afterRefuels.
+  ///
+  /// In en, this message translates to:
+  /// **'After {count} more refuels'**
+  String afterRefuels(Object count);
+
+  /// No description provided for @discountValidUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid until {date}'**
+  String discountValidUntil(Object date);
+
+  /// No description provided for @omvStationName.
+  ///
+  /// In en, this message translates to:
+  /// **'OMV City Central'**
+  String get omvStationName;
+
+  /// No description provided for @omvStationAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Praterstraße 42, 1020 Wien'**
+  String get omvStationAddress;
+
+  /// No description provided for @pointsValue.
+  ///
+  /// In en, this message translates to:
+  /// **'1,240'**
+  String get pointsValue;
+
+  /// No description provided for @accountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get accountTitle;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePassword;
+
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Out'**
+  String get signOut;
+
+  /// No description provided for @changePasswordSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your account password'**
+  String get changePasswordSubtitle;
+
+  /// No description provided for @signOutSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out of your account'**
+  String get signOutSubtitle;
 }
 
 class _AppLocalizationsDelegate

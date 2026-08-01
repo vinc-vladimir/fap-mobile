@@ -210,4 +210,110 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get passwordReqSpecial => 'Jedan specijalni karakter';
+
+  @override
+  String get homeTitle => 'Početna';
+
+  @override
+  String get pointsLabel => 'Poeni';
+
+  @override
+  String get bronzeLevel => 'Bronzani Nivo';
+
+  @override
+  String pointsUntilSilver(Object points) {
+    return '$points poena do Srebrnog Statusa';
+  }
+
+  @override
+  String get nearbyStation => 'Obližnja Stanica';
+
+  @override
+  String get viewMap => 'Pogledaj Mapu';
+
+  @override
+  String distanceAway(Object distance) {
+    return '$distance km udaljeno';
+  }
+
+  @override
+  String get myRewards => 'Moje Nagrade';
+
+  @override
+  String get seeAll => 'Pogledaj Sve';
+
+  @override
+  String get redeemPoints => 'Iskoristi Poene';
+
+  @override
+  String get navigate => 'Navigacija';
+
+  @override
+  String get bottomNavHome => 'Početna';
+
+  @override
+  String get bottomNavRefuel => 'Točenje';
+
+  @override
+  String get bottomNavActivity => 'Aktivnost';
+
+  @override
+  String get bottomNavAccount => 'Nalog';
+
+  @override
+  String validUntil(Object date) {
+    return 'Važi do $date';
+  }
+
+  @override
+  String get newBadge => 'Novo';
+
+  @override
+  String get fuelSuper95 => 'Super 95';
+
+  @override
+  String get fuelDiesel => 'Dizel';
+
+  @override
+  String get fuelUltimate100 => 'Ultimate 100';
+
+  @override
+  String get percentOffPremium => '10% POPUST Premium Goriva';
+
+  @override
+  String get freeDeluxeWash => 'Besplatno Deluxe Pranje';
+
+  @override
+  String afterRefuels(Object count) {
+    return 'Posle $count još točenja';
+  }
+
+  @override
+  String discountValidUntil(Object date) {
+    return 'Važi do $date';
+  }
+
+  @override
+  String get omvStationName => 'OMV City Central';
+
+  @override
+  String get omvStationAddress => 'Praterstraße 42, 1020 Wien';
+
+  @override
+  String get pointsValue => '1.240';
+
+  @override
+  String get accountTitle => 'Nalog';
+
+  @override
+  String get changePassword => 'Promeni Lozinku';
+
+  @override
+  String get signOut => 'Odjavi Se';
+
+  @override
+  String get changePasswordSubtitle => 'Ažurirajte lozinku vašeg naloga';
+
+  @override
+  String get signOutSubtitle => 'Odjavite se sa vašeg naloga';
 }

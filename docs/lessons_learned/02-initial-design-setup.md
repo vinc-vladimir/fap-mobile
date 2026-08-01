@@ -4,8 +4,8 @@
 
 This phase established the foundational design system for FAP Mobile by translating
 the Velocity Flux (light) / Velocity Blue (dark) design tokens into Flutter/Material 3
-theme files. The `design/` folder is the single source of truth for design specs;
-the `lib/core/theme/` folder is the compiled Dart implementation.
+theme files. The [`design/`](../../design/) folder is the single source of truth for design specs;
+the [`lib/core/theme/`](../../lib/core/theme/) folder is the compiled Dart implementation.
 
 ---
 
@@ -13,13 +13,13 @@ the `lib/core/theme/` folder is the compiled Dart implementation.
 
 | File | Purpose |
 |---|---|
-| `lib/core/theme/app_colors.dart` | Light + dark `ColorScheme` constants and custom brand colors (`vibrantCyan`, `surfaceGlassLight/Dark`, `successGlint`, `mapVoid`) |
-| `lib/core/theme/app_typography.dart` | `TextTheme` with all 8 Inter-based text styles (headline-lg → displayLarge, body-md → bodyMedium, label-md → labelMedium, etc.) |
-| `lib/core/theme/app_dimensions.dart` | Spacing (`stackSm` 8, `stackMd` 16, `stackLg` 24, `marginMain` 20) and border radius (`radiusSm` 4 → `radiusFull` 9999) constants |
-| `lib/core/theme/app_theme.dart` | `lightTheme` and `darkTheme` getters that compose `ColorScheme` + `TextTheme` + `InputDecorationTheme` + `ElevatedButtonTheme` + `OutlinedButtonTheme` |
-| `lib/core/theme/theme_provider.dart` | `NotifierProvider<ThemeModeNotifier, ThemeMode>` so the app can toggle/system-follow theme |
-| `lib/main.dart` | Entrypoint with `ProviderScope` + `FapApp` (ConsumerWidget) using `MaterialApp(theme:, darkTheme:, themeMode:)` |
-| `assets/images/` | `google_logo.png`, `github_logo.png`, `sports_car_refueling.png` copied from `design/sign_in/images/` |
+| [`lib/core/theme/app_colors.dart`](../../lib/core/theme/app_colors.dart) | Light + dark `ColorScheme` constants and custom brand colors (`vibrantCyan`, `surfaceGlassLight/Dark`, `successGlint`, `mapVoid`) |
+| [`lib/core/theme/app_typography.dart`](../../lib/core/theme/app_typography.dart) | `TextTheme` with all 8 Inter-based text styles (headline-lg → displayLarge, body-md → bodyMedium, label-md → labelMedium, etc.) |
+| [`lib/core/theme/app_dimensions.dart`](../../lib/core/theme/app_dimensions.dart) | Spacing (`stackSm` 8, `stackMd` 16, `stackLg` 24, `marginMain` 20) and border radius (`radiusSm` 4 → `radiusFull` 9999) constants |
+| [`lib/core/theme/app_theme.dart`](../../lib/core/theme/app_theme.dart) | `lightTheme` and `darkTheme` getters that compose `ColorScheme` + `TextTheme` + `InputDecorationTheme` + `ElevatedButtonTheme` + `OutlinedButtonTheme` |
+| [`lib/core/theme/theme_provider.dart`](../../lib/core/theme/theme_provider.dart) | `NotifierProvider<ThemeModeNotifier, ThemeMode>` so the app can toggle/system-follow theme |
+| [`lib/main.dart`](../../lib/main.dart) | Entrypoint with `ProviderScope` + `FapApp` (ConsumerWidget) using `MaterialApp(theme:, darkTheme:, themeMode:)` |
+| [`assets/images/`](../../assets/images/) | [`google_logo.png`](../../assets/images/google_logo.png), [`github_logo.png`](../../assets/images/github_logo.png), [`sports_car_refueling.png`](../../assets/images/sports_car_refueling.png) copied from [`design/sign_in/images/`](../../design/sign_in/images/) |
 
 ---
 
@@ -38,16 +38,16 @@ which is the Riverpod 3.x idiomatic way to manage simple mutable state.
 ### 3. Inter font not bundled
 The `TextTheme` specifies `fontFamily: 'Inter'`. For the font to actually render:
 - **Recommended:** Add `google_fonts: ^6.0.0` dependency and use `GoogleFonts.interTextTheme()`
-- **Alternative:** Download Inter .ttf files into `fonts/` and declare in `pubspec.yaml`
+- **Alternative:** Download Inter .ttf files into `fonts/` and declare in [`pubspec.yaml`](../../pubspec.yaml)
 - Until then, the system fallback font is used (build compiles fine)
 
 ### 4. Asset strategy
-Images are placed flat in `assets/images/` rather than per-feature. This avoids
-duplication (e.g., `sports_car_refueling.png` appears in both auth screens and future
-splash/onboarding screens). The `design/` folder mirrors this structure for authoring.
+Images are placed flat in [`assets/images/`](../../assets/images/) rather than per-feature. This avoids
+duplication (e.g., [`sports_car_refueling.png`](../../assets/images/sports_car_refueling.png) appears in both auth screens and future
+splash/onboarding screens). The [`design/`](../../design/) folder mirrors this structure for authoring.
 
 ### 5. UI theme vs component theme
-`app_theme.dart` sets input decoration, button, and scaffold defaults via `ThemeData`.
+[`app_theme.dart`](../../lib/core/theme/app_theme.dart) sets input decoration, button, and scaffold defaults via `ThemeData`.
 Per-screen custom overrides (e.g., glass card effect, hero background) are deliberately
 NOT in the global theme — they belong in the screen widgets themselves.
 
@@ -57,14 +57,14 @@ NOT in the global theme — they belong in the screen widgets themselves.
 
 | DESIGN.md YAML | Flutter File | Dart Name |
 |---|---|---|
-| `colors.primary` | `app_colors.dart` | `lightColorScheme.primary` / `darkColorScheme.primary` |
-| `colors.primary-container` | `app_colors.dart` | `lightColorScheme.primaryContainer` / `darkColorScheme.primaryContainer` |
-| `colors.vibrant-cyan` | `app_colors.dart` | `vibrantCyan` (top-level const) |
-| `typography.headline-lg` | `app_typography.dart` | `appTextTheme.displayLarge` |
-| `typography.body-md` | `app_typography.dart` | `appTextTheme.bodyMedium` |
-| `rounded.md` (0.75rem) | `app_dimensions.dart` | `AppDimensions.radiusLg` (12px) |
-| `spacing.stack-md` (16px) | `app_dimensions.dart` | `AppDimensions.stackMd` (16px) |
-| `colors.surface-glass` | `app_colors.dart` | `surfaceGlassLight` / `surfaceGlassDark` |
+| `colors.primary` | [`app_colors.dart`](../../lib/core/theme/app_colors.dart) | `lightColorScheme.primary` / `darkColorScheme.primary` |
+| `colors.primary-container` | [`app_colors.dart`](../../lib/core/theme/app_colors.dart) | `lightColorScheme.primaryContainer` / `darkColorScheme.primaryContainer` |
+| `colors.vibrant-cyan` | [`app_colors.dart`](../../lib/core/theme/app_colors.dart) | `vibrantCyan` (top-level const) |
+| `typography.headline-lg` | [`app_typography.dart`](../../lib/core/theme/app_typography.dart) | `appTextTheme.displayLarge` |
+| `typography.body-md` | [`app_typography.dart`](../../lib/core/theme/app_typography.dart) | `appTextTheme.bodyMedium` |
+| `rounded.md` (0.75rem) | [`app_dimensions.dart`](../../lib/core/theme/app_dimensions.dart) | `AppDimensions.radiusLg` (12px) |
+| `spacing.stack-md` (16px) | [`app_dimensions.dart`](../../lib/core/theme/app_dimensions.dart) | `AppDimensions.stackMd` (16px) |
+| `colors.surface-glass` | [`app_colors.dart`](../../lib/core/theme/app_colors.dart) | `surfaceGlassLight` / `surfaceGlassDark` |
 
 ---
 
@@ -73,7 +73,7 @@ NOT in the global theme — they belong in the screen widgets themselves.
 ### 1. Hero Background
 Both light and dark code.html use a full-width image covering 35–40vh of the viewport
 with a gradient overlay fading into the surface color. In Flutter:
-- Use `Stack` with a positioned `Image.asset('assets/images/sports_car_refueling.png')`
+- Use `Stack` with a positioned `Image.asset` of [`assets/images/sports_car_refueling.png`](../../assets/images/sports_car_refueling.png)
 - Overlay with `Container` + `BoxDecoration(gradient: LinearGradient(...))` using `Theme.of(context).colorScheme.surface`
 
 ### 2. Glass Card

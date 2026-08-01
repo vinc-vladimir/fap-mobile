@@ -2,7 +2,7 @@
 
 ## What We Did
 
-We initialized the Flutter project (`flutter create`), configured dependencies in `pubspec.yaml`, installed them (`flutter pub get`), set up build_runner for code generation, and ran `flutter analyze` to verify everything compiles cleanly.
+We initialized the Flutter project (`flutter create`), configured dependencies in [`pubspec.yaml`](../../pubspec.yaml), installed them (`flutter pub get`), set up build_runner for code generation, and ran `flutter analyze` to verify everything compiles cleanly.
 
 ---
 
@@ -18,7 +18,7 @@ We initialized the Flutter project (`flutter create`), configured dependencies i
 | **StatelessWidget** | A widget that doesn't have mutable state. Its appearance depends entirely on the configuration passed to it. Once built, it never changes. |
 | **StatefulWidget** | A widget that has mutable state. Used when the UI needs to change dynamically (e.g., counter app, form inputs, animations). |
 | **BuildContext** | An object that knows a widget's location in the widget tree. Used to access theme, routing, media queries, and other inherited widgets. Every `build` method receives one. |
-| **pubspec.yaml** | The project manifest file. Lists package name, dependencies, dev_dependencies, and Flutter configuration. Similar to `package.json` (Node.js) or `Cargo.toml` (Rust). |
+| **[`pubspec.yaml`](../../pubspec.yaml)** | The project manifest file. Lists package name, dependencies, dev_dependencies, and Flutter configuration. Similar to `package.json` (Node.js) or `Cargo.toml` (Rust). |
 
 ### State Management & Code Gen
 
@@ -171,11 +171,11 @@ flutter clean && flutter pub get && dart run build_runner build --delete-conflic
 
 ## Key Takeaway
 
-The `flutter analyze` output showed **11 issues, all in `build/ios/SourcePackages/firebase_messaging/example/`** — inside a third-party package's example code, not our project. Our actual code (`lib/main.dart`, `test/widget_test.dart`) had zero issues.
+The `flutter analyze` output showed **11 issues, all in `build/ios/SourcePackages/firebase_messaging/example/`** — inside a third-party package's example code, not our project. Our actual code ([`lib/main.dart`](../../lib/main.dart), [`test/widget_test.dart`](../../test/widget_test.dart)) had zero issues.
 
 ### Fix: Exclude `build/` from analysis
 
-We added this to `analysis_options.yaml`:
+We added this to [`analysis_options.yaml`](../../analysis_options.yaml):
 
 ```yaml
 analyzer:
@@ -185,6 +185,6 @@ analyzer:
 
 This tells the Dart analyzer to skip the `build/` directory entirely. After the change: **No issues found.**
 
-The `build/` directory is auto-generated (CocoaPods/SPM dependencies) and listed in `.gitignore`. It would be regenerated on every `flutter pub get` or pod install — so attempting to delete the offending files is futile. The correct approach is always to exclude it from analysis.
+The `build/` directory is auto-generated (CocoaPods/SPM dependencies) and listed in [`.gitignore`](../../.gitignore). It would be regenerated on every `flutter pub get` or pod install — so attempting to delete the offending files is futile. The correct approach is always to exclude it from analysis.
 
 The pattern `dart run build_runner build --delete-conflicting-outputs` will be run frequently — every time we add or modify a `@freezed` data class or `@riverpod` provider — since code generation is central to this project's architecture.
