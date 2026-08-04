@@ -7,7 +7,9 @@ import '../widgets/glass_card.dart';
 import '../widgets/hero_background.dart';
 
 class EmailSentScreen extends StatelessWidget {
-  const EmailSentScreen({super.key});
+  const EmailSentScreen({super.key, this.description});
+
+  final String? description;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class EmailSentScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: AppDimensions.stackSm),
                   Text(
-                    l10n.emailSentDescription,
+                    description ?? l10n.emailSentDescription,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                       height: 1.5,

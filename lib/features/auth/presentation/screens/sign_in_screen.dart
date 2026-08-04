@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -10,20 +11,21 @@ import '../widgets/hero_background.dart';
 import '../widgets/or_divider.dart';
 import '../widgets/social_button.dart';
 import '../../data/validation_constants.dart';
+import '../providers/auth_providers.dart';
 import '../../../home/presentation/screens/home_screen.dart';
 import 'forgot_password_screen.dart';
 import 'privacy_policy_screen.dart';
 import 'sign_up_screen.dart';
 import 'terms_of_service_screen.dart';
 
-class SignInScreen extends StatefulWidget {
+class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  ConsumerState<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignInScreenState extends ConsumerState<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -36,8 +38,31 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
-  void _onSignIn() {
+  Future<void> _onSignIn() async {
     if (!_formKey.currentState!.validate()) return;
+
+    final messenger = ScaffoldMessenger.of(context);
+    final l10n = AppLocalizations.of(context)!;
+
+    await ref
+        .read(loginControllerProvider.notifier)
+        .login(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        );
+
+    final state = ref.read(loginControllerProvider);
+    if (state.hasError) {
+      final error = state.error;
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(error?.toString() ?? l10n.errorSomethingWentWrong),
+        ),
+      );
+      return;
+    }
+
+    if (!mounted) return;
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => const HomeScreen()),
@@ -200,8 +225,9 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Widget _buildSignInButton(ThemeData theme) {
     final l10n = AppLocalizations.of(context)!;
+    final isLoading = ref.watch(loginControllerProvider).isLoading;
     return ElevatedButton(
-      onPressed: _onSignIn,
+      onPressed: isLoading ? null : _onSignIn,
       style: ElevatedButton.styleFrom(
         backgroundColor: vibrantCyan,
         foregroundColor: brandPrimary,
@@ -211,10 +237,21 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
         elevation: 0,
       ),
-      child: Text(
-        l10n.signIn,
-        style: theme.textTheme.displaySmall?.copyWith(color: brandPrimary),
-      ),
+      child: isLoading
+          ? const SizedBox(
+              width: 22,
+              height: 22,
+              child: CircularProgressIndicator(
+                strokeWidth: 2.5,
+                color: brandPrimary,
+              ),
+            )
+          : Text(
+              l10n.signIn,
+              style: theme.textTheme.displaySmall?.copyWith(
+                color: brandPrimary,
+              ),
+            ),
     );
   }
 

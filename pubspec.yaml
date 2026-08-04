@@ -40,9 +40,12 @@ dependencies:
   # Social Auth (OAuth2)
   flutter_appauth: ^12.0.0
 
+  # Deep Linking
+  app_links: ^6.4.1
+
   # Data Classes & JSON
   freezed_annotation: ^3.1.0
-  json_annotation: ^4.9.0
+  json_annotation: ^4.12.0
 
   # Fonts
   google_fonts: ^6.0.0

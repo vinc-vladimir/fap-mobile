@@ -43,6 +43,11 @@
       "headers": {
         "CONTEXT7_API_KEY": "ctx7sk-e6459ed6-c8b0-413e-b1f2-3f0ebe50dd0b"
       }
+    },
+    "jrag-mcp": {
+      "type": "remote",
+      "url": "http://localhost:8888/api/mcp",
+      "enabled": true
     }
   },
   "instructions": [

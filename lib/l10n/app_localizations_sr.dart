@@ -212,6 +212,33 @@ class AppLocalizationsSr extends AppLocalizations {
   String get passwordReqSpecial => 'Jedan specijalni karakter';
 
   @override
+  String get registrationSuccessDescription =>
+      'Poslali smo link za potvrdu na vašu email adresu. Otvorite link na ovom telefonu da aktivirate vaš nalog.';
+
+  @override
+  String get registrationConfirmedTitle => 'Nalog Aktiviran';
+
+  @override
+  String get registrationConfirmedDescription =>
+      'Vaša email adresa je potvrđena. Prijavite se da biste nastavili.';
+
+  @override
+  String get registrationConfirmationFailedTitle => 'Potvrda nije uspela';
+
+  @override
+  String get registrationConfirmationFailedDescription =>
+      'Ovaj link za potvrdu je nevažeći ili je istekao. Registrujte se ponovo da biste dobili novi link.';
+
+  @override
+  String get goToSignIn => 'IDI NA PRIJAVU';
+
+  @override
+  String get retry => 'POKUŠAJ PONOVO';
+
+  @override
+  String get errorSomethingWentWrong => 'Došlo je do greške. Pokušajte ponovo.';
+
+  @override
   String get homeTitle => 'Početna';
 
   @override
