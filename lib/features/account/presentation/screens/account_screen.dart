@@ -1,11 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
+import '../../../auth/presentation/providers/auth_providers.dart';
+import '../../../auth/presentation/screens/sign_in_screen.dart';
 
-class AccountScreen extends StatelessWidget {
+class AccountScreen extends ConsumerStatefulWidget {
   const AccountScreen({super.key});
+
+  @override
+  ConsumerState<AccountScreen> createState() => _AccountScreenState();
+}
+
+class _AccountScreenState extends ConsumerState<AccountScreen> {
+  bool _loggingOut = false;
+
+  Future<void> _onSignOut() async {
+    if (_loggingOut) return;
+    setState(() => _loggingOut = true);
+
+    await ref.read(loginControllerProvider.notifier).logout();
+
+    if (!mounted) return;
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const SignInScreen()),
+      (route) => false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +64,8 @@ class AccountScreen extends StatelessWidget {
                     subtitle: l10n.signOutSubtitle,
                     theme: theme,
                     isDark: isDark,
-                    onTap: () {},
+                    isLoading: _loggingOut,
+                    onTap: _onSignOut,
                   ),
                 ],
               ),
@@ -89,6 +113,7 @@ class _AccountActionTile extends StatelessWidget {
   final ThemeData theme;
   final bool isDark;
   final VoidCallback onTap;
+  final bool isLoading;
 
   const _AccountActionTile({
     required this.icon,
@@ -97,12 +122,13 @@ class _AccountActionTile extends StatelessWidget {
     required this.theme,
     required this.isDark,
     required this.onTap,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: isLoading ? null : onTap,
       child: Container(
         padding: const EdgeInsets.all(AppDimensions.containerPadding + 4),
         decoration: BoxDecoration(
@@ -148,10 +174,17 @@ class _AccountActionTile extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(
-              Icons.chevron_right,
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
+            if (isLoading)
+              const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2.5),
+              )
+            else
+              Icon(
+                Icons.chevron_right,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
           ],
         ),
       ),

@@ -212,6 +212,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get passwordReqSpecial => 'One special character';
 
   @override
+  String get registrationSuccessDescription =>
+      'We\'ve sent a confirmation link to your email address. Open the link on this phone to activate your account.';
+
+  @override
+  String get registrationConfirmedTitle => 'Account Activated';
+
+  @override
+  String get registrationConfirmedDescription =>
+      'Your email has been verified. Sign in to continue.';
+
+  @override
+  String get registrationConfirmationFailedTitle => 'Confirmation Failed';
+
+  @override
+  String get registrationConfirmationFailedDescription =>
+      'This confirmation link is invalid or has expired. Please sign up again to receive a new link.';
+
+  @override
+  String get goToSignIn => 'GO TO SIGN IN';
+
+  @override
+  String get retry => 'RETRY';
+
+  @override
+  String get errorSomethingWentWrong =>
+      'Something went wrong. Please try again.';
+
+  @override
   String get homeTitle => 'Home';
 
   @override

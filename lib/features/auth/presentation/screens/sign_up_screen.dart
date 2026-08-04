@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -6,18 +7,20 @@ import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/widgets/brand_title.dart';
 import '../../data/validation_constants.dart';
+import '../providers/auth_providers.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/hero_background.dart';
+import 'email_sent_screen.dart';
 import 'sign_in_screen.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -48,8 +51,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
-  void _onCreateAccount() {
+  Future<void> _onCreateAccount() async {
     if (!_formKey.currentState!.validate()) return;
+
+    final messenger = ScaffoldMessenger.of(context);
+    final l10n = AppLocalizations.of(context)!;
+
+    await ref
+        .read(registrationControllerProvider.notifier)
+        .register(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        );
+
+    final state = ref.read(registrationControllerProvider);
+    if (state.hasError) {
+      final error = state.error;
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(error?.toString() ?? l10n.errorSomethingWentWrong),
+        ),
+      );
+      return;
+    }
+
+    if (!mounted) return;
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) =>
+            EmailSentScreen(description: l10n.registrationSuccessDescription),
+      ),
+    );
   }
 
   @override
@@ -295,8 +327,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget _buildCreateAccountButton(ThemeData theme, AppLocalizations l10n) {
+    final isLoading = ref.watch(registrationControllerProvider).isLoading;
     return ElevatedButton(
-      onPressed: _onCreateAccount,
+      onPressed: isLoading ? null : _onCreateAccount,
       style: ElevatedButton.styleFrom(
         backgroundColor: vibrantCyan,
         foregroundColor: brandPrimary,
@@ -306,10 +339,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
         elevation: 0,
       ),
-      child: Text(
-        l10n.createAccount,
-        style: theme.textTheme.displaySmall?.copyWith(color: brandPrimary),
-      ),
+      child: isLoading
+          ? const SizedBox(
+              width: 22,
+              height: 22,
+              child: CircularProgressIndicator(
+                strokeWidth: 2.5,
+                color: brandPrimary,
+              ),
+            )
+          : Text(
+              l10n.createAccount,
+              style: theme.textTheme.displaySmall?.copyWith(
+                color: brandPrimary,
+              ),
+            ),
     );
   }
 

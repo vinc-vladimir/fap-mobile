@@ -476,6 +476,54 @@ abstract class AppLocalizations {
   /// **'One special character'**
   String get passwordReqSpecial;
 
+  /// No description provided for @registrationSuccessDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ve sent a confirmation link to your email address. Open the link on this phone to activate your account.'**
+  String get registrationSuccessDescription;
+
+  /// No description provided for @registrationConfirmedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Activated'**
+  String get registrationConfirmedTitle;
+
+  /// No description provided for @registrationConfirmedDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your email has been verified. Sign in to continue.'**
+  String get registrationConfirmedDescription;
+
+  /// No description provided for @registrationConfirmationFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmation Failed'**
+  String get registrationConfirmationFailedTitle;
+
+  /// No description provided for @registrationConfirmationFailedDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This confirmation link is invalid or has expired. Please sign up again to receive a new link.'**
+  String get registrationConfirmationFailedDescription;
+
+  /// No description provided for @goToSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'GO TO SIGN IN'**
+  String get goToSignIn;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'RETRY'**
+  String get retry;
+
+  /// No description provided for @errorSomethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get errorSomethingWentWrong;
+
   /// No description provided for @homeTitle.
   ///
   /// In en, this message translates to:
