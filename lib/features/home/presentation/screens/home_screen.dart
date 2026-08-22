@@ -3,105 +3,81 @@ import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
-import '../../../account/presentation/screens/account_screen.dart';
+import '../../../../core/widgets/screen_app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(children: [_buildContent(context), const _HomeBottomNav()]),
-    );
-  }
-
-  Widget _buildContent(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
-    return Column(
-      children: [
-        _HomeAppBar(l10n: l10n, theme: theme),
-        Expanded(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(
-              AppDimensions.marginMain,
-              AppDimensions.stackLg,
-              AppDimensions.marginMain,
-              120,
-            ),
-            children: [
-              _PointsCard(l10n: l10n, theme: theme),
-              const SizedBox(height: AppDimensions.stackLg),
-              _StationCard(l10n: l10n, theme: theme),
-              const SizedBox(height: AppDimensions.stackLg),
-              _RewardsSection(l10n: l10n, theme: theme),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _HomeAppBar extends StatelessWidget {
-  final AppLocalizations l10n;
-  final ThemeData theme;
-
-  const _HomeAppBar({required this.l10n, required this.theme});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(
-        top: MediaQuery.of(context).padding.top + 16,
-        bottom: 16,
-        left: AppDimensions.marginMain + 4,
-        right: AppDimensions.marginMain,
-      ),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface.withValues(alpha: 0.8),
-        border: Border(
-          bottom: BorderSide(
-            color: theme.colorScheme.outlineVariant.withValues(alpha: 0.2),
-          ),
-        ),
-      ),
-      child: Row(
+    return Scaffold(
+      body: Column(
         children: [
-          Text(
-            l10n.homeTitle,
-            style: theme.textTheme.headlineSmall?.copyWith(
-              color: theme.colorScheme.onSurface,
-            ),
+          ScreenAppBar(
+            title: l10n.homeTitle,
+            mode: ScreenAppBarMode.main,
+            trailing: _HomeTrailing(theme: theme),
           ),
-          const Spacer(),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.notifications_outlined,
-              color: theme.colorScheme.onSurface,
-            ),
-          ),
-          const SizedBox(width: AppDimensions.stackSm),
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: theme.brightness == Brightness.dark
-                    ? const Color(0xFF00DCE5)
-                    : brandPrimary,
-                width: 2,
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.fromLTRB(
+                AppDimensions.marginMain,
+                AppDimensions.stackLg,
+                AppDimensions.marginMain,
+                AppDimensions.stackLg + MediaQuery.of(context).padding.bottom,
               ),
-            ),
-            child: const CircleAvatar(
-              backgroundColor: Colors.transparent,
-              child: Icon(Icons.person, color: Colors.white70),
+              children: [
+                _PointsCard(l10n: l10n, theme: theme),
+                const SizedBox(height: AppDimensions.stackLg),
+                _StationCard(l10n: l10n, theme: theme),
+                const SizedBox(height: AppDimensions.stackLg),
+                _RewardsSection(l10n: l10n, theme: theme),
+              ],
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _HomeTrailing extends StatelessWidget {
+  const _HomeTrailing({required this.theme});
+
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = theme.brightness == Brightness.dark;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          onPressed: () {},
+          icon: Icon(
+            Icons.notifications_outlined,
+            color: theme.colorScheme.onSurface,
+          ),
+        ),
+        const SizedBox(width: AppDimensions.stackSm),
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: isDark ? const Color(0xFF00DCE5) : brandPrimary,
+              width: 2,
+            ),
+          ),
+          child: const CircleAvatar(
+            backgroundColor: Colors.transparent,
+            child: Icon(Icons.person, color: Colors.white70),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -686,139 +662,6 @@ class _RewardCard extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _HomeBottomNav extends StatelessWidget {
-  const _HomeBottomNav();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    final accentColor = isDark ? const Color(0xFF00DCE5) : vibrantCyan;
-    final l10n = AppLocalizations.of(context)!;
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: Container(
-        padding: EdgeInsets.only(
-          left: AppDimensions.stackMd,
-          right: AppDimensions.stackMd,
-          top: AppDimensions.stackSm + 4,
-          bottom: MediaQuery.of(context).padding.bottom + AppDimensions.stackSm,
-        ),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface.withValues(alpha: 0.8),
-          border: Border(
-            top: BorderSide(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.05)
-                  : glassBorderLight,
-            ),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _NavItem(
-              icon: Icons.home,
-              label: l10n.bottomNavHome,
-              isActive: true,
-              accentColor: accentColor,
-              isDark: isDark,
-              theme: theme,
-            ),
-            _NavItem(
-              icon: Icons.local_gas_station_outlined,
-              label: l10n.bottomNavRefuel,
-              accentColor: accentColor,
-              isDark: isDark,
-              theme: theme,
-            ),
-            _NavItem(
-              icon: Icons.history,
-              label: l10n.bottomNavActivity,
-              accentColor: accentColor,
-              isDark: isDark,
-              theme: theme,
-            ),
-            _NavItem(
-              icon: Icons.person_outline,
-              label: l10n.bottomNavAccount,
-              accentColor: accentColor,
-              isDark: isDark,
-              theme: theme,
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const AccountScreen()),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _NavItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool isActive;
-  final Color accentColor;
-  final bool isDark;
-  final ThemeData theme;
-  final VoidCallback? onTap;
-
-  const _NavItem({
-    required this.icon,
-    required this.label,
-    this.isActive = false,
-    required this.accentColor,
-    required this.isDark,
-    required this.theme,
-    this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppDimensions.containerPadding,
-          vertical: AppDimensions.stackSm,
-        ),
-        decoration: BoxDecoration(
-          color: isActive
-              ? accentColor.withValues(alpha: 0.1)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(AppDimensions.radiusXl),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: isActive
-                  ? accentColor
-                  : theme.colorScheme.onSurfaceVariant,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              label.toUpperCase(),
-              style: theme.textTheme.labelMedium?.copyWith(
-                fontSize: 10,
-                color: isActive
-                    ? accentColor
-                    : theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -12,11 +13,6 @@ import '../widgets/or_divider.dart';
 import '../widgets/social_button.dart';
 import '../../data/validation_constants.dart';
 import '../providers/auth_providers.dart';
-import '../../../home/presentation/screens/home_screen.dart';
-import 'forgot_password_screen.dart';
-import 'privacy_policy_screen.dart';
-import 'sign_up_screen.dart';
-import 'terms_of_service_screen.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({super.key});
@@ -63,10 +59,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     }
 
     if (!mounted) return;
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const HomeScreen()),
-    );
+    context.go('/');
   }
 
   @override
@@ -205,10 +198,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         ),
         const SizedBox(height: AppDimensions.stackSm),
         TextButton(
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const ForgotPasswordScreen()),
-          ),
+          onPressed: () => context.push('/forgot-password'),
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
             minimumSize: Size.zero,
@@ -313,10 +303,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               ),
             ),
             TextButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const SignUpScreen()),
-              ),
+              onPressed: () => context.push('/sign-up'),
               style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,
                 minimumSize: Size.zero,
@@ -334,10 +321,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen()),
-              ),
+              onPressed: () => context.push('/privacy-policy'),
               style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,
                 minimumSize: Size.zero,
@@ -352,10 +336,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             ),
             const SizedBox(width: AppDimensions.stackMd),
             TextButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const TermsOfServiceScreen()),
-              ),
+              onPressed: () => context.push('/terms-of-service'),
               style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,
                 minimumSize: Size.zero,

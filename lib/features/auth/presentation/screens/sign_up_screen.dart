@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -10,8 +11,6 @@ import '../../data/validation_constants.dart';
 import '../providers/auth_providers.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/hero_background.dart';
-import 'email_sent_screen.dart';
-import 'sign_in_screen.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
@@ -76,12 +75,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     }
 
     if (!mounted) return;
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) =>
-            EmailSentScreen(description: l10n.registrationSuccessDescription),
-      ),
-    );
+    context.go('/email-sent', extra: l10n.registrationSuccessDescription);
   }
 
   @override
@@ -368,10 +362,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
           ),
         ),
         GestureDetector(
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const SignInScreen()),
-          ),
+          onTap: () => context.go('/sign-in'),
           child: Text(
             l10n.signInLink,
             style: linkMedium.copyWith(color: vibrantCyan),

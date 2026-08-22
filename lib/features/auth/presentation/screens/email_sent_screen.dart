@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -49,9 +50,7 @@ class EmailSentScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: AppDimensions.stackLg),
                   ElevatedButton(
-                    onPressed: () => Navigator.of(
-                      context,
-                    ).popUntil((route) => route.isFirst),
+                    onPressed: () => context.go('/sign-in'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: vibrantCyan,
                       foregroundColor: brandPrimary,

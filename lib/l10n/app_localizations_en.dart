@@ -334,14 +334,120 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountTitle => 'Account';
 
   @override
-  String get changePassword => 'Change Password';
+  String get profileName => 'John Smith';
+
+  @override
+  String get profileEmail => 'john.smith@velocityfleet.com';
+
+  @override
+  String get premiumMember => 'Premium Member';
+
+  @override
+  String get fleetAdmin => 'Fleet Admin';
+
+  @override
+  String get addNewPlate => 'Add New Plate';
+
+  @override
+  String get managementSection => 'Management';
+
+  @override
+  String get personalDetails => 'Personal Details';
+
+  @override
+  String get organization => 'Organization';
+
+  @override
+  String get licencePlates => 'Licence Plates';
+
+  @override
+  String get paymentMethods => 'Payment Methods';
+
+  @override
+  String get settings => 'Settings';
 
   @override
   String get signOut => 'Sign Out';
+
+  @override
+  String get changePassword => 'Change Password';
 
   @override
   String get changePasswordSubtitle => 'Update your account password';
 
   @override
   String get signOutSubtitle => 'Sign out of your account';
+
+  @override
+  String appVersion(Object version) {
+    return 'v$version';
+  }
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get preferencesSection => 'Preferences';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get serbian => 'Srpski';
+
+  @override
+  String get darkMode => 'Dark Mode';
+
+  @override
+  String get securitySection => 'Security';
+
+  @override
+  String get changeEmail => 'Change Email';
+
+  @override
+  String get changePasswordLastUpdated => 'Last updated 3 months ago';
+
+  @override
+  String get accountManagementSection => 'Account Management';
+
+  @override
+  String get deleteAccount => 'Delete Account';
+
+  @override
+  String get changePasswordDialogTitle => 'Change Password';
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get deleteAccountDialogTitle => 'Delete Account?';
+
+  @override
+  String get deleteAccountDialogBody =>
+      'This will permanently deactivate your account. This action cannot be undone.';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get passwordChangedSuccess =>
+      'Your password has been changed successfully.';
+
+  @override
+  String get accountDeletedSuccess => 'Your account has been deactivated.';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get comingSoon => 'Coming soon';
 }

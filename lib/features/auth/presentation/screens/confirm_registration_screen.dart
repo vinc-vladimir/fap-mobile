@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -17,6 +18,7 @@ class ConfirmRegistrationScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    debugPrint('[ConfirmRegistrationScreen] build START token=$token');
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
     final screenHeight = MediaQuery.of(context).size.height;
@@ -62,6 +64,15 @@ class ConfirmRegistrationScreen extends ConsumerWidget {
     );
   }
 
+  /// Dismisses the confirm screen (presented on top of the current route via the
+  /// navigator for deep links) and lands on the Sign In screen.
+  void _goToSignIn(BuildContext context) {
+    final router = GoRouter.of(context);
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) navigator.pop();
+    router.go('/sign-in');
+  }
+
   Widget _buildSuccessContent(
     BuildContext context,
     ThemeData theme,
@@ -90,8 +101,7 @@ class ConfirmRegistrationScreen extends ConsumerWidget {
         ),
         const SizedBox(height: AppDimensions.stackLg),
         ElevatedButton(
-          onPressed: () =>
-              Navigator.of(context).popUntil((route) => route.isFirst),
+          onPressed: () => _goToSignIn(context),
           style: ElevatedButton.styleFrom(
             backgroundColor: vibrantCyan,
             foregroundColor: brandPrimary,
@@ -154,8 +164,7 @@ class ConfirmRegistrationScreen extends ConsumerWidget {
         ),
         const SizedBox(height: AppDimensions.stackMd),
         ElevatedButton(
-          onPressed: () =>
-              Navigator.of(context).popUntil((route) => route.isFirst),
+          onPressed: () => _goToSignIn(context),
           style: ElevatedButton.styleFrom(
             backgroundColor: vibrantCyan,
             foregroundColor: brandPrimary,

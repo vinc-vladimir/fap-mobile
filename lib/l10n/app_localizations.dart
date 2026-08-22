@@ -692,17 +692,83 @@ abstract class AppLocalizations {
   /// **'Account'**
   String get accountTitle;
 
-  /// No description provided for @changePassword.
+  /// No description provided for @profileName.
   ///
   /// In en, this message translates to:
-  /// **'Change Password'**
-  String get changePassword;
+  /// **'John Smith'**
+  String get profileName;
+
+  /// No description provided for @profileEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'john.smith@velocityfleet.com'**
+  String get profileEmail;
+
+  /// No description provided for @premiumMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium Member'**
+  String get premiumMember;
+
+  /// No description provided for @fleetAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Fleet Admin'**
+  String get fleetAdmin;
+
+  /// No description provided for @addNewPlate.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Plate'**
+  String get addNewPlate;
+
+  /// No description provided for @managementSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Management'**
+  String get managementSection;
+
+  /// No description provided for @personalDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Details'**
+  String get personalDetails;
+
+  /// No description provided for @organization.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization'**
+  String get organization;
+
+  /// No description provided for @licencePlates.
+  ///
+  /// In en, this message translates to:
+  /// **'Licence Plates'**
+  String get licencePlates;
+
+  /// No description provided for @paymentMethods.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Methods'**
+  String get paymentMethods;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
 
   /// No description provided for @signOut.
   ///
   /// In en, this message translates to:
   /// **'Sign Out'**
   String get signOut;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePassword;
 
   /// No description provided for @changePasswordSubtitle.
   ///
@@ -715,6 +781,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign out of your account'**
   String get signOutSubtitle;
+
+  /// No description provided for @appVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'v{version}'**
+  String appVersion(Object version);
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @preferencesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get preferencesSection;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @serbian.
+  ///
+  /// In en, this message translates to:
+  /// **'Srpski'**
+  String get serbian;
+
+  /// No description provided for @darkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get darkMode;
+
+  /// No description provided for @securitySection.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get securitySection;
+
+  /// No description provided for @changeEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Email'**
+  String get changeEmail;
+
+  /// No description provided for @changePasswordLastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated 3 months ago'**
+  String get changePasswordLastUpdated;
+
+  /// No description provided for @accountManagementSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Management'**
+  String get accountManagementSection;
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
+
+  /// No description provided for @changePasswordDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePasswordDialogTitle;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// No description provided for @deleteAccountDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account?'**
+  String get deleteAccountDialogTitle;
+
+  /// No description provided for @deleteAccountDialogBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This will permanently deactivate your account. This action cannot be undone.'**
+  String get deleteAccountDialogBody;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @passwordChangedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password has been changed successfully.'**
+  String get passwordChangedSuccess;
+
+  /// No description provided for @accountDeletedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been deactivated.'**
+  String get accountDeletedSuccess;
+
+  /// No description provided for @back.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
+  /// No description provided for @comingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get comingSoon;
 }
 
 class _AppLocalizationsDelegate

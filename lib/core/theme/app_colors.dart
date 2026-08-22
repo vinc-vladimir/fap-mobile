@@ -10,6 +10,10 @@ const glassBorderDark = Color(0x14FFFFFF); // rgba(255,255,255,0.08)
 const successGlint = Color(0xFF97E5EB);
 const mapVoid = Color(0xFFECEEF0);
 
+// ── Surface / card tones ──────────────────────────────────────────
+const navySurface = Color(0xFF1A2130); // solid card surface (Velocity Blue)
+const pageBaseDark = Color(0xFF0B101A); // base background layer
+
 // ── Light ColorScheme — Velocity Flux ────────────────────────────
 const lightColorScheme = ColorScheme(
   brightness: Brightness.light,

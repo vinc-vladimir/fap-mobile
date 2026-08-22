@@ -1,0 +1,268 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Settings - Fuel Auto Pay</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#051424",
+                        "surface-container-lowest": "#010f1f",
+                        "secondary-container": "#42495a",
+                        "primary-fixed-dim": "#00dce5",
+                        "outline": "#849495",
+                        "on-tertiary-fixed-variant": "#424752",
+                        "on-secondary-container": "#b1b8cc",
+                        "on-primary-fixed-variant": "#004f53",
+                        "tertiary": "#faf9ff",
+                        "background": "#051424",
+                        "surface-variant": "#273647",
+                        "surface-container-high": "#1c2b3c",
+                        "inverse-primary": "#00696e",
+                        "tertiary-fixed-dim": "#c2c6d5",
+                        "surface-container": "#122131",
+                        "surface-bright": "#2c3a4c",
+                        "surface-dim": "#051424",
+                        "primary": "#e9feff",
+                        "tertiary-container": "#d9ddec",
+                        "on-secondary-fixed-variant": "#404757",
+                        "on-surface": "#d4e4fa",
+                        "on-primary": "#003739",
+                        "tertiary-fixed": "#dee2f1",
+                        "on-surface-variant": "#b9caca",
+                        "on-tertiary-container": "#5c616e",
+                        "on-tertiary": "#2c303b",
+                        "surface-container-highest": "#273647",
+                        "on-tertiary-fixed": "#171c26",
+                        "secondary-fixed-dim": "#c0c6da",
+                        "primary-container": "#00f5ff",
+                        "inverse-surface": "#d4e4fa",
+                        "secondary": "#c0c6da",
+                        "inverse-on-surface": "#233143",
+                        "on-secondary-fixed": "#141b2a",
+                        "primary-fixed": "#63f7ff",
+                        "on-secondary": "#293040",
+                        "outline-variant": "#3a494a",
+                        "error-container": "#93000a",
+                        "on-primary-container": "#006c71",
+                        "secondary-fixed": "#dce2f7",
+                        "surface-tint": "#00dce5",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed": "#002021",
+                        "on-background": "#d4e4fa",
+                        "on-error": "#690005",
+                        "surface-container-low": "#0d1c2d",
+                        "on-error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "container-padding": "16px",
+                        "stack-md": "16px",
+                        "margin-main": "20px",
+                        "stack-lg": "24px",
+                        "stack-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-sm": ["10px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom Toggle Switch Styles */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #00f5ff;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #00f5ff;
+        }
+        
+        /* Hide scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-[#0B101A] text-on-background font-body-md min-h-screen flex flex-col pb-24 md:pb-0">
+<!-- TOP APP BAR -->
+<header class="bg-[#0B101A] text-[#00F5FF] font-inter font-semibold text-lg tracking-tight docked full-width top-0 border-b border-white/10 flat no shadows flex justify-between items-center w-full px-5 py-4 max-w-none sticky z-40">
+<button aria-label="Go back" class="hover:opacity-80 transition-opacity active:scale-98 transition-transform duration-200 flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/5">
+<span class="material-symbols-outlined text-2xl" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="text-xl font-black text-[#00F5FF] tracking-tighter">Settings</h1>
+<!-- Empty placeholder to balance flex layout -->
+<div class="w-10 h-10"></div>
+</header>
+<!-- MAIN CONTENT -->
+<main class="flex-1 w-full max-w-3xl mx-auto px-margin-main py-stack-lg flex flex-col gap-stack-lg">
+<!-- PREFERENCES SECTION -->
+<section class="flex flex-col gap-stack-sm">
+<h2 class="font-label-md text-label-md text-slate-400 uppercase tracking-widest pl-2">Preferences</h2>
+<div class="bg-[#1A2130] rounded-xl border border-white/10 shadow-[0_8px_24px_rgba(0,245,255,0.02)] overflow-hidden">
+<!-- Language -->
+<div class="flex items-center justify-between p-4 border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer active:scale-[0.99]">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#0B101A] flex items-center justify-center text-[#00F5FF]">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">Language</span>
+</div>
+<div class="flex items-center gap-2 text-slate-400">
+<div class="flex items-center gap-2 bg-[#0B101A] px-3 py-1.5 rounded-lg border border-white/5">
+<span class="text-xl leading-none">🇬🇧</span>
+<span class="font-body-sm text-body-sm">English</span>
+</div>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Theme Toggle -->
+<div class="flex items-center justify-between p-4 hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#0B101A] flex items-center justify-center text-[#00F5FF]">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">Dark Mode</span>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-[#00f5ff] checked:bg-surface-container-lowest transition-transform duration-200" id="toggle" name="toggle" type="checkbox">
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-[#00f5ff] cursor-pointer" for="toggle"></label>
+</div>
+</div>
+</div>
+</section>
+<!-- SECURITY SECTION -->
+<section class="flex flex-col gap-stack-sm mt-4">
+<h2 class="font-label-md text-label-md text-slate-400 uppercase tracking-widest pl-2">Security</h2>
+<div class="bg-[#1A2130] rounded-xl border border-white/10 shadow-[0_8px_24px_rgba(0,245,255,0.02)] overflow-hidden">
+<!-- Change Email -->
+<button class="w-full flex items-center justify-between p-4 border-b border-white/5 hover:bg-white/5 transition-colors active:scale-[0.99] text-left">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#0B101A] flex items-center justify-center text-[#00F5FF]">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">Change Email</span>
+<span class="font-body-sm text-body-sm text-slate-400">user@example.com</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Change Password -->
+<button class="w-full flex items-center justify-between p-4 hover:bg-white/5 transition-colors active:scale-[0.99] text-left">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#0B101A] flex items-center justify-center text-[#00F5FF]">
+<span class="material-symbols-outlined" data-icon="key">key</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">Change Password</span>
+<span class="font-body-sm text-body-sm text-slate-400">Last updated 3 months ago</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- ACCOUNT MANAGEMENT SECTION -->
+<section class="flex flex-col gap-stack-sm mt-4 mb-8">
+<h2 class="font-label-md text-label-md text-slate-400 uppercase tracking-widest pl-2">Account Management</h2>
+<div class="bg-[#1A2130] rounded-xl border border-white/10 shadow-[0_8px_24px_rgba(0,245,255,0.02)] overflow-hidden">
+<!-- Delete Account -->
+<button class="w-full flex items-center justify-between p-4 hover:bg-error/10 transition-colors active:scale-[0.99] text-left group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-error/10 group-hover:bg-error/20 flex items-center justify-center text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete_forever">delete_forever</span>
+</div>
+<span class="font-body-md text-body-md text-error font-medium">Delete Account</span>
+</div>
+<span class="material-symbols-outlined text-error/50 group-hover:text-error transition-colors" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</section>
+</main>
+<!-- BOTTOM NAV BAR (Mobile Only) -->
+<nav class="md:hidden bg-[#1A2130]/80 backdrop-blur-md font-inter text-[10px] font-medium uppercase tracking-widest text-[#00F5FF] font-bold fixed bottom-0 w-full rounded-t-[24px] border-t border-white/10 border-t border-white/10 shadow-[0_-8px_24px_rgba(0,245,255,0.05)] hover:text-[#00F5FF] transition-colors active:scale-95 transition-all duration-200 fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3"><a class="flex flex-col items-center justify-center text-slate-500 opacity-70 gap-1 w-16" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="home">home</span>
+<span class="">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-70 gap-1 w-16" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="map">map</span>
+<span class="">Map</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-70 gap-1 w-16" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="payments">payments</span>
+<span class="">Wallet</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-70 gap-1 w-16" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="history">history</span>
+<span class="">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#00F5FF] bg-cyan-500/10 rounded-xl px-3 py-1 gap-1 w-16" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="">Account</span>
+</a></nav>
+<!-- SIDE NAV (Desktop Only - Optional shell structure) -->
+<aside class="hidden md:flex flex-col fixed left-0 top-0 h-screen w-64 bg-[#1A2130] border-r border-white/10 pt-20 px-4 z-30">
+<!-- Replicating Bottom Nav links for desktop side nav if needed, simplified for this layout -->
+<nav class="flex flex-col gap-2"><a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:text-[#00F5FF] hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-body-md text-body-md font-medium">Home</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:text-[#00F5FF] hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-body-md text-body-md font-medium">Map</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:text-[#00F5FF] hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-body-md text-body-md font-medium">Wallet</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:text-[#00F5FF] hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-body-md text-body-md font-medium">Activity</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-[#00F5FF] bg-cyan-500/10 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-body-md text-body-md font-medium">Account</span>
+</a></nav>
+</aside>
+
+
+</body></html>
