@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -6,6 +7,31 @@ import '../../../../core/storage/secure_storage.dart';
 import '../../data/repositories/auth_repository.dart';
 
 part 'auth_providers.g.dart';
+
+/// Whether a valid session (access token) is currently held. Read synchronously
+/// by the router's guard so redirects see the correct value immediately after
+/// login/logout — no async storage read that can return a stale cached `false`.
+///
+/// The value is restored from secure storage on first build (cold start) and
+/// updated in-memory by [LoginController] when the user signs in/out.
+@Riverpod(keepAlive: true)
+class AuthState extends _$AuthState {
+  @override
+  bool build() {
+    _restorePersistedSession();
+    return false;
+  }
+
+  Future<void> _restorePersistedSession() async {
+    final storage = ref.read(secureStorageProvider);
+    final token = await storage.readAccessToken();
+    if (token != null && token.isNotEmpty) {
+      state = true;
+    }
+  }
+
+  void setAuthenticated(bool value) => state = value;
+}
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepository(ref.watch(dioProvider));
@@ -34,6 +60,7 @@ class LoginController extends _$LoginController {
       if (refreshToken != null && refreshToken.isNotEmpty) {
         await storage.writeRefreshToken(refreshToken);
       }
+      ref.read(authStateProvider.notifier).setAuthenticated(true);
     });
   }
 
@@ -46,6 +73,7 @@ class LoginController extends _$LoginController {
       // session is cleared regardless.
     }
     await ref.read(secureStorageProvider).clearTokens();
+    ref.read(authStateProvider.notifier).setAuthenticated(false);
     state = const AsyncData<void>(null);
   }
 }
@@ -70,7 +98,18 @@ class RegistrationController extends _$RegistrationController {
 
 /// POST /v1/auth/confirm/registration — verifies the email address with the
 /// one-time token from the confirmation deep link.
-@riverpod
+///
+/// This is a public action (the endpoint is `permitAll`), so it must not clear
+/// stored tokens first: clearing them here once blocked the request if the
+/// storage delete threw. Any stale-session cleanup belongs after a successful
+/// confirm, not before the call.
+///
+/// `keepAlive` caches the per-token result so the (single-use) OTT is only
+/// consumed once — a screen rebuild must not re-fire the request and flip a
+/// successful confirmation to an "already consumed" failure.
+@Riverpod(keepAlive: true)
 Future<void> confirmRegistration(Ref ref, {required String token}) async {
+  debugPrint('[confirmRegistration] provider run for token=$token');
   await ref.watch(authRepositoryProvider).confirmRegistration(token: token);
+  debugPrint('[confirmRegistration] confirm completed for token=$token');
 }

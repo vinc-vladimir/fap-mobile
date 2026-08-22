@@ -333,14 +333,119 @@ class AppLocalizationsSr extends AppLocalizations {
   String get accountTitle => 'Nalog';
 
   @override
-  String get changePassword => 'Promeni Lozinku';
+  String get profileName => 'John Smith';
+
+  @override
+  String get profileEmail => 'john.smith@velocityfleet.com';
+
+  @override
+  String get premiumMember => 'Premium Član';
+
+  @override
+  String get fleetAdmin => 'Fleet Administrator';
+
+  @override
+  String get addNewPlate => 'Dodaj Novu Tablicu';
+
+  @override
+  String get managementSection => 'Upravljanje';
+
+  @override
+  String get personalDetails => 'Lični Podaci';
+
+  @override
+  String get organization => 'Organizacija';
+
+  @override
+  String get licencePlates => 'Registarske Tablice';
+
+  @override
+  String get paymentMethods => 'Načini Plaćanja';
+
+  @override
+  String get settings => 'Podešavanja';
 
   @override
   String get signOut => 'Odjavi Se';
+
+  @override
+  String get changePassword => 'Promeni Lozinku';
 
   @override
   String get changePasswordSubtitle => 'Ažurirajte lozinku vašeg naloga';
 
   @override
   String get signOutSubtitle => 'Odjavite se sa vašeg naloga';
+
+  @override
+  String appVersion(Object version) {
+    return 'v$version';
+  }
+
+  @override
+  String get settingsTitle => 'Podešavanja';
+
+  @override
+  String get preferencesSection => 'Preference';
+
+  @override
+  String get language => 'Jezik';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get serbian => 'Srpski';
+
+  @override
+  String get darkMode => 'Tamni Režim';
+
+  @override
+  String get securitySection => 'Bezbednost';
+
+  @override
+  String get changeEmail => 'Promeni Email';
+
+  @override
+  String get changePasswordLastUpdated => 'Poslednja izmena pre 3 meseca';
+
+  @override
+  String get accountManagementSection => 'Upravljanje Nalogom';
+
+  @override
+  String get deleteAccount => 'Obriši Nalog';
+
+  @override
+  String get changePasswordDialogTitle => 'Promeni Lozinku';
+
+  @override
+  String get newPassword => 'Nova Lozinka';
+
+  @override
+  String get deleteAccountDialogTitle => 'Obrisati Nalog?';
+
+  @override
+  String get deleteAccountDialogBody =>
+      'Ovo će trajno deaktivirati vaš nalog. Ova radnja se ne može poništiti.';
+
+  @override
+  String get cancel => 'Otkaži';
+
+  @override
+  String get confirm => 'Potvrdi';
+
+  @override
+  String get delete => 'Obriši';
+
+  @override
+  String get passwordChangedSuccess => 'Vaša lozinka je uspešno promenjena.';
+
+  @override
+  String get accountDeletedSuccess => 'Vaš nalog je deaktiviran.';
+
+  @override
+  String get back => 'Nazad';
+
+  @override
+  String get comingSoon => 'Uskoro';
 }

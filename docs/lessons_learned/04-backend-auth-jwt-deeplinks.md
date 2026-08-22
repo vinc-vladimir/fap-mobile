@@ -168,9 +168,9 @@ Confirmed end-to-end: Sign Up → email (SES) → copy deep link from backend lo
 
 ## Follow-ups
 
-1. **Migrate to go_router** (`MaterialApp.router`, `ShellRoute`, `AuthGuard` driven
-   by login state) — still pending; deep links currently route via a
-   `navigatorKey` + `Navigator`.
+1. ~~**Migrate to go_router**~~ — done (see
+   [`05-email-confirm-deeplink-gorouter.md`](05-email-confirm-deeplink-gorouter.md)
+   for the go_router `StatefulShellRoute` redirect pitfalls encountered).
 2. **Real refresh-token flow** — backend returns `"placeholder"`; implement refresh
    + `AuthInterceptor` auto-retry on 401.
 3. **Auto-login after email confirmation** — needs a backend change (confirm

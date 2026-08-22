@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -7,7 +8,6 @@ import '../../../../core/widgets/brand_title.dart';
 import '../../data/validation_constants.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/hero_background.dart';
-import 'email_sent_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -50,10 +50,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   void _onResetPassword() {
     if (!_formKey.currentState!.validate()) return;
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const EmailSentScreen()),
-    );
+    context.go('/email-sent');
   }
 
   @override

@@ -137,6 +137,39 @@ border: Border.all(color: glassBorderLight)
 If a new design value does not have a corresponding constant, add it to the appropriate
 theme file first, then reference it. Never embed raw design values in widget files.
 
+## Color Reuse Rule
+
+**Rule 1: Always reuse existing named color constants first.**
+Before introducing a new color, check whether an existing constant in `app_colors.dart`
+(or the `ColorScheme` via `theme.colorScheme.*`) already represents the same hex value /
+semantic intent. Prefer reusing it over duplicating. Do NOT add a new constant that is an
+exact duplicate of an existing one.
+
+**Anti-pattern (DO NOT — duplicates `vibrantCyan`):**
+```dart
+const verifiedFill = Color(0xFF00F5FF); // duplicate of vibrantCyan
+```
+**Correct pattern (DO):**
+```dart
+color: vibrantCyan
+```
+
+**Rule 2: Notify before adding a new color constant.**
+If a genuinely new color is required (no existing constant matches), STOP and notify the
+user: state the hex value, where it is used, and which token category it belongs to (e.g.
+brand / surface / border / component-specific), and ask whether it should be added (and
+whether a light + dark variant is needed). Do not add the constant silently. Only add it
+to `app_colors.dart` after confirmation, and reference it from widgets — never embed the
+raw value.
+
+**Rule 3: Ensure every color used has a light and dark variant.**
+Colors applied via `theme.colorScheme.*` adapt automatically. When using a named constant
+that must look correct in both themes, either:
+- use a cross-theme constant that is intentionally identical in both themes (e.g.
+  `vibrantCyan`, `brandPrimary`), or
+- branch on `theme.brightness` to provide a light and a dark value.
+Never ship a color that only works in one theme without a counterpart for the other.
+
 ## Typography & Style Reuse Rules
 
 **Rule 1: Use appTextTheme styles directly.**

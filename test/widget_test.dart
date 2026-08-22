@@ -4,9 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:fap_mobile/app/app.dart';
 import 'package:fap_mobile/core/network/health_providers.dart';
 import 'package:fap_mobile/core/network/health_repository.dart';
-import 'package:fap_mobile/main.dart';
 
 class _FakeAdapter implements HttpClientAdapter {
   @override
