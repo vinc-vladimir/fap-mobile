@@ -124,6 +124,7 @@
   "securitySection": "Security",
   "changeEmail": "Change Email",
   "changePasswordLastUpdated": "Last updated 3 months ago",
+  "passwordChangedAt": "Changed: {timestamp} (UTC)",
   "accountManagementSection": "Account Management",
   "deleteAccount": "Delete Account",
   "changePasswordDialogTitle": "Change Password",
@@ -134,7 +135,9 @@
   "confirm": "Confirm",
   "delete": "Delete",
   "passwordChangedSuccess": "Your password has been changed successfully.",
+  "passwordNeverUpdated": "—",
   "accountDeletedSuccess": "Your account has been deactivated.",
   "back": "Back",
+  "save": "Save",
   "comingSoon": "Coming soon"
 }

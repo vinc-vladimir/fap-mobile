@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_snack_bar.dart';
 import '../../../../core/widgets/brand_title.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -50,10 +51,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     final state = ref.read(loginControllerProvider);
     if (state.hasError) {
       final error = state.error;
-      messenger.showSnackBar(
-        SnackBar(
-          content: Text(error?.toString() ?? l10n.errorSomethingWentWrong),
-        ),
+      showAppSnackBar(
+        messenger,
+        message: error?.toString() ?? l10n.errorSomethingWentWrong,
+        isError: true,
       );
       return;
     }

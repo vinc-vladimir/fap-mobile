@@ -124,6 +124,7 @@
   "securitySection": "Bezbednost",
   "changeEmail": "Promeni Email",
   "changePasswordLastUpdated": "Poslednja izmena pre 3 meseca",
+  "passwordChangedAt": "Promenjeno: {timestamp} (UTC)",
   "accountManagementSection": "Upravljanje Nalogom",
   "deleteAccount": "Obriši Nalog",
   "changePasswordDialogTitle": "Promeni Lozinku",
@@ -134,7 +135,9 @@
   "confirm": "Potvrdi",
   "delete": "Obriši",
   "passwordChangedSuccess": "Vaša lozinka je uspešno promenjena.",
+  "passwordNeverUpdated": "—",
   "accountDeletedSuccess": "Vaš nalog je deaktiviran.",
   "back": "Nazad",
+  "save": "Sačuvaj",
   "comingSoon": "Uskoro"
 }

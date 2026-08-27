@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/l10n/locale_provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
+import '../../../../core/widgets/app_snack_bar.dart';
 import '../../../../core/widgets/screen_app_bar.dart';
+import '../../../account/presentation/providers/account_provider.dart';
 import '../../../auth/presentation/providers/auth_providers.dart';
 import '../../../auth/presentation/widgets/glass_card.dart';
 import '../providers/settings_providers.dart';
@@ -23,82 +26,17 @@ class SettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
-  Future<void> _showChangePasswordDialog() async {
-    final l10n = AppLocalizations.of(context)!;
-    final passwordController = TextEditingController();
-    final confirmController = TextEditingController();
-    final formKey = GlobalKey<FormState>();
-
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) {
-        final theme = Theme.of(context);
-        return AlertDialog(
-          title: Text(
-            l10n.changePasswordDialogTitle,
-            style: theme.textTheme.headlineSmall?.copyWith(
-              color: theme.colorScheme.onSurface,
-            ),
-          ),
-          content: Form(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(labelText: l10n.newPassword),
-                ),
-                const SizedBox(height: AppDimensions.stackSm),
-                TextFormField(
-                  controller: confirmController,
-                  obscureText: true,
-                  decoration: InputDecoration(labelText: l10n.confirmPassword),
-                  validator: (value) =>
-                      value != passwordController.text ? l10n.matchError : null,
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: Text(l10n.cancel),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (formKey.currentState!.validate()) {
-                  Navigator.pop(context, true);
-                }
-              },
-              child: Text(l10n.confirm),
-            ),
-          ],
-        );
-      },
-    );
-
-    if (confirmed != true || !mounted) return;
-
-    final messenger = ScaffoldMessenger.of(context);
-    final notifier = ref.read(changePasswordControllerProvider.notifier);
-    await notifier.changePassword(
-      password: passwordController.text,
-      confirmedPassword: confirmController.text,
-    );
-
-    if (!mounted) return;
-    final state = ref.read(changePasswordControllerProvider);
-    messenger.showSnackBar(
-      SnackBar(
-        content: Text(
-          state.hasError
-              ? (state.error?.toString() ?? l10n.errorSomethingWentWrong)
-              : l10n.passwordChangedSuccess,
-        ),
-      ),
-    );
+  /// Subtitle for the Change Password row: the exact UTC time of the last
+  /// password change, falling back to the account creation time when the
+  /// password was never changed, `—` when neither is available, and the static
+  /// text while the account is still loading.
+  String _passwordUpdatedSubtitle(AppLocalizations l10n) {
+    final account = ref.watch(accountProvider).value;
+    if (account == null) return l10n.changePasswordLastUpdated;
+    final timestamp = account.passwordChangedAt ?? account.createdAt;
+    if (timestamp == null) return l10n.passwordNeverUpdated;
+    final formatted = DateFormat('dd.MM.yyyy HH:mm:ss').format(timestamp);
+    return l10n.passwordChangedAt(formatted);
   }
 
   Future<void> _confirmDeleteAccount() async {
@@ -146,19 +84,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     if (!mounted) return;
     final state = ref.read(deleteAccountControllerProvider);
     if (state.hasError) {
-      messenger.showSnackBar(
-        SnackBar(
-          content: Text(
-            state.error?.toString() ?? l10n.errorSomethingWentWrong,
-          ),
-        ),
+      showAppSnackBar(
+        messenger,
+        message: state.error?.toString() ?? l10n.errorSomethingWentWrong,
+        isError: true,
       );
       return;
     }
 
     await ref.read(loginControllerProvider.notifier).logout();
     if (!mounted) return;
-    messenger.showSnackBar(SnackBar(content: Text(l10n.accountDeletedSuccess)));
+    showAppSnackBar(messenger, message: l10n.accountDeletedSuccess);
     context.go('/sign-in');
   }
 
@@ -262,8 +198,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           _SettingsRow(
                             icon: Icons.key_outlined,
                             title: l10n.changePassword,
-                            subtitle: l10n.changePasswordLastUpdated,
-                            onTap: _showChangePasswordDialog,
+                            subtitle: _passwordUpdatedSubtitle(l10n),
+                            onTap: () =>
+                                context.push('/account/change-password'),
                           ),
                         ],
                       ),
@@ -388,10 +325,16 @@ class _SettingsRow extends StatelessWidget {
                   ),
                   if (subtitle != null) ...[
                     const SizedBox(height: 2),
-                    Text(
-                      subtitle!,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.outline,
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        subtitle!,
+                        maxLines: 1,
+                        softWrap: false,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.outline,
+                        ),
                       ),
                     ),
                   ],
