@@ -13,7 +13,7 @@ the [`lib/core/theme/`](../../lib/core/theme/) folder is the compiled Dart imple
 
 | File | Purpose |
 |---|---|
-| [`lib/core/theme/app_colors.dart`](../../lib/core/theme/app_colors.dart) | Light + dark `ColorScheme` constants and custom brand colors (`vibrantCyan`, `surfaceGlassLight/Dark`, `successGlint`, `mapVoid`) |
+| [`lib/core/theme/app_colors.dart`](../../lib/core/theme/app_colors.dart) | Light + dark `ColorScheme` constants and custom brand colors (`vibrantCyan`, `surfaceGlassLight/Dark`, `mapVoid`) |
 | [`lib/core/theme/app_typography.dart`](../../lib/core/theme/app_typography.dart) | `TextTheme` with all 8 Inter-based text styles (headline-lg → displayLarge, body-md → bodyMedium, label-md → labelMedium, etc.) |
 | [`lib/core/theme/app_dimensions.dart`](../../lib/core/theme/app_dimensions.dart) | Spacing (`stackSm` 8, `stackMd` 16, `stackLg` 24, `marginMain` 20) and border radius (`radiusSm` 4 → `radiusFull` 9999) constants |
 | [`lib/core/theme/app_theme.dart`](../../lib/core/theme/app_theme.dart) | `lightTheme` and `darkTheme` getters that compose `ColorScheme` + `TextTheme` + `InputDecorationTheme` + `ElevatedButtonTheme` + `OutlinedButtonTheme` |

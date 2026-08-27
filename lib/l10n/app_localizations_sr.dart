@@ -410,6 +410,11 @@ class AppLocalizationsSr extends AppLocalizations {
   String get changePasswordLastUpdated => 'Poslednja izmena pre 3 meseca';
 
   @override
+  String passwordChangedAt(Object timestamp) {
+    return 'Promenjeno: $timestamp (UTC)';
+  }
+
+  @override
   String get accountManagementSection => 'Upravljanje Nalogom';
 
   @override
@@ -441,10 +446,16 @@ class AppLocalizationsSr extends AppLocalizations {
   String get passwordChangedSuccess => 'Vaša lozinka je uspešno promenjena.';
 
   @override
+  String get passwordNeverUpdated => '—';
+
+  @override
   String get accountDeletedSuccess => 'Vaš nalog je deaktiviran.';
 
   @override
   String get back => 'Nazad';
+
+  @override
+  String get save => 'Sačuvaj';
 
   @override
   String get comingSoon => 'Uskoro';

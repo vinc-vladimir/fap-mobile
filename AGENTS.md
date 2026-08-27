@@ -48,6 +48,10 @@ lib/
 **Auth:** JWT stored in FlutterSecureStorage, attached via Dio interceptor as `Authorization: Bearer {token}`.
 **Login Response:** `{ access_token: string, refresh_token: string }`
 
+> **Note:** The endpoint/model tables below are a static *summary* and can drift from the
+> backend. Always resolve the true contract from the live OpenAPI spec — see
+> "REST API Spec — Source of Truth" below.
+
 ### Auth Endpoints (no auth)
 | POST | `/v1/auth/login` | `{ email, password }` |
 | POST | `/v1/auth/registration` | `{ email, password, role: "ADMIN" }` |
@@ -90,6 +94,49 @@ ErrorModel { timestamp, status, error: { message }, trace, message, path }
 ```json
 { "timestamp": "...", "status": 400, "error": { "message": "..." }, "trace": "...", "message": "...", "path": "..." }
 ```
+
+## REST API Spec — Source of Truth
+
+**The backend OpenAPI spec is the single source of truth for endpoint contracts.
+Never trust the static tables above or model field guesses over the live spec.**
+
+**Rule 1: Prefer the live backend when it is running.**
+Fetch the OpenAPI JSON directly (read-only) and inspect it:
+```bash
+# Health-check the backend first (expect 200):
+curl -s -o /dev/null -w "%{http_code}" --max-time 10 http://localhost:8080/api/swagger-ui/index.html
+# Fetch the spec JSON:
+curl -s --max-time 15 http://localhost:8080/api/v3/api-docs -o /tmp/fap_openapi.json
+# Inspect paths / operations / schemas with jq:
+jq -r '.paths | keys[]' /tmp/fap_openapi.json
+jq -r '.paths | to_entries[] | .key as $p | (.value | to_entries[] | select(.key!="parameters") |
+  [$p,(.key|ascii_upcase),(.value.operationId // "-")] | @tsv)' /tmp/fap_openapi.json
+jq -c '.components.schemas.<DtoName>' /tmp/fap_openapi.json
+```
+The Swagger UI is a JS app that cannot be clicked programmatically; its data comes
+from the same `/v3/api-docs` JSON, so fetch that instead.
+
+**Rule 2: If the backend is down, use the MCP filesystem server (`/workspace`).**
+Browse `fap-service` source under `/workspace/FuelAutoPay/code/fap-service`:
+- Generated spec: `fap-service/doc/openapi/*.yaml`
+- Controllers: `src/main/java/com/vincsoftware/fap/*/controller/*Controller.java`
+- DTOs (contracts): `src/main/java/com/vincsoftware/fap/*/dto/*Dto.java`
+Do NOT use `/Users/...` absolute paths to read backend code — the MCP filesystem
+server only exposes `/workspace`.
+
+**Rule 3: Before defining or changing any endpoint / model, resolve the true contract.**
+Confirm: HTTP method, path, path/query params, request body schema, response schema,
+and auth requirement (bearer vs public). Record the DTO field names and constraints
+exactly as declared (e.g. `maxLength`, `required`, enums).
+
+**Rule 4: Keep `lib/core/network/api_constants.dart` in sync with the live spec.**
+If the backend adds/renames/changes a path, update the constant(s) here first, then
+any repository using them. If a UI feature needs an endpoint that does NOT exist in
+the spec, flag it as a backend gap — do not invent a contract.
+
+**Rule 5: Never hardcode endpoint paths or DTO shapes from memory/briefs.**
+The static tables above and the project brief are summaries and can drift. When in
+doubt, re-fetch the spec (Rule 1) or the backend source (Rule 2).
 
 ## MVP Features (Phase 1)
 1. **Auth:** Login, Registration, Email confirmation, Forgot password, Reset password, Passkey login, Social login (Google, GitHub)

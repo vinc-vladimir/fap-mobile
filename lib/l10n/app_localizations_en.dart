@@ -411,6 +411,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get changePasswordLastUpdated => 'Last updated 3 months ago';
 
   @override
+  String passwordChangedAt(Object timestamp) {
+    return 'Changed: $timestamp (UTC)';
+  }
+
+  @override
   String get accountManagementSection => 'Account Management';
 
   @override
@@ -443,10 +448,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your password has been changed successfully.';
 
   @override
+  String get passwordNeverUpdated => '—';
+
+  @override
   String get accountDeletedSuccess => 'Your account has been deactivated.';
 
   @override
   String get back => 'Back';
+
+  @override
+  String get save => 'Save';
 
   @override
   String get comingSoon => 'Coming soon';

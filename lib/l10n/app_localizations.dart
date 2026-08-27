@@ -842,6 +842,12 @@ abstract class AppLocalizations {
   /// **'Last updated 3 months ago'**
   String get changePasswordLastUpdated;
 
+  /// No description provided for @passwordChangedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Changed: {timestamp} (UTC)'**
+  String passwordChangedAt(Object timestamp);
+
   /// No description provided for @accountManagementSection.
   ///
   /// In en, this message translates to:
@@ -902,6 +908,12 @@ abstract class AppLocalizations {
   /// **'Your password has been changed successfully.'**
   String get passwordChangedSuccess;
 
+  /// No description provided for @passwordNeverUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'—'**
+  String get passwordNeverUpdated;
+
   /// No description provided for @accountDeletedSuccess.
   ///
   /// In en, this message translates to:
@@ -913,6 +925,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Back'**
   String get back;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
 
   /// No description provided for @comingSoon.
   ///

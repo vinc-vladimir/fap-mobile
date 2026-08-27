@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/storage/secure_storage.dart';
 import '../../data/repositories/auth_repository.dart';
+import '../../../account/presentation/providers/account_provider.dart';
 
 part 'auth_providers.g.dart';
 
@@ -61,6 +62,8 @@ class LoginController extends _$LoginController {
         await storage.writeRefreshToken(refreshToken);
       }
       ref.read(authStateProvider.notifier).setAuthenticated(true);
+      // Fresh session → drop any cached account data from a previous session.
+      ref.invalidate(accountProvider);
     });
   }
 

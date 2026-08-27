@@ -7,8 +7,13 @@ const surfaceGlassLight = Color(0xD9FFFFFF); // rgba(255,255,255,0.85)
 const surfaceGlassDark = Color(0xB31A2130); // rgba(26,33,48,0.7)
 const glassBorderLight = Color(0x1A00696E); // rgba(0,105,110,0.10)
 const glassBorderDark = Color(0x14FFFFFF); // rgba(255,255,255,0.08)
-const successGlint = Color(0xFF97E5EB);
 const mapVoid = Color(0xFFECEEF0);
+
+// ── Success semantic colors (SnackBar feedback) ───────────────────
+const successContainerLight = Color(0xFFB7E4C7);
+const onSuccessContainerLight = Color(0xFF0E6B2E);
+const successContainerDark = Color(0xFF1B5E20);
+const onSuccessContainerDark = Color(0xFFA5D6A7);
 
 // ── Surface / card tones ──────────────────────────────────────────
 const navySurface = Color(0xFF1A2130); // solid card surface (Velocity Blue)

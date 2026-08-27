@@ -6,6 +6,7 @@ import 'package:fap_mobile/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../core/widgets/app_snack_bar.dart';
 import '../../../../core/widgets/brand_title.dart';
 import '../../data/validation_constants.dart';
 import '../providers/auth_providers.dart';
@@ -66,10 +67,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     final state = ref.read(registrationControllerProvider);
     if (state.hasError) {
       final error = state.error;
-      messenger.showSnackBar(
-        SnackBar(
-          content: Text(error?.toString() ?? l10n.errorSomethingWentWrong),
-        ),
+      showAppSnackBar(
+        messenger,
+        message: error?.toString() ?? l10n.errorSomethingWentWrong,
+        isError: true,
       );
       return;
     }
