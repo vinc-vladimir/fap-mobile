@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/network/api_client.dart';
+import '../../../../core/network/api_exceptions.dart';
 import '../../../../core/storage/secure_storage.dart';
 import '../../data/repositories/auth_repository.dart';
 import '../../../account/presentation/providers/account_provider.dart';
@@ -14,7 +15,9 @@ part 'auth_providers.g.dart';
 /// login/logout — no async storage read that can return a stale cached `false`.
 ///
 /// The value is restored from secure storage on first build (cold start) and
-/// updated in-memory by [LoginController] when the user signs in/out.
+/// updated in-memory by [LoginController] when the user signs in/out. The
+/// restored token is validated against `GET /v1/account`; if the server rejects
+/// it (401/403) the token is cleared so the guard stays on sign-in.
 @Riverpod(keepAlive: true)
 class AuthState extends _$AuthState {
   @override
@@ -26,8 +29,24 @@ class AuthState extends _$AuthState {
   Future<void> _restorePersistedSession() async {
     final storage = ref.read(secureStorageProvider);
     final token = await storage.readAccessToken();
-    if (token != null && token.isNotEmpty) {
+    if (token == null || token.isEmpty) return;
+
+    try {
+      // Validate the restored token against the backend. A 2xx from
+      // GET /v1/account confirms the session is still usable.
+      await ref.read(accountRepositoryProvider).getAccount();
       state = true;
+    } on ApiException catch (e) {
+      final statusCode = e.statusCode;
+      if (statusCode == 401 || statusCode == 403) {
+        // Token rejected/expired — drop it so the router guard keeps the user
+        // on the sign-in screen. (The AuthInterceptor also clears on 401.)
+        await storage.clearTokens();
+      } else if (statusCode == null) {
+        // Server unreachable — cannot validate, so keep the stored session
+        // rather than logging the user out on a transient network failure.
+        state = true;
+      }
     }
   }
 
