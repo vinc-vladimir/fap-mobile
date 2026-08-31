@@ -25,6 +25,19 @@ class SecureStorage {
     await _storage.delete(key: ApiConstants.accessTokenKey);
     await _storage.delete(key: ApiConstants.refreshTokenKey);
   }
+
+  /// Whether a passkey is registered for the current account. Local flag only
+  /// — the source of truth is the server once backend G2 ships (decision D5).
+  Future<bool> readPasskeyEnabled() async {
+    final value = await _storage.read(key: ApiConstants.passkeyEnabledKey);
+    return value == 'true';
+  }
+
+  Future<void> writePasskeyEnabled(bool enabled) =>
+      _storage.write(key: ApiConstants.passkeyEnabledKey, value: '$enabled');
+
+  Future<void> clearPasskeyEnabled() =>
+      _storage.delete(key: ApiConstants.passkeyEnabledKey);
 }
 
 final secureStorageProvider = Provider<SecureStorage>((ref) => SecureStorage());

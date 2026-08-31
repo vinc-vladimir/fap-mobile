@@ -31,6 +31,7 @@ abstract final class ApiConstants {
   // ── Secure storage keys ────────────────────────────────────────
   static const String accessTokenKey = 'access_token';
   static const String refreshTokenKey = 'refresh_token';
+  static const String passkeyEnabledKey = 'passkey_enabled';
 
   // ── Auth endpoints ─────────────────────────────────────────────
   static const String registration = '/v1/auth/registration';
@@ -39,6 +40,13 @@ abstract final class ApiConstants {
   static const String logout = '/v1/auth/logout';
   static const String tokenExchange = '/v1/auth/token/exchange';
   static const String webauthnLogin = '/v1/auth/login/webauthn';
+
+  // ── WebAuthn endpoints (Spring Security managed filter) ────────
+  static const String webauthnRegisterOptions = '/webauthn/register/options';
+  static const String webauthnRegister = '/webauthn/register';
+  static const String webauthnAuthenticateOptions =
+      '/webauthn/authenticate/options';
+
   static const String forgottenPasswordEmail =
       '/v1/auth/forgotten/password/email';
   static const String forgottenPassword = '/v1/auth/forgotten/password';
