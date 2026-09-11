@@ -91,11 +91,12 @@ safe-area handling per screen (`MediaQuery.padding.top`). Refactoring to
 
 ### 9. Hardcoded hex values crept back into widgets
 Per AGENTS design-token rule, colors like `Color(0xFF00DCE5)` (dark accent),
-`Color(0xB31A2130)`, `Color(0xFF273647)`, and `Color(0xFF0d1c2d)` appear directly in
-`home_screen.dart` / `account_screen.dart` **without** a named constant. These
-should be promoted into `app_colors.dart` (e.g., a `darkAccent` / `cardDark` /
-`stationMapDark` constant) before commit. This is the main anti-pattern flagged in
-this phase.
+`Color(0xFF273647)`, and `Color(0xFF0d1c2d)` appeared directly in
+`home_screen.dart` / `account_screen.dart` **without** a named constant.
+**Resolved for account/settings:** `Color(0xFF00DCE5)` → `accentCyanDark` and the icon-tile
+fills → `iconTileBackgroundLight` / `iconTileBackgroundDark` in `app_colors.dart` (see
+[`02-initial-design-setup.md`](02-initial-design-setup.md) → "Later token additions"). Remaining
+raw hexes in `home_screen.dart` are still tracked in Follow-ups.
 
 ---
 
@@ -160,9 +161,9 @@ rename in commit `8d6a223`.
 | Hero image | `HeroBackground(imagePath:)` | Defaults to `sports_car_refueling.png`; `email_sent` passes `digital_envelope.png` |
 | Primary CTA | `ElevatedButton` + `vibrantCyan` | Exact style mandated in AGENTS Button Tier table |
 | Secondary CTA | `OutlinedButton` + `surfaceContainerLow` | Biometric, social, navigate |
-| Inline links | `linkMedium` / `linkSmall` + `copyWith(color: vibrantCyan)` | AGENTS Rule 5 |
+| Inline links | `linkMedium` / `linkSmall` + theme accent (`brandPrimary` light / `vibrantCyan` dark) | AGENTS Rules 3 & 5 |
 | Stroke-text brand | `BrandTitle` | Outline `brandPrimary` + fill `vibrantCyan` |
-| Dark accent | **promote to constant** | Currently raw `Color(0xFF00DCE5)` in home/account |
+| Dark accent | `accentCyanDark` | Promoted to `app_colors.dart` (was raw `Color(0xFF00DCE5)`) |
 | Dashboard cards | `Container` + `radiusXxl` (24) | `surfaceGlassLight` / `Color(0xB31A2130)` |
 | Progress gauge | `CustomPaint` (`_CircularProgressPainter`) | Track 10% opacity, progress `accentColor` |
 
@@ -182,8 +183,9 @@ flutter gen-l10n       # Regenerate localizations after ARB edits
 
 1. **Fix `widget_test.dart`** to match the uppercase brand (and ideally assert the
    localized `appTitle`).
-2. **Promote dashboard hex values** to named constants in
-   `app_colors.dart` (AGENTS token rule).
+2. **Promote remaining `home_screen.dart` hex values** to named constants in
+   `app_colors.dart` (AGENTS token rule). Account/settings icon-tile hexes are already
+   promoted (`iconTileBackgroundLight/Dark`, `accentCyanDark`).
 3. **Migrate to go_router** (`MaterialApp.router`, `ShellRoute` for home/account,
    `AuthGuard`).
 4. **Replace hand-rolled bottom nav / app bar** with `Scaffold` +

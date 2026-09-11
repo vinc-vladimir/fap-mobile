@@ -18,13 +18,117 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Confirming registration (Sign Up) locally
 
-After signing up, the backend emails a one-time confirmation link. When
-developing locally you can trigger the same deep link directly from the
-command line to confirm a registration without opening the email:
+After signing up, the backend emails a one-time confirmation link. Two URI forms
+are supported, and both are routed by `lib/core/deep_links/deep_link_handler.dart`
+to the in-app route `/confirm-registration/<token>`:
+
+| URI | Purpose |
+|---|---|
+| `fap://registration-confirm?token=<TOKEN>` | Manual `adb` testing / back-compat (custom scheme) |
+| `https://dev.fap.rs/registration-confirm?token=<TOKEN>` | Tappable link in the confirmation email (Gmail does not open custom schemes) |
+
+Trigger the same deep link directly from the command line to confirm a
+registration without opening the email (replace the token):
 
 ```bash
+# Custom scheme (manual adb testing)
 adb shell am start -a android.intent.action.VIEW -d "fap://registration-confirm?token=10e05099-900e-4639-9532-46e82996c781"
+
+# HTTPS App Link (the form sent in the confirmation email)
+adb shell am start -a android.intent.action.VIEW -d "https://dev.fap.rs/registration-confirm?token=10e05099-900e-4639-9532-46e82996c781"
 ```
+
+Notes:
+
+- The `fap://` scheme is kept for `adb`; Gmail does not open custom schemes, so the
+  email uses the HTTPS App Link instead.
+- HTTPS App Links require the `dev.fap.rs` association (`static/.well-known/assetlinks.json`
+  in `fap-infra`) and are **Android-only** for now — iOS Universal Links are not configured.
+- Watch the app log for the `[DeepLinkHandler]` line to confirm the URI was parsed and routed.
+
+## Resetting your password (Forgot Password) locally
+
+After requesting a reset, the backend emails a one-time link. As with registration,
+two URI forms are supported and both are routed by
+`lib/core/deep_links/deep_link_handler.dart` to the in-app route `/reset-password/<token>`:
+
+| URI | Purpose |
+|---|---|
+| `fap://set-new-password?token=<TOKEN>` (`fap://reset-password?token=<TOKEN>` alias) | Manual `adb` testing / back-compat (custom scheme) |
+| `https://dev.fap.rs/set-new-password?token=<TOKEN>` | Tappable link in the reset email (Gmail does not open custom schemes) |
+
+Trigger the same deep link directly from the command line to reach the set-new-password
+screen without opening the email (replace the token):
+
+```bash
+# Custom scheme (manual adb testing)
+adb shell am start -a android.intent.action.VIEW -d "fap://set-new-password?token=10e05099-900e-4639-9532-46e82996c781"
+
+# HTTPS App Link (the form sent in the reset email)
+adb shell am start -a android.intent.action.VIEW -d "https://dev.fap.rs/set-new-password?token=10e05099-900e-4639-9532-46e82996c781"
+```
+
+Notes:
+
+- The backend emits `set-new-password`; `reset-password` is accepted as an alias for manual testing.
+- Both email flows share the same Android App Link / `dev.fap.rs` association; iOS Universal
+  Links are not configured yet.
+- Watch the app log for the `[DeepLinkHandler]` line to confirm the URI was parsed and routed.
+
+## Emulator internal storage full
+
+Symptom: `flutter run` fails during install with:
+
+```
+adb: failed to install .../app-debug.apk:
+  Requested internal only, but not enough space
+```
+
+The emulator's `/data` partition is full. Stop the emulator and wipe its writable
+storage with the helper script:
+
+```bash
+tool/clean_emulator.sh
+```
+
+The script:
+
+1. Stops the running `Pixel_9` emulator (if any).
+2. Deletes the writable data overlays and fast-boot snapshot under
+   `~/.android/avd/Pixel_9.avd/` (`userdata-qemu.img*`, `cache.img.qcow2`,
+   `encryptionkey.img.qcow2`, `snapshots/default_boot/`).
+3. Leaves the base images intact, so the emulator rebuilds a fresh disk on next boot.
+
+Then start the emulator again from IntelliJ and verify the freed space with
+`adb shell df -h /data`.
+
+> The script does **not** restart the emulator, and it wipes **all** emulator state
+> (installed apps, accounts, settings). It is safe to re-run — it is a no-op when
+> the emulator is already stopped and storage is clean.
+
+## Useful terminal commands
+
+### Device & emulator
+
+| Command | What it does |
+|---|---|
+| `adb devices` | List connected devices/emulators. |
+| `adb shell df -h /data` | Show used/free space on the emulator's internal storage. |
+| `adb shell getprop sys.boot_completed` | Prints `1` once the emulator has fully booted. |
+| `adb -s emulator-5554 emu avd name` | Show which AVD a running emulator belongs to. |
+| `adb -s emulator-5554 emu kill` | Stop the emulator. |
+| `flutter emulators` | List available emulators. |
+| `flutter emulators --launch Pixel_9` | Launch an emulator by id. |
+| `tool/clean_emulator.sh` | Stop the Pixel_9 emulator and wipe its internal storage (see above). |
+
+### App on device
+
+| Command | What it does |
+|---|---|
+| `adb shell pm clear com.vincsoftware.fap_mobile` | Clear the app's data and cache. |
+| `adb uninstall com.vincsoftware.fap_mobile` | Uninstall the app. |
+| `adb logcat -s flutter` | Stream Flutter app logs. |
+| `adb shell am start -a android.intent.action.VIEW -d "fap://registration-confirm?token=<TOKEN>"` | Fire the registration-confirm deep link manually. |
 
 ## Common Flutter commands
 
@@ -43,3 +147,4 @@ adb shell am start -a android.intent.action.VIEW -d "fap://registration-confirm?
 - **Added a new dependency to `pubspec.yaml`** → `flutter pub get`
 - **Changed models / providers that use code generation** → `dart run build_runner build --delete-conflicting-outputs`
 - **After a dependency upgrade or weird build errors** → `flutter clean` then `flutter pub get`
+- **`adb: ... not enough space` when installing on the emulator** → `tool/clean_emulator.sh`, then start the emulator again

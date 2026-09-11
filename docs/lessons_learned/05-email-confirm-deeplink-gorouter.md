@@ -164,6 +164,8 @@ Confirmed end-to-end: Sign Up → copy deep link from backend log → `adb` inje
    screen when the navigator is available (see Lesson #5 above).
 3. **Prefer a cleaner go_router-native confirm navigation** once the
    `StatefulShellRoute` redirect quirk is better understood or upgraded away.
-4. **Forgot-password deep link** (`fap://reset-password`) — reuse the same
-   `app_links` plumbing + path-param pattern; backend `FORGOTTEN_PWD_URL` is
-   already configurable.
+4. ~~**Forgot-password deep link** (`fap://reset-password`)~~ — **done:** the same
+   `app_links` plumbing + path-param pattern now presents `ResetPasswordScreen` for
+   `fap://set-new-password` / `https://dev.fap.rs/set-new-password` (alias `reset-password`);
+   backend `FORGOTTEN_PWD_URL` emits the HTTPS link. See
+   [`07-forgot-password-deeplink.md`](07-forgot-password-deeplink.md).

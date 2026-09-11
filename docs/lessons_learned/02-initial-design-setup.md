@@ -66,6 +66,20 @@ NOT in the global theme — they belong in the screen widgets themselves.
 | `spacing.stack-md` (16px) | [`app_dimensions.dart`](../../lib/core/theme/app_dimensions.dart) | `AppDimensions.stackMd` (16px) |
 | `colors.surface-glass` | [`app_colors.dart`](../../lib/core/theme/app_colors.dart) | `surfaceGlassLight` / `surfaceGlassDark` |
 
+### Later token additions (theme-dependent accents & icon tiles)
+
+The first pass used `vibrantCyan` for every accent regardless of theme. A later refinement
+made brand accents and icon tiles **theme-dependent** and promoted the previously inline hexes
+to named constants (AGENTS "Typography & Style Reuse Rules" Rule 3 and the Icon Tile
+Convention):
+
+| Token | Value | Used for |
+|---|---|---|
+| `brandPrimary` (light accent) / `vibrantCyan` (dark accent) | `#00696E` / `#00F5FF` | Tagline, action links, inline CTAs, row icon color (branch on `theme.brightness`) |
+| `iconTileBackgroundLight` | translucent `brandPrimary` | 40×40 menu/settings icon tile fill (light) |
+| `iconTileBackgroundDark` | translucent slate-teal | 40×40 menu/settings icon tile fill (dark) |
+| `accentCyanDark` | `#00DCE5` | Small dark-mode affordances (e.g. language picker chevron) |
+
 ---
 
 ## Guidelines for Sign In / Sign Up Screens

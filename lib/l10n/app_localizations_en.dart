@@ -70,6 +70,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resetPassword => 'RESET PASSWORD';
 
   @override
+  String get resetPasswordTitle => 'Set New Password';
+
+  @override
+  String get resetPasswordSubtitle => 'Choose a new password for your account.';
+
+  @override
+  String get resetPasswordInvalidTitle => 'Link Expired';
+
+  @override
+  String get resetPasswordInvalidDescription =>
+      'This password reset link is invalid or has expired. Please request a new one.';
+
+  @override
+  String get requestNewLink => 'REQUEST NEW LINK';
+
+  @override
+  String get resetPasswordSuccessTitle => 'Password Reset';
+
+  @override
   String get checkYourEmail => 'Check Your Email';
 
   @override

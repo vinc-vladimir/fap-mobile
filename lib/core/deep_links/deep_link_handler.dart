@@ -8,6 +8,13 @@ class DeepLinkHandler {
 
   static const String _registrationConfirmPath = 'registration-confirm';
 
+  /// Password-reset paths. The backend emits `set-new-password` in the reset
+  /// email; `reset-password` is accepted as an alias for manual testing.
+  static const List<String> _resetPasswordPaths = [
+    'set-new-password',
+    'reset-password',
+  ];
+
   /// Converts a received URI into the equivalent in-app route, or returns null
   /// if the link is not recognized. The caller is responsible for invoking it
   /// on the router.
@@ -17,12 +24,18 @@ class DeepLinkHandler {
     final path = uri.path.isEmpty ? uri.host : uri.path;
     final token = uri.queryParameters['token'];
 
-    final route =
-        (path.contains(_registrationConfirmPath) &&
-            token != null &&
-            token.isNotEmpty)
-        ? '/confirm-registration/$token'
-        : null;
+    final String? route;
+    if (token != null && token.isNotEmpty) {
+      if (path.contains(_registrationConfirmPath)) {
+        route = '/confirm-registration/$token';
+      } else if (_resetPasswordPaths.any(path.contains)) {
+        route = '/reset-password/$token';
+      } else {
+        route = null;
+      }
+    } else {
+      route = null;
+    }
     debugPrint(
       '[DeepLinkHandler] scheme=${uri.scheme} host=${uri.host} path=${uri.path} '
       'token=${token ?? "<none>"} → route=${route ?? "<unhandled>"}',

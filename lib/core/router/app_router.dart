@@ -9,6 +9,7 @@ import '../../features/auth/presentation/screens/confirm_registration_screen.dar
 import '../../features/auth/presentation/screens/email_sent_screen.dart';
 import '../../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../../features/auth/presentation/screens/privacy_policy_screen.dart';
+import '../../features/auth/presentation/screens/reset_password_screen.dart';
 import '../../features/auth/presentation/screens/sign_in_screen.dart';
 import '../../features/auth/presentation/screens/sign_up_screen.dart';
 import '../../features/auth/presentation/screens/terms_of_service_screen.dart';
@@ -103,6 +104,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => ConfirmRegistrationScreen(
           token: state.pathParameters['token'] ?? '',
         ),
+      ),
+      GoRoute(
+        path: '/reset-password/:token',
+        builder: (context, state) =>
+            ResetPasswordScreen(token: state.pathParameters['token'] ?? ''),
       ),
       GoRoute(
         path: '/privacy-policy',

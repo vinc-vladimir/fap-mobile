@@ -16,10 +16,10 @@ back-compat.
 The Flutter side needed **no Dart change**: `DeepLinkHandler.routeForUri` already read
 `uri.path` for non-custom-scheme links and maps both forms to `/confirm-registration/<token>`.
 
-> **Status:** the mobile App Link is implemented and verified via `adb`. The **`fap-service`
-> email change is not yet applied** — the service still runs at `localhost` and its
-> `reg-confirm-url` default remains `fap://…`. Switching the email link to the HTTPS URL is
-> handed off to the `fap-service` agent (see Follow-ups).
+> **Status:** implemented and verified end-to-end — tapping the link in Gmail opens the app and
+> reaches `ConfirmRegistrationScreen`. The `fap-service` email now carries the HTTPS App Link.
+> The same pattern was later reused for the **password-reset** link (`/set-new-password`); see
+> [`07-forgot-password-deeplink.md`](07-forgot-password-deeplink.md).
 
 ---
 
@@ -31,8 +31,8 @@ change each one; the others are handed off.
 | Artifact | Repo | Change |
 |---|---|---|
 | `static/.well-known/assetlinks.json` | **fap-infra** | Added `delegate_permission/common.handle_all_urls` (kept `get_login_creds` for passkeys) |
-| `android/app/src/main/AndroidManifest.xml` | **fap-mobile** | Added an `https` + `host=dev.fap.rs` + `pathPrefix=/registration-confirm` + `autoVerify` intent-filter |
-| `reg-confirm-url` + email body | **fap-service** | Point the confirmation link at `https://dev.fap.rs/registration-confirm?token=` (pending) |
+| `android/app/src/main/AndroidManifest.xml` | **fap-mobile** | Added an `https` + `host=dev.fap.rs` + `pathPrefix=/registration-confirm` + `autoVerify` intent-filter (later a second `pathPrefix=/set-new-password` for the reset link) |
+| `reg-confirm-url` + email body | **fap-service** | Confirmation link points at `https://dev.fap.rs/registration-confirm?token=` (done) |
 
 ---
 
@@ -44,8 +44,8 @@ change each one; the others are handed off.
 | [`lib/core/deep_links/deep_link_handler.dart`](../../lib/core/deep_links/deep_link_handler.dart) | Unchanged — already reads `uri.path` for https and maps to `/confirm-registration/<token>` |
 | [`lib/app/app.dart`](../../lib/app/app.dart) | Unchanged — `app_links` cold/warm handling already presents the confirm screen |
 | `fap-infra: static/.well-known/assetlinks.json` | App Links relation with the app package + debug cert fingerprint |
-| `fap-service: src/main/resources/application.yml` | `REG_CONFIRM_URL=https://dev.fap.rs/registration-confirm?token=` (pending) |
-| `fap-service: .../notification/email/service/EmailServiceImpl.java` | Render the link as an HTML anchor (pending) |
+| `fap-service: src/main/resources/application.yml` | `REG_CONFIRM_URL=https://dev.fap.rs/registration-confirm?token=` (done) |
+| `fap-service: .../notification/email/service/EmailServiceImpl.java` | Render the link as an HTML anchor (done) |
 
 ---
 
@@ -113,19 +113,21 @@ adb shell am start -a android.intent.action.VIEW \
 ```
 
 Confirmed: the HTTPS link opens the app and reaches `ConfirmRegistrationScreen`. The full
-"tap the link in Gmail" path is blocked only on the pending `fap-service` email change.
+"tap the link in Gmail" path is verified end-to-end now that `fap-service` sends the HTTPS URL.
 
 ---
 
 ## Follow-ups
 
-1. **`fap-service` (hand-off):** default `REG_CONFIRM_URL` to
+1. ~~**`fap-service` (hand-off):** default `REG_CONFIRM_URL` to
    `https://dev.fap.rs/registration-confirm?token=` and render the link as an HTML anchor
-   (localized label). Until then, mail still carries the `fap://` link.
+   (localized label).~~ — **done** (verified: tapping the link in Gmail opens the app).
 2. **iOS Universal Links:** add `applinks:dev.fap.rs` to `Runner.entitlements` and host
    `apple-app-site-association` at `https://dev.fap.rs/.well-known/` (absent today).
 3. **Release signing fingerprint:** add the release cert SHA-256 to `assetlinks.json` before
    shipping release builds.
-4. **Forgot-password App Link:** reuse this pattern for `forgotten-password-url`.
+4. ~~**Forgot-password App Link:** reuse this pattern for `forgotten-password-url`.~~ —
+   **done:** `https://dev.fap.rs/set-new-password?token=…` (see
+   [`07-forgot-password-deeplink.md`](07-forgot-password-deeplink.md)).
 5. **Cold-start from Gmail:** verify `getInitialLink` presents the confirm screen when the app
    is not already running (see `05-email-confirm-deeplink-gorouter.md`, Lesson #5).

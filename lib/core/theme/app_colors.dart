@@ -19,6 +19,13 @@ const onSuccessContainerDark = Color(0xFFA5D6A7);
 const navySurface = Color(0xFF1A2130); // solid card surface (Velocity Blue)
 const pageBaseDark = Color(0xFF0B101A); // base background layer
 
+// ── Icon tile / accent ────────────────────────────────────────────
+const iconTileBackgroundLight = Color(
+  0x2500696E,
+); // brandPrimary @18% tile fill (light)
+const iconTileBackgroundDark = Color(0x59427677); // icon tile fill in dark mode
+const accentCyanDark = Color(0xFF00DCE5); // icon/link accent in dark mode
+
 // ── Light ColorScheme — Velocity Flux ────────────────────────────
 const lightColorScheme = ColorScheme(
   brightness: Brightness.light,
