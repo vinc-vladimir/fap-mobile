@@ -848,6 +848,150 @@ abstract class AppLocalizations {
   /// **'Changed: {timestamp} (UTC)'**
   String passwordChangedAt(Object timestamp);
 
+  /// No description provided for @settingsPasskey.
+  ///
+  /// In en, this message translates to:
+  /// **'Passkey'**
+  String get settingsPasskey;
+
+  /// No description provided for @passkeyEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get passkeyEnabled;
+
+  /// No description provided for @passkeyDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enabled'**
+  String get passkeyDisabled;
+
+  /// No description provided for @passkeyAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add passkey'**
+  String get passkeyAdd;
+
+  /// No description provided for @passkeyRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get passkeyRemove;
+
+  /// No description provided for @passkeyRemoveConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove passkey?'**
+  String get passkeyRemoveConfirmTitle;
+
+  /// No description provided for @passkeyRemoveConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your passkey will be removed from this device. Note: it will still exist on the server until server-side removal is available.'**
+  String get passkeyRemoveConfirmBody;
+
+  /// No description provided for @passkeyRegistrationSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Passkey registered.'**
+  String get passkeyRegistrationSuccess;
+
+  /// No description provided for @passkeyRemovedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Passkey removed from this device.'**
+  String get passkeyRemovedSuccess;
+
+  /// No description provided for @passkeyErrorNoCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'No passkey found on this device.'**
+  String get passkeyErrorNoCredentials;
+
+  /// No description provided for @passkeyErrorGoogleSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to a Google account to use passkeys.'**
+  String get passkeyErrorGoogleSignIn;
+
+  /// No description provided for @passkeyErrorDomainNotAssociated.
+  ///
+  /// In en, this message translates to:
+  /// **'Passkeys are not configured for this app yet.'**
+  String get passkeyErrorDomainNotAssociated;
+
+  /// No description provided for @passkeyErrorNoCreateOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable passkeys in your device settings and try again.'**
+  String get passkeyErrorNoCreateOption;
+
+  /// No description provided for @passkeyErrorDeviceUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Your device does not support passkeys.'**
+  String get passkeyErrorDeviceUnsupported;
+
+  /// No description provided for @passkeyErrorSyncUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No passkey sync account available. Check your Google account and try again.'**
+  String get passkeyErrorSyncUnavailable;
+
+  /// No description provided for @passkeyErrorCredentialExists.
+  ///
+  /// In en, this message translates to:
+  /// **'This passkey is already registered.'**
+  String get passkeyErrorCredentialExists;
+
+  /// No description provided for @passkeyErrorMalformedChallenge.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid passkey challenge received from the server.'**
+  String get passkeyErrorMalformedChallenge;
+
+  /// No description provided for @passkeyErrorTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'The passkey operation timed out. Please try again.'**
+  String get passkeyErrorTimeout;
+
+  /// No description provided for @passkeyErrorUnhandled.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong during the passkey operation.'**
+  String get passkeyErrorUnhandled;
+
+  /// No description provided for @passkeyErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to complete the passkey operation.'**
+  String get passkeyErrorGeneric;
+
+  /// No description provided for @biometricGateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Your Identity'**
+  String get biometricGateTitle;
+
+  /// No description provided for @biometricGateSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan your fingerprint or face to continue.'**
+  String get biometricGateSubtitle;
+
+  /// No description provided for @biometricUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'UNLOCK'**
+  String get biometricUnlock;
+
+  /// No description provided for @biometricGateUsePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Use password instead'**
+  String get biometricGateUsePassword;
+
   /// No description provided for @accountManagementSection.
   ///
   /// In en, this message translates to:

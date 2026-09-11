@@ -13,13 +13,13 @@ abstract final class ApiConstants {
   }
 
   static String get localBaseUrl => 'http://$_localHost:8080/api';
-  static const String devBaseUrl = 'https://dev.fng.rs/api';
+  static const String devBaseUrl = 'https://dev.fap.rs/api';
 
   static String get baseUrl => kDebugMode ? localBaseUrl : devBaseUrl;
 
   // Spring Boot Actuator runs on the management port (8081 in dev).
   static String get localManagementBaseUrl => 'http://$_localHost:8081';
-  static const String devManagementBaseUrl = 'https://dev.fng.rs:8081';
+  static const String devManagementBaseUrl = 'https://dev.fap.rs:8081';
 
   static String get managementBaseUrl =>
       kDebugMode ? localManagementBaseUrl : devManagementBaseUrl;

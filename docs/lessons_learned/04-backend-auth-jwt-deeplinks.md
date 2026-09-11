@@ -21,8 +21,8 @@ then clears local tokens.
 
 | File | Purpose |
 |---|---|
-| `fap-service/src/main/resources/application.yml` | `reg-confirm-url` default → `fap://registration-confirm?token=` |
-| `fap-service/.env` | `REG_CONFIRM_URL=fap://registration-confirm?token=` (dev override) |
+| `fap-service/src/main/resources/application.yml` | `reg-confirm-url` default → `fap://registration-confirm?token=` (moving to https — see 06) |
+| `fap-service/.env` | `REG_CONFIRM_URL=fap://registration-confirm?token=` (dev override; moving to https — see 06) |
 | [`lib/core/network/api_client.dart`](../../lib/core/network/api_client.dart) | Dio instance (`dioProvider`) + `managementDioProvider` for actuator probes |
 | [`lib/core/network/api_interceptors.dart`](../../lib/core/network/api_interceptors.dart) | `AuthInterceptor` — attaches `Authorization: Bearer` from storage, clears on 401 |
 | [`lib/core/network/api_constants.dart`](../../lib/core/network/api_constants.dart) | Base URLs, endpoint paths, secure-storage keys |
@@ -39,7 +39,7 @@ then clears local tokens.
 | [`lib/features/account/presentation/screens/account_screen.dart`](../../lib/features/account/presentation/screens/account_screen.dart) | Sign Out tile → `LoginController.logout()` → `SignInScreen` |
 | [`lib/l10n/app_en.arb`](../../lib/l10n/app_en.arb), [`app_sr.arb`](../../lib/l10n/app_sr.arb) | New confirm/login strings; updated `registrationSuccessDescription` |
 | [`pubspec.yaml`](../../pubspec.yaml) | Added `app_links: ^6.4.1` |
-| `android/app/src/main/AndroidManifest.xml` | `fap://` intent-filter (`autoVerify`) on `MainActivity` |
+| `android/app/src/main/AndroidManifest.xml` | `fap://` intent-filter (`autoVerify`) on `MainActivity`; an HTTPS App Link filter was added later (see 06) |
 | `android/app/src/debug/AndroidManifest.xml` | `usesCleartextTraffic="true"` so dev builds can call `http://10.0.2.2:8080` |
 | `ios/Runner/Info.plist` | `CFBundleURLTypes` registering the `fap` scheme |
 
@@ -52,6 +52,11 @@ The backend builds the confirmation link from `reg-confirm-url` (env-configurabl
 now `fap://registration-confirm?token=…`. Tapping it on the phone opens the app
 instead of a dead web page. The **token is the payload**, not the mail client — so
 testing never requires logging into email on the emulator.
+
+> **Superseded for the mail link:** see
+> [`06-app-links-registration-confirm.md`](06-app-links-registration-confirm.md) — Gmail does not
+> open custom schemes, so the email link is moving to an HTTPS App Link
+> (`https://dev.fap.rs/registration-confirm?token=…`). The `fap://` scheme is kept for `adb`.
 
 ### 2. Dev flow: copy the token from the backend log, inject via adb/simctl
 The backend logs the full confirmation link. To exercise the real deep-link path:

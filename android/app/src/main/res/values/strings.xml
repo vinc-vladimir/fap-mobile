@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- WebAuthn (passkeys) relying-party domain association.
+         Relation and site must match the server file at
+         https://dev.fap.rs/.well-known/assetlinks.json -->
+    <string name="asset_statements" translatable="false">
+        [{
+            "relation": ["delegate_permission/common.get_login_creds"],
+            "target": {
+                "namespace": "web",
+                "site": "https://dev.fap.rs"
+            }
+        }]
+    </string>
+</resources>

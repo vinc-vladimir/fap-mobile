@@ -14,6 +14,8 @@ import '../widgets/or_divider.dart';
 import '../widgets/social_button.dart';
 import '../../data/validation_constants.dart';
 import '../providers/auth_providers.dart';
+import '../providers/passkey_providers.dart';
+import '../passkey_error_messages.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({super.key});
@@ -54,6 +56,28 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       showAppSnackBar(
         messenger,
         message: error?.toString() ?? l10n.errorSomethingWentWrong,
+        isError: true,
+      );
+      return;
+    }
+
+    if (!mounted) return;
+    context.go('/');
+  }
+
+  Future<void> _onBiometricSignIn() async {
+    final messenger = ScaffoldMessenger.of(context);
+    final l10n = AppLocalizations.of(context)!;
+
+    await ref.read(passkeyLoginControllerProvider.notifier).loginWithPasskey();
+
+    final state = ref.read(passkeyLoginControllerProvider);
+    if (state.hasError) {
+      final error = state.error;
+      if (isPasskeyCancellation(error)) return;
+      showAppSnackBar(
+        messenger,
+        message: passkeyErrorMessage(l10n, error),
         isError: true,
       );
       return;
@@ -248,8 +272,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
   Widget _buildBiometricButton(ThemeData theme) {
     final l10n = AppLocalizations.of(context)!;
+    final isLoading = ref.watch(passkeyLoginControllerProvider).isLoading;
     return OutlinedButton(
-      onPressed: () {},
+      onPressed: isLoading ? null : _onBiometricSignIn,
       style: OutlinedButton.styleFrom(
         backgroundColor: theme.colorScheme.surfaceContainerLow,
         foregroundColor: theme.colorScheme.onSurface,

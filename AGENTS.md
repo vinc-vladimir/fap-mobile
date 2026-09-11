@@ -8,6 +8,53 @@ Replaces the Angular/Ionic fap-client.
 **Platforms:** Android & iOS
 **AI Assistant:** DeepSeek V4 via OpenCode-Local
 
+## Cross-Project Changes — Hand Off to the Owning Project's Agent (MANDATORY)
+
+FAP is a multi-repository platform. Each repository has its **own dedicated agent** and
+its own `AGENTS.md`, and that agent is the only one allowed to change its repository:
+
+| Repository   | Scope                                                        | Path (MCP filesystem root `/workspace`)            |
+|--------------|--------------------------------------------------------------|----------------------------------------------------|
+| `fap-service`| Spring Boot backend / REST API / email                       | `/workspace/FuelAutoPay/code/fap-service`          |
+| `fap-client` | Angular/Ionic web console                                    | `/workspace/FuelAutoPay/code/fap-client`           |
+| `fap-mobile` | Flutter mobile client                                        | `/workspace/FuelAutoPay/code/fap-mobile`           |
+| `fap-infra`  | Terraform AWS infra + static hosting (e.g. `.well-known/…`)  | `/workspace/FuelAutoPay/code/fap-infra`            |
+
+**Rule 1: NEVER implement changes in another project's repository.**
+If the task requires a change outside this repository (an endpoint, DTO, email link, DNS
+record, static/association file, Terraform resource, CI config, etc.), do NOT edit it and do
+NOT run host-path commands against it. Hand it off instead.
+
+**Rule 2: Produce a self-contained hand-off prompt for the owning project's agent.**
+The recipient agent has no access to this conversation. The prompt MUST state the WHAT and
+WHY, and leave the HOW to the owner. It MUST contain:
+1. **Goal** — the feature/behaviour being built and the end-to-end outcome.
+2. **What is needed from the target project** — the exact contract/artifact (HTTP method +
+   path, request/response shape, URL/host, file path, resource) and why it is needed.
+3. **Explicitly leave implementation to the owner** — describe the required outcome, not the
+   code; the owning agent decides how to implement it in its repository.
+
+**Rule 3: Resolve the target project's real contract before writing the prompt.**
+Read the target project under `/workspace` ONLY with the `filesystem_*` MCP tools — never with
+bash and never with `/Users/...` paths. Confirm the current contract from source or spec so the
+prompt is accurate.
+
+**Rule 4: Deliver the prompt to the user for the owning agent, and keep it in sync.**
+Output the hand-off prompt (do not attempt the change yourself). If the owning agent proposes a
+different contract, surface that back to the user rather than assuming.
+
+**Hand-off prompt template:**
+```
+Project: <fap-service | fap-client | fap-infra>
+Context: We are building <feature> in <this project>. <1–3 sentences end-to-end.>
+Need: <exact contract/artifact requested>.
+Relevant current state: <files/paths/endpoints that already exist>.
+Fixed constraints: <hosts, ids, fingerprints, formats>.
+Acceptance criteria: <how to verify>.
+Please decide how best to implement this in your repository and reply with the resulting
+contract/artifact and how to verify it.
+```
+
 ## Technology Stack (Mandated)
 - **Flutter** 3.44+ / **Dart** 3.12+
 - **State:** Riverpod 3.x with `@riverpod` code-gen (riverpod_annotation + riverpod_generator)
@@ -44,7 +91,7 @@ lib/
 
 ## Backend API
 **Base URL (dev):** `http://localhost:8080/api`
-**Base URL (prod):** `https://dev.fng.rs/api`
+**Base URL (prod):** `https://dev.fap.rs/api`
 **Auth:** JWT stored in FlutterSecureStorage, attached via Dio interceptor as `Authorization: Bearer {token}`.
 **Login Response:** `{ access_token: string, refresh_token: string }`
 
@@ -95,6 +142,25 @@ ErrorModel { timestamp, status, error: { message }, trace, message, path }
 { "timestamp": "...", "status": 400, "error": { "message": "..." }, "trace": "...", "message": "...", "path": "..." }
 ```
 
+## Deep Links / App Links
+
+The registration-confirm flow supports two entry URIs; `lib/core/deep_links/deep_link_handler.dart`
+routes both to `/confirm-registration/<token>`:
+
+| URI | Purpose | Registered in |
+|---|---|---|
+| `fap://registration-confirm?token=…` | Manual `adb` testing / back-compat | `android/app/src/main/AndroidManifest.xml` (scheme `fap`); `ios/Runner/Info.plist` |
+| `https://dev.fap.rs/registration-confirm?token=…` | Tappable link in the confirmation email (Gmail) | Android App Link intent-filter (`autoVerify`, host `dev.fap.rs`, path prefix `/registration-confirm`) + `fap-infra` `static/.well-known/assetlinks.json` (`handle_all_urls` + debug cert fingerprint) |
+
+- The dev App Link / association domain is **`dev.fap.rs`**.
+- The email link is produced by `fap-service` from `email-configuration.reg-confirm-url`
+  (env `REG_CONFIRM_URL`). Switching it to the HTTPS URL is **pending** on `fap-service`
+  (hand off per the Cross-Project rule above).
+- Changing the host requires lockstep updates across `fap-mobile` (manifest), `fap-infra`
+  (assetlinks), and `fap-service` (email URL).
+- iOS Universal Links are **not configured yet** (no `apple-app-site-association`; no
+  `applinks:` entitlement).
+
 ## REST API Spec — Source of Truth
 
 **The backend OpenAPI spec is the single source of truth for endpoint contracts.
@@ -116,13 +182,38 @@ jq -c '.components.schemas.<DtoName>' /tmp/fap_openapi.json
 The Swagger UI is a JS app that cannot be clicked programmatically; its data comes
 from the same `/v3/api-docs` JSON, so fetch that instead.
 
-**Rule 2: If the backend is down, use the MCP filesystem server (`/workspace`).**
-Browse `fap-service` source under `/workspace/FuelAutoPay/code/fap-service`:
-- Generated spec: `fap-service/doc/openapi/*.yaml`
+**Rule 2: If the backend is down, read fap-service source through the MCP filesystem server.**
+
+The MCP filesystem server's root is `/workspace`. The backend lives at:
+
+```
+/workspace/FuelAutoPay/code/fap-service
+```
+
+Access it ONLY with the `filesystem_*` MCP tools — never with bash and never with
+`/Users/...` paths. Bash runs on the host filesystem, where `/workspace` does not
+exist; the MCP server cannot read host paths.
+
+Tool mapping:
+- `filesystem_list_allowed_directories` → confirm `/workspace` is exposed (do this first).
+- `filesystem_directory_tree` / `filesystem_list_directory` → browse a directory.
+- `filesystem_read_file` / `filesystem_read_multiple_files` → read files.
+- `filesystem_search_files` → glob (e.g. `**/*Controller.java`, `**/*.yaml`).
+- `filesystem_get_file_info` → metadata.
+
+Navigation procedure:
+1. Call `filesystem_list_allowed_directories`; it must include `/workspace`.
+2. `filesystem_directory_tree` on `/workspace/FuelAutoPay/code/fap-service`.
+3. Drill into `src/main/java/com/vincsoftware/fap/` for controllers/DTOs, or
+   `doc/openapi/*.yaml` for the generated spec.
+
+Key locations (under the root above):
+- Generated spec: `doc/openapi/*.yaml`
 - Controllers: `src/main/java/com/vincsoftware/fap/*/controller/*Controller.java`
 - DTOs (contracts): `src/main/java/com/vincsoftware/fap/*/dto/*Dto.java`
-Do NOT use `/Users/...` absolute paths to read backend code — the MCP filesystem
-server only exposes `/workspace`.
+
+If the `filesystem_*` tools are unavailable or `/workspace` is not exposed, STOP
+and ask the user — do not silently fall back to bash on the local repo.
 
 **Rule 3: Before defining or changing any endpoint / model, resolve the true contract.**
 Confirm: HTTP method, path, path/query params, request body schema, response schema,

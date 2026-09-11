@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Placeholder: WebAuthn (passkeys) relying-party domain association.
+	     A real domain is required in Phase 2 when backend G1 configures the
+	     production RP domain. That domain must serve apple-app-site-association
+	     (with the "webcredentials" key and this app's TEAMID.<bundle-id>)
+	     before passkeys work on iOS. iOS passkeys do NOT work with rpId
+	     "localhost" — this is expected until G1 ships. -->
+	<key>com.apple.developer.webcredentials</key>
+	<array>
+		<string>fng.rs</string>
+	</array>
+</dict>
+</plist>

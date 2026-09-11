@@ -11,6 +11,8 @@ import '../../../../core/widgets/app_snack_bar.dart';
 import '../../../../core/widgets/screen_app_bar.dart';
 import '../../../account/presentation/providers/account_provider.dart';
 import '../../../auth/presentation/providers/auth_providers.dart';
+import '../../../auth/presentation/providers/passkey_providers.dart';
+import '../../../auth/presentation/passkey_error_messages.dart';
 import '../../../auth/presentation/widgets/glass_card.dart';
 import '../providers/settings_providers.dart';
 
@@ -98,6 +100,73 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     context.go('/sign-in');
   }
 
+  Future<void> _onPasskeyTap() async {
+    final l10n = AppLocalizations.of(context)!;
+    final messenger = ScaffoldMessenger.of(context);
+    final enabled = ref.read(passkeyEnabledProvider).value ?? false;
+
+    if (enabled) {
+      // Remove: clears the local flag only — the server credential is orphaned
+      // until backend G3 ships a user-scoped delete (decision D2).
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (context) {
+          final theme = Theme.of(context);
+          return AlertDialog(
+            title: Text(
+              l10n.passkeyRemoveConfirmTitle,
+              style: theme.textTheme.headlineSmall,
+            ),
+            content: Text(
+              l10n.passkeyRemoveConfirmBody,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text(l10n.cancel),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context, true),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: theme.colorScheme.error,
+                  foregroundColor: theme.colorScheme.onError,
+                ),
+                child: Text(l10n.delete),
+              ),
+            ],
+          );
+        },
+      );
+
+      if (confirmed != true || !mounted) return;
+      await ref.read(passkeyEnabledProvider.notifier).setEnabled(false);
+      if (!mounted) return;
+      showAppSnackBar(messenger, message: l10n.passkeyRemovedSuccess);
+      return;
+    }
+
+    // Register: options → platform biometric → POST /webauthn/register.
+    await ref
+        .read(passkeyRegistrationControllerProvider.notifier)
+        .registerPasskey();
+    if (!mounted) return;
+    final state = ref.read(passkeyRegistrationControllerProvider);
+    if (state.hasError) {
+      final error = state.error;
+      if (isPasskeyCancellation(error)) return;
+      showAppSnackBar(
+        messenger,
+        message: passkeyErrorMessage(l10n, error),
+        isError: true,
+      );
+      return;
+    }
+    showAppSnackBar(messenger, message: l10n.passkeyRegistrationSuccess);
+  }
+
   void _showLanguageSheet() {
     final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet<void>(
@@ -140,6 +209,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final l10n = AppLocalizations.of(context)!;
     final isDark = theme.brightness == Brightness.dark;
     final accentColor = isDark ? const Color(0xFF00DCE5) : vibrantCyan;
+    final passkeyEnabled =
+        ref.watch(passkeyEnabledProvider).value ?? false;
+    final passkeyRegistering = ref
+        .watch(passkeyRegistrationControllerProvider)
+        .isLoading;
 
     return Scaffold(
       body: Column(
@@ -201,6 +275,24 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                             subtitle: _passwordUpdatedSubtitle(l10n),
                             onTap: () =>
                                 context.push('/account/change-password'),
+                          ),
+                          const _RowDivider(),
+                          _SettingsRow(
+                            icon: Icons.fingerprint,
+                            title: l10n.settingsPasskey,
+                            subtitle: passkeyEnabled
+                                ? l10n.passkeyEnabled
+                                : l10n.passkeyDisabled,
+                            onTap: passkeyRegistering ? null : _onPasskeyTap,
+                            trailing: passkeyRegistering
+                                ? const SizedBox(
+                                    width: 18,
+                                    height: 18,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : null,
                           ),
                         ],
                       ),

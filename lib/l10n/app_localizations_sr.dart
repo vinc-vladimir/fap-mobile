@@ -415,6 +415,92 @@ class AppLocalizationsSr extends AppLocalizations {
   }
 
   @override
+  String get settingsPasskey => 'Prilazni ključ';
+
+  @override
+  String get passkeyEnabled => 'Aktiviran';
+
+  @override
+  String get passkeyDisabled => 'Nije aktiviran';
+
+  @override
+  String get passkeyAdd => 'Dodaj prilazni ključ';
+
+  @override
+  String get passkeyRemove => 'Ukloni';
+
+  @override
+  String get passkeyRemoveConfirmTitle => 'Ukloniti prilazni ključ?';
+
+  @override
+  String get passkeyRemoveConfirmBody =>
+      'Vaš prilazni ključ će biti uklonjen sa ovog uređaja. Napomena: i dalje će postojati na serveru dok se ne omogući uklanjanje na serveru.';
+
+  @override
+  String get passkeyRegistrationSuccess => 'Prilazni ključ je registrovan.';
+
+  @override
+  String get passkeyRemovedSuccess =>
+      'Prilazni ključ je uklonjen sa ovog uređaja.';
+
+  @override
+  String get passkeyErrorNoCredentials =>
+      'Nije pronađen prilazni ključ na ovom uređaju.';
+
+  @override
+  String get passkeyErrorGoogleSignIn =>
+      'Prijavite se na Google nalog da biste koristili prilazne ključeve.';
+
+  @override
+  String get passkeyErrorDomainNotAssociated =>
+      'Prilazni ključevi još nisu konfigurisani za ovu aplikaciju.';
+
+  @override
+  String get passkeyErrorNoCreateOption =>
+      'Omogućite prilazne ključeve u podešavanjima uređaja i pokušajte ponovo.';
+
+  @override
+  String get passkeyErrorDeviceUnsupported =>
+      'Vaš uređaj ne podržava prilazne ključeve.';
+
+  @override
+  String get passkeyErrorSyncUnavailable =>
+      'Nije dostupan nalog za sinhronizaciju prilaznih ključeva. Proverite Google nalog i pokušajte ponovo.';
+
+  @override
+  String get passkeyErrorCredentialExists =>
+      'Ovaj prilazni ključ je već registrovan.';
+
+  @override
+  String get passkeyErrorMalformedChallenge =>
+      'Neispravan prilazni izazov primljen sa servera.';
+
+  @override
+  String get passkeyErrorTimeout =>
+      'Operacija prilaznog ključa je istekla. Pokušajte ponovo.';
+
+  @override
+  String get passkeyErrorUnhandled =>
+      'Došlo je do greške tokom operacije prilaznog ključa.';
+
+  @override
+  String get passkeyErrorGeneric =>
+      'Nije moguće završiti operaciju prilaznog ključa.';
+
+  @override
+  String get biometricGateTitle => 'Potvrdite Vaš Identitet';
+
+  @override
+  String get biometricGateSubtitle =>
+      'Skenirajte otisak prsta ili lice da biste nastavili.';
+
+  @override
+  String get biometricUnlock => 'OTKLJUČAJ';
+
+  @override
+  String get biometricGateUsePassword => 'Koristi lozinku';
+
+  @override
   String get accountManagementSection => 'Upravljanje Nalogom';
 
   @override

@@ -9,6 +9,11 @@ confirmation email. On a real phone the user taps that link in the mail app and
 the app opens and confirms automatically; `adb` was only a **test substitute**
 for that mail-app tap (as in Lesson #04).
 
+> **Update:** the email link has since moved from the custom scheme to an **HTTPS App Link**
+> (`https://dev.fap.rs/registration-confirm?token=…`) because Gmail does not open custom
+> schemes. See [`06-app-links-registration-confirm.md`](06-app-links-registration-confirm.md).
+> The `fap://` flow below remains valid for `adb` testing and back-compat.
+
 Three distinct bugs were found and fixed along the way:
 
 1. The confirm screen never opened from the deep link — a go_router
@@ -30,6 +35,7 @@ Three distinct bugs were found and fixed along the way:
 | [`lib/core/router/app_router.dart`](../../lib/core/router/app_router.dart) | Confirm route is `/confirm-registration/:token` and is **not** login-gated; redirect reads synchronous `authStateProvider`; `router.refresh()` on auth change; `[RouterRedirect]` logs |
 | [`lib/features/auth/presentation/providers/auth_providers.dart`](../../lib/features/auth/presentation/providers/auth_providers.dart) | `authState` → synchronous `AuthState` Notifier; `LoginController` updates it on login/logout; `confirmRegistration` is `@Riverpod(keepAlive: true)` |
 | [`lib/features/auth/presentation/screens/confirm_registration_screen.dart`](../../lib/features/auth/presentation/screens/confirm_registration_screen.dart) | Pops the pushed confirm overlay then routes to Sign In (`_goToSignIn`); `[ConfirmRegistrationScreen]` log |
+| [`android/app/src/main/AndroidManifest.xml`](../../android/app/src/main/AndroidManifest.xml) | `fap://` filter; **later added an HTTPS App Link filter** for `dev.fap.rs` (see [`06-app-links-registration-confirm.md`](06-app-links-registration-confirm.md)) |
 
 ---
 
@@ -150,9 +156,10 @@ Confirmed end-to-end: Sign Up → copy deep link from backend log → `adb` inje
 
 ## Follow-ups
 
-1. **HTTPS universal links** (custom scheme → `fap://`) — `assetlinks.json`
-   (Android) / `apple-app-site-association` (iOS) are more robust in production
-   (no "Open with?" prompt, reliable cold start, stronger `autoVerify`).
+1. ~~**HTTPS universal links** (custom scheme → `fap://`)~~ — **done for Android**
+   (verified HTTPS App Link); see
+   [`06-app-links-registration-confirm.md`](06-app-links-registration-confirm.md).
+   iOS `apple-app-site-association` + associated-domains entitlement remain.
 2. **Verify cold-start deep link** — confirm `getInitialLink` pushes the confirm
    screen when the navigator is available (see Lesson #5 above).
 3. **Prefer a cleaner go_router-native confirm navigation** once the
