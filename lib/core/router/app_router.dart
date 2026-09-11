@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/account/presentation/screens/account_screen.dart';
 import '../../features/auth/presentation/providers/auth_providers.dart';
+import '../../features/auth/presentation/screens/biometric_gate_screen.dart';
 import '../../features/auth/presentation/screens/confirm_registration_screen.dart';
 import '../../features/auth/presentation/screens/email_sent_screen.dart';
 import '../../features/auth/presentation/screens/forgot_password_screen.dart';
@@ -52,22 +53,28 @@ final routerProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
     initialLocation: '/sign-in',
     redirect: (context, state) {
-      final loggedIn = ref.read(authStateProvider);
+      final status = ref.read(authStateProvider);
       final location = state.matchedLocation;
 
       final isProtected = _protectedLocations.any(
         (l) => _isAtOrUnder(location, l),
       );
       final isAuthRoute = _authLocations.any((l) => _isAtOrUnder(location, l));
+      final isBiometricGate = location == '/biometric-gate';
 
-      final result = (!loggedIn && isProtected)
-          ? '/sign-in'
-          : (loggedIn && isAuthRoute)
-          ? '/'
-          : null;
+      final String? result;
+      switch (status) {
+        case AuthStatus.loggedOut:
+          result = (isProtected || isBiometricGate) ? '/sign-in' : null;
+        case AuthStatus.biometricLocked:
+          result = isBiometricGate ? null : '/biometric-gate';
+        case AuthStatus.loggedIn:
+          result = (isAuthRoute || isBiometricGate) ? '/' : null;
+      }
       debugPrint(
-        '[RouterRedirect] loc=$location loggedIn=$loggedIn '
-        'isProtected=$isProtected isAuthRoute=$isAuthRoute → $result',
+        '[RouterRedirect] loc=$location status=$status '
+        'isProtected=$isProtected isAuthRoute=$isAuthRoute '
+        'isBiometricGate=$isBiometricGate → $result',
       );
 
       return result;
@@ -104,6 +111,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/terms-of-service',
         builder: (context, state) => const TermsOfServiceScreen(),
+      ),
+      GoRoute(
+        path: '/biometric-gate',
+        builder: (context, state) => const BiometricGateScreen(),
       ),
 
       // ── Main shell (5 tabs) ─────────────────────────────────────

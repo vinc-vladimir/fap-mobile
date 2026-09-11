@@ -10,20 +10,31 @@ import '../../../account/presentation/providers/account_provider.dart';
 
 part 'auth_providers.g.dart';
 
-/// Whether a valid session (access token) is currently held. Read synchronously
-/// by the router's guard so redirects see the correct value immediately after
-/// login/logout — no async storage read that can return a stale cached `false`.
+/// Session state read synchronously by the router's guard.
 ///
-/// The value is restored from secure storage on first build (cold start) and
-/// updated in-memory by [LoginController] when the user signs in/out. The
-/// restored token is validated against `GET /v1/account`; if the server rejects
-/// it (401/403) the token is cleared so the guard stays on sign-in.
+/// - [AuthStatus.loggedOut] — no usable session; protected routes redirect to
+///   sign-in.
+/// - [AuthStatus.biometricLocked] — a valid session exists but the user has a
+///   registered passkey, so the app re-prompts for a biometric scan before
+///   showing the shell.
+/// - [AuthStatus.loggedIn] — fully unlocked; protected routes are reachable.
+enum AuthStatus { loggedOut, biometricLocked, loggedIn }
+
+/// The session state, restored from secure storage on first build (cold start)
+/// and updated in-memory by [LoginController] / [PasskeyLoginController] when
+/// the user signs in/out. The restored token is validated against
+/// `GET /v1/account`; if the server rejects it (401/403) the token is cleared
+/// so the guard stays on sign-in.
+///
+/// When a valid session is restored AND a passkey is registered for the
+/// account, the state becomes [AuthStatus.biometricLocked] instead of
+/// [AuthStatus.loggedIn] — the app re-opens behind the biometric gate (P1-8).
 @Riverpod(keepAlive: true)
 class AuthState extends _$AuthState {
   @override
-  bool build() {
+  AuthStatus build() {
     _restorePersistedSession();
-    return false;
+    return AuthStatus.loggedOut;
   }
 
   Future<void> _restorePersistedSession() async {
@@ -31,11 +42,15 @@ class AuthState extends _$AuthState {
     final token = await storage.readAccessToken();
     if (token == null || token.isEmpty) return;
 
+    // Local passkey flag — source of truth until backend G2 ships a
+    // server-side credential list (decision D5).
+    final passkeyEnabled = await storage.readPasskeyEnabled();
+
     try {
       // Validate the restored token against the backend. A 2xx from
       // GET /v1/account confirms the session is still usable.
       await ref.read(accountRepositoryProvider).getAccount();
-      state = true;
+      state = passkeyEnabled ? AuthStatus.biometricLocked : AuthStatus.loggedIn;
     } on ApiException catch (e) {
       final statusCode = e.statusCode;
       if (statusCode == 401 || statusCode == 403) {
@@ -45,12 +60,15 @@ class AuthState extends _$AuthState {
       } else if (statusCode == null) {
         // Server unreachable — cannot validate, so keep the stored session
         // rather than logging the user out on a transient network failure.
-        state = true;
+        state = passkeyEnabled
+            ? AuthStatus.biometricLocked
+            : AuthStatus.loggedIn;
       }
     }
   }
 
-  void setAuthenticated(bool value) => state = value;
+  void setAuthenticated(bool value) =>
+      state = value ? AuthStatus.loggedIn : AuthStatus.loggedOut;
 }
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {

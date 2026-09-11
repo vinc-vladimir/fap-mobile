@@ -416,6 +416,89 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get settingsPasskey => 'Passkey';
+
+  @override
+  String get passkeyEnabled => 'Enabled';
+
+  @override
+  String get passkeyDisabled => 'Not enabled';
+
+  @override
+  String get passkeyAdd => 'Add passkey';
+
+  @override
+  String get passkeyRemove => 'Remove';
+
+  @override
+  String get passkeyRemoveConfirmTitle => 'Remove passkey?';
+
+  @override
+  String get passkeyRemoveConfirmBody =>
+      'Your passkey will be removed from this device. Note: it will still exist on the server until server-side removal is available.';
+
+  @override
+  String get passkeyRegistrationSuccess => 'Passkey registered.';
+
+  @override
+  String get passkeyRemovedSuccess => 'Passkey removed from this device.';
+
+  @override
+  String get passkeyErrorNoCredentials => 'No passkey found on this device.';
+
+  @override
+  String get passkeyErrorGoogleSignIn =>
+      'Sign in to a Google account to use passkeys.';
+
+  @override
+  String get passkeyErrorDomainNotAssociated =>
+      'Passkeys are not configured for this app yet.';
+
+  @override
+  String get passkeyErrorNoCreateOption =>
+      'Enable passkeys in your device settings and try again.';
+
+  @override
+  String get passkeyErrorDeviceUnsupported =>
+      'Your device does not support passkeys.';
+
+  @override
+  String get passkeyErrorSyncUnavailable =>
+      'No passkey sync account available. Check your Google account and try again.';
+
+  @override
+  String get passkeyErrorCredentialExists =>
+      'This passkey is already registered.';
+
+  @override
+  String get passkeyErrorMalformedChallenge =>
+      'Invalid passkey challenge received from the server.';
+
+  @override
+  String get passkeyErrorTimeout =>
+      'The passkey operation timed out. Please try again.';
+
+  @override
+  String get passkeyErrorUnhandled =>
+      'Something went wrong during the passkey operation.';
+
+  @override
+  String get passkeyErrorGeneric => 'Unable to complete the passkey operation.';
+
+  @override
+  String get biometricGateTitle => 'Confirm Your Identity';
+
+  @override
+  String get biometricGateSubtitle =>
+      'Scan your fingerprint or face to continue.';
+
+  @override
+  String get biometricUnlock => 'UNLOCK';
+
+  @override
+  String get biometricGateUsePassword => 'Use password instead';
+
+  @override
   String get accountManagementSection => 'Account Management';
 
   @override

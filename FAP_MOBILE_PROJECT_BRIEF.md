@@ -138,7 +138,7 @@ PaymentCard
 ### 2.4 REST API Endpoints
 
 **Base URL (dev):** `http://localhost:8080/api`
-**Base URL (prod):** `https://dev.fng.rs/api`
+**Base URL (prod):** `https://dev.fap.rs/api`
 
 #### Auth Service
 
@@ -706,7 +706,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 ```dart
 class ApiConfig {
   static const String devBaseUrl = 'http://localhost:8080/api';
-  static const String prodBaseUrl = 'https://dev.fng.rs/api';
+  static const String prodBaseUrl = 'https://dev.fap.rs/api';
   static const String serverApiUrl = kDebugMode ? devBaseUrl : prodBaseUrl;
 
   // OAuth2 redirect URI

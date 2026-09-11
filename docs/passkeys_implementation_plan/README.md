@@ -22,23 +22,23 @@ mobile contract — **no backend change is needed for emulator-first development
 | Phase | Description | Status | Key deliverable |
 |---|---|---|---|
 | 0 | Docs & decisions | ✅ Done | This plan + [01_decisions.md](./01_decisions.md) |
-| 1 | Mobile implementation (emulator-first, no backend dependency) | ⏳ Pending | Full passkey feature in `fap-mobile` |
-| 2 | Backend-coordinated (G1 RP domain, G2/G3 list/delete) | ⏳ Pending | Real-device passkeys + server-truth passkey state |
+| 1 | Mobile implementation (emulator-first, no backend dependency) | 🔄 In progress | Code complete; **end-to-end validation blocked on G1** — see 02_backend_audit.md G1, decision D6 |
+| 2 | Backend-coordinated (G1 RP domain, G2/G3 list/delete) | 🔄 In progress | Real RP domain for passkeys (blocking validation); server-truth passkey state |
 | 3 | Backend hardening (G4, G6, G9, G5, G7) | ⏳ Pending | Prod-safe WebAuthn + docs/tests |
 
 ## Phase 1 checklist (fap-mobile)
 
-- [ ] **P1-1** Core constants & storage — `api_constants.dart`, `SecureStorage` passkey flag
-- [ ] **P1-2** Models — `passkey_models.dart` (freezed) + codegen
-- [ ] **P1-3** REST repository — `passkey_repository.dart`
-- [ ] **P1-4** Platform service — `passkey_service.dart` (`PasskeyAuthenticator` wrapper)
-- [ ] **P1-5** Providers — `passkey_providers.dart` (register, login, enabled flag)
-- [ ] **P1-6** Settings screen — "Add / Remove passkey" rows (local flag)
-- [ ] **P1-7** Sign-in screen — wire biometric button to passkey login
-- [ ] **P1-8** Biometric re-open gate — `AuthState` cold-start + `BiometricGateScreen` + route
-- [ ] **P1-9** ARB strings (en + sr) + regen
-- [ ] **P1-10** Platform config — Android assetlinks note, iOS `webcredentials` placeholder
-- [ ] **P1-11** Verify — `build_runner` → `flutter analyze` → `flutter test` → manual emulator test
+- [x] **P1-1** Core constants & storage — `api_constants.dart`, `SecureStorage` passkey flag
+- [x] **P1-2** Models — `passkey_models.dart` (freezed) + codegen
+- [x] **P1-3** REST repository — `passkey_repository.dart`
+- [x] **P1-4** Platform service — `passkey_service.dart` (`PasskeyAuthenticator` wrapper)
+- [x] **P1-5** Providers — `passkey_providers.dart` (register, login, enabled flag)
+- [x] **P1-6** Settings screen — "Add / Remove passkey" rows (local flag)
+- [x] **P1-7** Sign-in screen — wire biometric button to passkey login
+- [x] **P1-8** Biometric re-open gate — `AuthState` cold-start + `BiometricGateScreen` + route
+- [x] **P1-9** ARB strings (en + sr) + regen
+- [x] **P1-10** Platform config — Android assetlinks note, iOS `webcredentials` placeholder
+- [x] **P1-11** Verify — `build_runner` → `flutter analyze` → `flutter test` → manual emulator test
 
 Detailed steps & "definition of done": [04_mobile_implementation_plan.md](./04_mobile_implementation_plan.md)
 
