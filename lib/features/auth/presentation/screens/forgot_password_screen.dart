@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fap_mobile/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
+import '../../../../core/widgets/app_snack_bar.dart';
 import '../../../../core/widgets/brand_title.dart';
 import '../../data/validation_constants.dart';
+import '../providers/auth_providers.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/hero_background.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
+class ForgotPasswordScreen extends ConsumerStatefulWidget {
   const ForgotPasswordScreen({super.key});
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  ConsumerState<ForgotPasswordScreen> createState() =>
+      _ForgotPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
 
@@ -48,8 +52,27 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  void _onResetPassword() {
+  Future<void> _onResetPassword() async {
     if (!_formKey.currentState!.validate()) return;
+
+    final messenger = ScaffoldMessenger.of(context);
+    final l10n = AppLocalizations.of(context)!;
+
+    await ref
+        .read(forgottenPasswordEmailControllerProvider.notifier)
+        .send(email: _emailController.text.trim());
+
+    if (!mounted) return;
+    final state = ref.read(forgottenPasswordEmailControllerProvider);
+    if (state.hasError) {
+      showAppSnackBar(
+        messenger,
+        message: state.error?.toString() ?? l10n.errorSomethingWentWrong,
+        isError: true,
+      );
+      return;
+    }
+
     context.go('/email-sent');
   }
 
@@ -154,8 +177,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   Widget _buildResetButton(ThemeData theme) {
     final l10n = AppLocalizations.of(context)!;
+    final isLoading = ref
+        .watch(forgottenPasswordEmailControllerProvider)
+        .isLoading;
     return ElevatedButton(
-      onPressed: _onResetPassword,
+      onPressed: isLoading ? null : _onResetPassword,
       style: ElevatedButton.styleFrom(
         backgroundColor: vibrantCyan,
         foregroundColor: brandPrimary,
@@ -165,10 +191,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         ),
         elevation: 0,
       ),
-      child: Text(
-        l10n.resetPassword,
-        style: theme.textTheme.displaySmall?.copyWith(color: brandPrimary),
-      ),
+      child: isLoading
+          ? const SizedBox(
+              width: 22,
+              height: 22,
+              child: CircularProgressIndicator(
+                strokeWidth: 2.5,
+                color: brandPrimary,
+              ),
+            )
+          : Text(
+              l10n.resetPassword,
+              style: theme.textTheme.displaySmall?.copyWith(
+                color: brandPrimary,
+              ),
+            ),
     );
   }
 }

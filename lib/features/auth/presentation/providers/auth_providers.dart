@@ -136,6 +136,54 @@ class RegistrationController extends _$RegistrationController {
   }
 }
 
+/// POST /v1/auth/forgotten/password/email — requests a password reset email.
+///
+/// Public endpoint. On success the UI shows the "Check Your Email" screen; the
+/// email contains a link back into the app to set a new password.
+@riverpod
+class ForgottenPasswordEmailController
+    extends _$ForgottenPasswordEmailController {
+  @override
+  FutureOr<void> build() {}
+
+  Future<void> send({required String email}) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(
+      () => ref
+          .read(authRepositoryProvider)
+          .sendForgottenPasswordEmail(email: email),
+    );
+  }
+}
+
+/// POST /v1/auth/forgotten/password — sets a new password using the one-time
+/// token from the reset email link.
+///
+/// Public endpoint; the backend returns no session, so the user signs in again
+/// with the new password afterwards.
+@riverpod
+class ResetPasswordController extends _$ResetPasswordController {
+  @override
+  FutureOr<void> build() {}
+
+  Future<void> reset({
+    required String token,
+    required String password,
+    required String confirmedPassword,
+  }) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(
+      () => ref
+          .read(authRepositoryProvider)
+          .resetPassword(
+            token: token,
+            password: password,
+            confirmedPassword: confirmedPassword,
+          ),
+    );
+  }
+}
+
 /// POST /v1/auth/confirm/registration — verifies the email address with the
 /// one-time token from the confirmation deep link.
 ///

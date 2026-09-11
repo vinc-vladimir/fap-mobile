@@ -13,6 +13,7 @@ import '../core/router/app_router.dart';
 import '../core/theme/app_theme.dart';
 import '../core/theme/theme_provider.dart';
 import '../features/auth/presentation/screens/confirm_registration_screen.dart';
+import '../features/auth/presentation/screens/reset_password_screen.dart';
 
 /// MaterialApp wired to go_router and the theme/locale providers.
 class FapApp extends ConsumerStatefulWidget {
@@ -58,31 +59,33 @@ class _FapAppState extends ConsumerState<FapApp> {
 
   /// Routes a received deep link into the app.
   ///
-  /// Email confirmation links are presented directly on the navigator (not via
-  /// go_router) because go_router's `redirect` re-evaluates the
-  /// `StatefulShellRoute` home `/` while navigating to a top-level route when
-  /// logged out, hijacking the confirm screen with a `/sign-in` redirect. Pushing
-  /// the screen directly bypasses that redirect entirely.
+  /// Email confirmation and password-reset links are presented directly on the
+  /// navigator (not via go_router) because go_router's `redirect` re-evaluates
+  /// the `StatefulShellRoute` home `/` while navigating to a top-level route when
+  /// logged out, hijacking the screen with a `/sign-in` redirect. Pushing the
+  /// screen directly bypasses that redirect entirely.
   void _handleDeepLink(GoRouter router, Uri uri) {
     final route = DeepLinkHandler.routeForUri(uri);
     if (route == null) return;
 
     final token = uri.queryParameters['token'];
-    final isConfirm =
-        route.startsWith('/confirm-registration') &&
-        token != null &&
-        token.isNotEmpty;
+    if (token != null && token.isNotEmpty) {
+      final WidgetBuilder? builder;
+      if (route.startsWith('/confirm-registration')) {
+        builder = (_) => ConfirmRegistrationScreen(token: token);
+      } else if (route.startsWith('/reset-password')) {
+        builder = (_) => ResetPasswordScreen(token: token);
+      } else {
+        builder = null;
+      }
 
-    if (isConfirm) {
-      final navigator = router.routerDelegate.navigatorKey.currentState;
-      if (navigator != null) {
-        debugPrint('[DeepLink] presenting confirm screen for token=$token');
-        navigator.push(
-          MaterialPageRoute<void>(
-            builder: (_) => ConfirmRegistrationScreen(token: token),
-          ),
-        );
-        return;
+      if (builder != null) {
+        final navigator = router.routerDelegate.navigatorKey.currentState;
+        if (navigator != null) {
+          debugPrint('[DeepLink] presenting screen for route=$route');
+          navigator.push(MaterialPageRoute<void>(builder: builder));
+          return;
+        }
       }
     }
 

@@ -70,6 +70,25 @@ class AppLocalizationsSr extends AppLocalizations {
   String get resetPassword => 'RESETUJ LOZINKU';
 
   @override
+  String get resetPasswordTitle => 'Postavite novu lozinku';
+
+  @override
+  String get resetPasswordSubtitle => 'Izaberite novu lozinku za vaš nalog.';
+
+  @override
+  String get resetPasswordInvalidTitle => 'Link je istekao';
+
+  @override
+  String get resetPasswordInvalidDescription =>
+      'Ovaj link za resetovanje lozinke je nevažeći ili je istekao. Zatražite novi.';
+
+  @override
+  String get requestNewLink => 'ZATRAŽI NOVI LINK';
+
+  @override
+  String get resetPasswordSuccessTitle => 'Lozinka je resetovana';
+
+  @override
   String get checkYourEmail => 'Proverite vaš email';
 
   @override

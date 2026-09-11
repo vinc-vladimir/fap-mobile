@@ -218,6 +218,42 @@ abstract class AppLocalizations {
   /// **'RESET PASSWORD'**
   String get resetPassword;
 
+  /// No description provided for @resetPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set New Password'**
+  String get resetPasswordTitle;
+
+  /// No description provided for @resetPasswordSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a new password for your account.'**
+  String get resetPasswordSubtitle;
+
+  /// No description provided for @resetPasswordInvalidTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Link Expired'**
+  String get resetPasswordInvalidTitle;
+
+  /// No description provided for @resetPasswordInvalidDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This password reset link is invalid or has expired. Please request a new one.'**
+  String get resetPasswordInvalidDescription;
+
+  /// No description provided for @requestNewLink.
+  ///
+  /// In en, this message translates to:
+  /// **'REQUEST NEW LINK'**
+  String get requestNewLink;
+
+  /// No description provided for @resetPasswordSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Password Reset'**
+  String get resetPasswordSuccessTitle;
+
   /// No description provided for @checkYourEmail.
   ///
   /// In en, this message translates to:

@@ -357,8 +357,8 @@ class _MenuRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accentColor = theme.brightness == Brightness.dark
-        ? const Color(0xFF00DCE5)
-        : vibrantCyan;
+        ? vibrantCyan
+        : brandPrimary;
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
@@ -371,8 +371,8 @@ class _MenuRow extends StatelessWidget {
               height: 40,
               decoration: BoxDecoration(
                 color: theme.brightness == Brightness.dark
-                    ? const Color(0xFF273647)
-                    : theme.colorScheme.surfaceContainerHigh,
+                    ? iconTileBackgroundDark
+                    : iconTileBackgroundLight,
                 borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
               ),
               child: Icon(icon, color: accentColor),

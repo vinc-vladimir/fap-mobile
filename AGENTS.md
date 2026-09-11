@@ -144,20 +144,36 @@ ErrorModel { timestamp, status, error: { message }, trace, message, path }
 
 ## Deep Links / App Links
 
-The registration-confirm flow supports two entry URIs; `lib/core/deep_links/deep_link_handler.dart`
-routes both to `/confirm-registration/<token>`:
+Two token-driven email flows navigate from a Gmail link into the app. Both are parsed by
+`lib/core/deep_links/deep_link_handler.dart` and **presented directly on the navigator**
+(`lib/app/app.dart`) rather than through go_router, so the `StatefulShellRoute` home redirect
+cannot hijack them while logged out.
+
+**Registration confirmation** → `/confirm-registration/<token>`:
 
 | URI | Purpose | Registered in |
 |---|---|---|
 | `fap://registration-confirm?token=…` | Manual `adb` testing / back-compat | `android/app/src/main/AndroidManifest.xml` (scheme `fap`); `ios/Runner/Info.plist` |
 | `https://dev.fap.rs/registration-confirm?token=…` | Tappable link in the confirmation email (Gmail) | Android App Link intent-filter (`autoVerify`, host `dev.fap.rs`, path prefix `/registration-confirm`) + `fap-infra` `static/.well-known/assetlinks.json` (`handle_all_urls` + debug cert fingerprint) |
 
+**Password reset** → `/reset-password/<token>`:
+
+| URI | Purpose | Registered in |
+|---|---|---|
+| `fap://set-new-password?token=…` (`fap://reset-password?token=…` alias) | Manual `adb` testing / back-compat | `android/app/src/main/AndroidManifest.xml` (scheme `fap`); `ios/Runner/Info.plist` |
+| `https://dev.fap.rs/set-new-password?token=…` | Tappable link in the reset email (Gmail) | Android App Link intent-filter (`autoVerify`, host `dev.fap.rs`, path prefix `/set-new-password`) + `fap-infra` `static/.well-known/assetlinks.json` |
+
+`DeepLinkHandler` accepts `set-new-password` (the path the backend emits) and `reset-password`
+(alias kept for manual testing); both map to the same route.
+
 - The dev App Link / association domain is **`dev.fap.rs`**.
-- The email link is produced by `fap-service` from `email-configuration.reg-confirm-url`
-  (env `REG_CONFIRM_URL`). Switching it to the HTTPS URL is **pending** on `fap-service`
-  (hand off per the Cross-Project rule above).
+- Email links are produced by `fap-service`: the confirmation link from
+  `email-configuration.reg-confirm-url` (env `REG_CONFIRM_URL`) and the reset link from its
+  forgot-password URL (env `FORGOTTEN_PWD_URL`). Both now use the **HTTPS App Link** and are
+  verified end-to-end: tapping the link in Gmail opens the app and navigates to the matching
+  screen (registration confirmation / set-new-password).
 - Changing the host requires lockstep updates across `fap-mobile` (manifest), `fap-infra`
-  (assetlinks), and `fap-service` (email URL).
+  (assetlinks), and `fap-service` (email URLs).
 - iOS Universal Links are **not configured yet** (no `apple-app-site-association`; no
   `applinks:` entitlement).
 
@@ -261,7 +277,7 @@ hardcoding raw values.
 | Typography | `app_typography.dart` | `appTextTheme.bodyMedium` |
 | Spacing | `app_dimensions.dart` | `AppDimensions.stackMd` |
 | Border radius | `app_dimensions.dart` | `AppDimensions.radiusLg` |
-| Component-specific | `app_colors.dart` | `glassBorderLight`, `surfaceGlassLight` |
+| Component-specific | `app_colors.dart` | `glassBorderLight`, `surfaceGlassLight`, `iconTileBackgroundLight` / `iconTileBackgroundDark` |
 
 **Anti-pattern (DO NOT):**
 ```dart
@@ -335,17 +351,22 @@ style: theme.textTheme.displayLarge?.copyWith(color: brandPrimary)
 ```
 (only color differs; fontSize, fontWeight, height all come from the base style)
 
-**Rule 3: Use named constants from `app_colors.dart` for cross-theme consistency.**
-For text that should appear the same in both light and dark themes (brand name,
-links, call-to-action text), use a named color constant like `brandPrimary` or
-`vibrantCyan`. Use `theme.colorScheme.onSurfaceVariant` only when the color
-should adapt to the current theme (e.g., secondary text).
+**Rule 3: Brand accents are theme-dependent — `brandPrimary` in light, `vibrantCyan` in dark.**
+Brand accent text and icons (tagline, action links, inline call-to-action text, menu icon tiles)
+use `brandPrimary` when `theme.brightness == Brightness.light` and `vibrantCyan` when dark.
+Branch on `theme.brightness` (or a small local helper) instead of hardcoding `vibrantCyan` for
+both themes. The `BrandTitle` wordmark is the exception: it keeps its cross-theme
+`brandPrimary` stroke + `vibrantCyan` fill unless a screen overrides `fillColor`. Use
+`theme.colorScheme.onSurfaceVariant` for secondary text that should simply adapt to the theme.
 
-✅ **Cross-theme (same in both themes):**
+✅ **Theme-dependent brand accent:**
 ```dart
-style: theme.textTheme.bodySmall?.copyWith(color: brandPrimary)
+Color _accentColor(ThemeData theme) =>
+    theme.brightness == Brightness.dark ? vibrantCyan : brandPrimary;
+
+style: linkMedium.copyWith(color: _accentColor(theme))
 ```
-✅ **Theme-adaptive (different in each theme):**
+✅ **Theme-adaptive secondary text:**
 ```dart
 style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)
 ```
@@ -359,8 +380,8 @@ a different style from the theme default.
 **Rule 5: Use `linkMedium` / `linkSmall` constants for all link text.**
 All clickable link text MUST use either `linkMedium` (inline action links)
 or `linkSmall` (footer/secondary links) from `app_typography.dart`. Color is
-applied via `copyWith` — `brandPrimary` for action links, `theme.colorScheme.onSurfaceVariant`
-for footer links.
+applied via `copyWith` — the theme accent (`brandPrimary` in light / `vibrantCyan` in dark,
+see Rule 3) for action links, `theme.colorScheme.onSurfaceVariant` for footer links.
 
 **Anti-pattern (DO NOT):**
 ```dart
@@ -372,7 +393,7 @@ style: theme.textTheme.bodySmall?.copyWith(
 
 **Correct pattern (DO):**
 ```dart
-style: linkMedium.copyWith(color: brandPrimary)
+style: linkMedium.copyWith(color: _accentColor(theme))
 ```
 
 **Footer links (Privacy Policy, Terms of Service):**
@@ -462,7 +483,7 @@ Exceptions must be documented with a comment explaining why a custom card is nec
 |---|---|---|---|---|
 | Primary | `ElevatedButton` | `vibrantCyan` | `brandPrimary` | SIGN IN, SIGN UP, SAVE, CONFIRM (call-to-action) |
 | Secondary | `OutlinedButton` | `colorScheme.surfaceContainerLow` | `colorScheme.onSurface` | BIOMETRIC SIGN IN, social login, CANCEL, SKIP |
-| Text | `TextButton` | transparent | `brandPrimary` | "Forgot password?", "Sign up now" (inline links) |
+| Text | `TextButton` | transparent | theme accent (`brandPrimary` light / `vibrantCyan` dark) | "Forgot password?", "Sign up now" (inline links) |
 
 **Rule 1: All primary `ElevatedButton` widgets MUST use the exact same style.**
 Every primary submit/action button in the app must have:
@@ -485,6 +506,26 @@ This ensures SIGN IN, CREATE ACCOUNT, RESET PASSWORD, SAVE, and CONFIRM buttons 
 
 **Rule 2:** All secondary `OutlinedButton` widgets MUST set
 `backgroundColor: theme.colorScheme.surfaceContainerLow` to match the input field fill color.
+
+## Icon Tile Convention
+
+Menu and settings rows place the leading icon in a **40×40 rounded-square tile**
+(`AppDimensions.radiusLg`). The tile fill and icon color are **theme-dependent**:
+
+| Theme | Tile fill | Icon color |
+|---|---|---|
+| Light | `iconTileBackgroundLight` (a translucent `brandPrimary` tint) | `brandPrimary` |
+| Dark | `iconTileBackgroundDark` (translucent slate-teal) | `vibrantCyan` |
+
+- Reference implementations: `_MenuRow` in
+  [`account_screen.dart`](lib/features/account/presentation/screens/account_screen.dart) and
+  `_SettingsRow` in
+  [`settings_screen.dart`](lib/features/settings/presentation/screens/settings_screen.dart).
+- Use the shared constants from `app_colors.dart`; never inline the raw hex.
+- **Destructive** rows (e.g. Delete Account) keep the error treatment: tile
+  `theme.colorScheme.error.withValues(alpha: 0.1)`, icon `theme.colorScheme.error`.
+- `accentCyanDark` (`#00DCE5`) is the dark-mode accent used for small affordances (e.g. the
+  language picker chevron) where `brandPrimary` would have poor contrast.
 
 ## Verification
 ```bash

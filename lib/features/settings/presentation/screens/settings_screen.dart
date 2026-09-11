@@ -208,9 +208,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
     final isDark = theme.brightness == Brightness.dark;
-    final accentColor = isDark ? const Color(0xFF00DCE5) : vibrantCyan;
-    final passkeyEnabled =
-        ref.watch(passkeyEnabledProvider).value ?? false;
+    final accentColor = isDark ? accentCyanDark : vibrantCyan;
+    final passkeyEnabled = ref.watch(passkeyEnabledProvider).value ?? false;
     final passkeyRegistering = ref
         .watch(passkeyRegistrationControllerProvider)
         .isLoading;
@@ -375,10 +374,13 @@ class _SettingsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final accentColor = isDark ? const Color(0xFF00DCE5) : vibrantCyan;
+    final accentColor = isDark ? vibrantCyan : brandPrimary;
     final titleColor = destructive
         ? theme.colorScheme.error
         : theme.colorScheme.onSurface;
+    final iconBackgroundColor = destructive
+        ? theme.colorScheme.error.withValues(alpha: 0.1)
+        : (isDark ? iconTileBackgroundDark : iconTileBackgroundLight);
 
     return InkWell(
       onTap: onTap,
@@ -390,10 +392,8 @@ class _SettingsRow extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: destructive
-                    ? theme.colorScheme.error.withValues(alpha: 0.1)
-                    : const Color(0xFF0B101A),
+                color: iconBackgroundColor,
+                borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
               ),
               child: Icon(
                 icon,

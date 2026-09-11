@@ -87,6 +87,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     context.go('/');
   }
 
+  Color _accentColor(ThemeData theme) =>
+      theme.brightness == Brightness.dark ? vibrantCyan : brandPrimary;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -135,7 +138,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         BrandTitle(
           text: l10n.tagline,
           style: theme.textTheme.bodyMedium,
-          fillColor: vibrantCyan,
+          fillColor: _accentColor(theme),
           strokeWidth: 1,
         ),
       ],
@@ -231,7 +234,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           ),
           child: Text(
             l10n.forgotPassword,
-            style: linkMedium.copyWith(color: vibrantCyan),
+            style: linkMedium.copyWith(color: _accentColor(theme)),
           ),
         ),
       ],
@@ -337,7 +340,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               ),
               child: Text(
                 l10n.signUpNow,
-                style: linkMedium.copyWith(color: vibrantCyan),
+                style: linkMedium.copyWith(color: _accentColor(theme)),
               ),
             ),
           ],

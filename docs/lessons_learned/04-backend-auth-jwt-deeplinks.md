@@ -180,8 +180,11 @@ Confirmed end-to-end: Sign Up → email (SES) → copy deep link from backend lo
    + `AuthInterceptor` auto-retry on 401.
 3. **Auto-login after email confirmation** — needs a backend change (confirm
    endpoint issuing a JWT), then the confirm screen can go straight to Home.
-4. **Forgot-password deep link** (`fap://reset-password`) — reuse the same
-   `app_links` plumbing; backend `FORGOTTEN_PWD_URL` is already configurable.
+4. ~~**Forgot-password deep link**~~ — **done:** `fap://set-new-password` /
+   `https://dev.fap.rs/set-new-password` (alias `reset-password`) route to
+   `ResetPasswordScreen`; backend `FORGOTTEN_PWD_URL` emits the HTTPS link. See
+   [`07-forgot-password-deeplink.md`](07-forgot-password-deeplink.md).
 5. **Account screen** — "Change Password" tile is still a stub.
-6. **Promote remaining raw hex colors** in `home_screen.dart`/`account_screen.dart`
-   to named constants (AGENTS token rule).
+6. **Promote remaining raw hex colors** in `home_screen.dart` to named constants
+   (AGENTS token rule). `account_screen.dart` / `settings_screen.dart` icon-tile hexes are
+   already promoted (`iconTileBackgroundLight/Dark`, `accentCyanDark`).
