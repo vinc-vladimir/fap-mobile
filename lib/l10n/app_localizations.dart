@@ -734,12 +734,6 @@ abstract class AppLocalizations {
   /// **'John Smith'**
   String get profileName;
 
-  /// No description provided for @profileEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'john.smith@velocityfleet.com'**
-  String get profileEmail;
-
   /// No description provided for @premiumMember.
   ///
   /// In en, this message translates to:

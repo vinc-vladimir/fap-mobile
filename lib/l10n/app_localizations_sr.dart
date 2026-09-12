@@ -355,9 +355,6 @@ class AppLocalizationsSr extends AppLocalizations {
   String get profileName => 'John Smith';
 
   @override
-  String get profileEmail => 'john.smith@velocityfleet.com';
-
-  @override
   String get premiumMember => 'Premium Član';
 
   @override

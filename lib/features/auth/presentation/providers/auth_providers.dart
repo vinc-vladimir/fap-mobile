@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../../core/auth/jwt_utils.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/network/api_exceptions.dart';
 import '../../../../core/storage/secure_storage.dart';
@@ -75,6 +76,18 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepository(ref.watch(dioProvider));
 });
 
+/// The signed-in user's email, decoded from the persisted access token's `sub`
+/// claim. `null` when no token is stored or it cannot be decoded.
+///
+/// `keepAlive` so it survives screen navigation; invalidated on sign-in and
+/// sign-out so it never serves a previous session's email.
+@Riverpod(keepAlive: true)
+Future<String?> currentUserEmail(Ref ref) async {
+  final token = await ref.watch(secureStorageProvider).readAccessToken();
+  if (token == null || token.isEmpty) return null;
+  return emailFromJwt(token);
+}
+
 /// Handles email + password sign in. On success the JWT pair is persisted in
 /// secure storage so the [AuthInterceptor] attaches it to subsequent requests.
 ///
@@ -101,6 +114,7 @@ class LoginController extends _$LoginController {
       ref.read(authStateProvider.notifier).setAuthenticated(true);
       // Fresh session → drop any cached account data from a previous session.
       ref.invalidate(accountProvider);
+      ref.invalidate(currentUserEmailProvider);
     });
   }
 
@@ -113,6 +127,7 @@ class LoginController extends _$LoginController {
       // session is cleared regardless.
     }
     await ref.read(secureStorageProvider).clearTokens();
+    ref.invalidate(currentUserEmailProvider);
     ref.read(authStateProvider.notifier).setAuthenticated(false);
     state = const AsyncData<void>(null);
   }

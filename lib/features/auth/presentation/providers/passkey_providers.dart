@@ -98,6 +98,7 @@ class PasskeyLoginController extends _$PasskeyLoginController {
       ref.read(authStateProvider.notifier).setAuthenticated(true);
       // Fresh session → drop any cached account data from a previous session.
       ref.invalidate(accountProvider);
+      ref.invalidate(currentUserEmailProvider);
     });
   }
 }
