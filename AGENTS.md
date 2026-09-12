@@ -291,6 +291,42 @@ border: Border.all(color: glassBorderLight)
 If a new design value does not have a corresponding constant, add it to the appropriate
 theme file first, then reference it. Never embed raw design values in widget files.
 
+**Rule 0 (HARD BAN — no exceptions): No raw color literal may appear anywhere outside
+`lib/core/theme/`.** The following are all forbidden in widgets, screens, and any other
+file under `lib/`:
+
+- `const Color(0xFF…)` / `Color(0x…)` / `const Color.fromARGB(…)` / `Color.fromRGBO(…)`
+- `Colors.<name>` (e.g. `Colors.white`, `Colors.black`, `Colors.grey[800]`) — including
+  `withValues(...)`/`withOpacity(...)` chains on them
+- any inline `Color` built from raw hex/RGB
+
+The **only** permitted exception is `Colors.transparent`, which represents the absence of
+a color rather than a design token.
+
+A color is allowed **only** if it resolves to one of:
+1. a `theme.colorScheme.*` role (preferred — it adapts to light/dark automatically), or
+2. a named constant exported from `lib/core/theme/app_colors.dart` (or another
+   `lib/core/theme/` file).
+
+`app_colors.dart` is the **only** file permitted to declare raw color values. If the value
+you need already exists there, reuse it — do not re-declare it (see Color Reuse Rule).
+
+**Anti-pattern (DO NOT):**
+```dart
+color: const Color(0xFF0B101A) // raw literal — must be `pageBaseDark`
+```
+
+**Correct pattern (DO):**
+```dart
+color: pageBaseDark
+```
+
+**Verification (must return zero matches before finishing any UI change):**
+```bash
+rg -n "Color\(0x|Color\.fromARGB|Color\.fromRGBO|Colors\." lib \
+  --glob '!lib/core/theme/**' | grep -v 'Colors.transparent'
+```
+
 ## Color Reuse Rule
 
 **Rule 1: Always reuse existing named color constants first.**

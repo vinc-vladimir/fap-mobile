@@ -468,7 +468,7 @@ class _LanguageTrailing extends StatelessWidget {
           vertical: 8,
         ),
         decoration: BoxDecoration(
-          color: const Color(0xFF0B101A),
+          color: pageBaseDark,
           borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
           border: Border.all(
             color: theme.colorScheme.outlineVariant.withValues(alpha: 0.2),

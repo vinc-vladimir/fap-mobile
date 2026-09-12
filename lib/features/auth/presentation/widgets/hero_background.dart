@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_colors.dart';
+
 class HeroBackground extends StatelessWidget {
   const HeroBackground({super.key, this.imagePath});
 
@@ -26,7 +28,7 @@ class HeroBackground extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.black.withValues(alpha: 0.5),
+                    scrimBlack50,
                     Colors.transparent,
                     theme.colorScheme.surface,
                   ],

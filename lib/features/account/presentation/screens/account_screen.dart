@@ -141,7 +141,7 @@ class _Avatar extends StatelessWidget {
           ),
           child: const CircleAvatar(
             backgroundColor: Colors.transparent,
-            child: Icon(Icons.person, size: 48, color: Colors.white70),
+            child: Icon(Icons.person, size: 48, color: overlayWhite70),
           ),
         ),
         Positioned(

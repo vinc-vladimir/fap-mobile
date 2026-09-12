@@ -28,7 +28,7 @@ class ScreenAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final accentColor = isDark ? const Color(0xFF00DCE5) : vibrantCyan;
+    final accentColor = isDark ? accentCyanDark : vibrantCyan;
 
     return Container(
       decoration: BoxDecoration(

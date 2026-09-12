@@ -68,13 +68,13 @@ class _HomeTrailing extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              color: isDark ? const Color(0xFF00DCE5) : brandPrimary,
+              color: isDark ? accentCyanDark : brandPrimary,
               width: 2,
             ),
           ),
           child: const CircleAvatar(
             backgroundColor: Colors.transparent,
-            child: Icon(Icons.person, color: Colors.white70),
+            child: Icon(Icons.person, color: overlayWhite70),
           ),
         ),
       ],
@@ -91,15 +91,13 @@ class _PointsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = theme.brightness == Brightness.dark;
-    final accentColor = isDark ? const Color(0xFF00DCE5) : vibrantCyan;
+    final accentColor = isDark ? accentCyanDark : vibrantCyan;
     return Container(
       padding: const EdgeInsets.all(AppDimensions.containerPadding + 8),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xB31A2130) : surfaceGlassLight,
+        color: isDark ? surfaceGlassDark : surfaceGlassLight,
         borderRadius: BorderRadius.circular(AppDimensions.radiusXxl),
-        border: Border.all(
-          color: isDark ? const Color(0x14FFFFFF) : glassBorderLight,
-        ),
+        border: Border.all(color: isDark ? glassBorderDark : glassBorderLight),
       ),
       child: Column(
         children: [
@@ -114,7 +112,7 @@ class _PointsCard extends StatelessWidget {
                   painter: _CircularProgressPainter(
                     progress: 0.7,
                     trackColor: isDark
-                        ? Colors.white.withValues(alpha: 0.1)
+                        ? overlayWhite10
                         : brandPrimary.withValues(alpha: 0.1),
                     progressColor: accentColor,
                     strokeWidth: 8,
@@ -149,13 +147,11 @@ class _PointsCard extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               color: isDark
-                  ? const Color(0xFF273647)
+                  ? surfaceRaisedDark
                   : theme.colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(AppDimensions.radiusFull),
               border: Border.all(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.1)
-                    : glassBorderLight,
+                color: isDark ? overlayWhite10 : glassBorderLight,
               ),
             ),
             child: Row(
@@ -164,7 +160,7 @@ class _PointsCard extends StatelessWidget {
                 Icon(
                   Icons.workspace_premium,
                   size: 18,
-                  color: isDark ? const Color(0xFFC0C6DA) : brandPrimary,
+                  color: isDark ? theme.colorScheme.secondary : brandPrimary,
                 ),
                 const SizedBox(width: 4),
                 Text(
@@ -199,7 +195,7 @@ class _StationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = theme.brightness == Brightness.dark;
-    final accentColor = isDark ? const Color(0xFF00DCE5) : vibrantCyan;
+    final accentColor = isDark ? accentCyanDark : vibrantCyan;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -226,10 +222,10 @@ class _StationCard extends StatelessWidget {
         const SizedBox(height: AppDimensions.stackMd),
         Container(
           decoration: BoxDecoration(
-            color: isDark ? const Color(0xB31A2130) : surfaceGlassLight,
+            color: isDark ? surfaceGlassDark : surfaceGlassLight,
             borderRadius: BorderRadius.circular(AppDimensions.radiusXxl),
             border: Border.all(
-              color: isDark ? const Color(0x14FFFFFF) : glassBorderLight,
+              color: isDark ? glassBorderDark : glassBorderLight,
             ),
           ),
           child: Column(
@@ -240,7 +236,7 @@ class _StationCard extends StatelessWidget {
                 ),
                 child: Container(
                   height: 160,
-                  color: isDark ? const Color(0xFF0d1c2d) : mapVoid,
+                  color: isDark ? surfaceMapDark : mapVoid,
                   child: Stack(
                     children: [
                       Center(
@@ -262,15 +258,13 @@ class _StationCard extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: isDark
-                                ? const Color(0xFF273647).withValues(alpha: 0.9)
+                                ? surfaceRaisedDark.withValues(alpha: 0.9)
                                 : surfaceGlassLight,
                             borderRadius: BorderRadius.circular(
                               AppDimensions.radiusLg,
                             ),
                             border: Border.all(
-                              color: isDark
-                                  ? Colors.white.withValues(alpha: 0.1)
-                                  : glassBorderLight,
+                              color: isDark ? overlayWhite10 : glassBorderLight,
                             ),
                           ),
                           child: Text(
@@ -332,7 +326,7 @@ class _StationCard extends StatelessWidget {
                             onPressed: () {},
                             icon: const Icon(Icons.directions),
                             color: theme.brightness == Brightness.dark
-                                ? const Color(0xFF051424)
+                                ? theme.colorScheme.surface
                                 : brandPrimary,
                           ),
                         ),
@@ -367,14 +361,10 @@ class _StationCard extends StatelessWidget {
                       child: OutlinedButton(
                         onPressed: () {},
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: isDark
-                              ? Colors.white.withValues(alpha: 0.05)
-                              : Colors.white,
+                          backgroundColor: isDark ? overlayWhite5 : pureWhite,
                           foregroundColor: theme.colorScheme.onSurface,
                           side: BorderSide(
-                            color: isDark
-                                ? Colors.white.withValues(alpha: 0.1)
-                                : glassBorderLight,
+                            color: isDark ? overlayWhite10 : glassBorderLight,
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
@@ -419,7 +409,7 @@ class _FuelChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = theme.brightness == Brightness.dark;
-    final accentColor = isDark ? const Color(0xFF00DCE5) : vibrantCyan;
+    final accentColor = isDark ? accentCyanDark : vibrantCyan;
     return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(
@@ -428,14 +418,10 @@ class _FuelChip extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: isDark
-              ? const Color(0xFF122131)
+              ? surfaceChipDark
               : theme.colorScheme.surfaceContainerLow,
           borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
-          border: Border.all(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.05)
-                : glassBorderLight,
-          ),
+          border: Border.all(color: isDark ? overlayWhite5 : glassBorderLight),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -470,7 +456,7 @@ class _RewardsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = theme.brightness == Brightness.dark;
-    final accentColor = isDark ? const Color(0xFF00DCE5) : vibrantCyan;
+    final accentColor = isDark ? accentCyanDark : vibrantCyan;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -542,16 +528,14 @@ class _RewardCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = theme.brightness == Brightness.dark;
-    final accentColor = isDark ? const Color(0xFF00DCE5) : vibrantCyan;
+    final accentColor = isDark ? accentCyanDark : vibrantCyan;
     final l10n = AppLocalizations.of(context)!;
     return Container(
       width: 280,
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xB31A2130) : surfaceGlassLight,
+        color: isDark ? surfaceGlassDark : surfaceGlassLight,
         borderRadius: BorderRadius.circular(AppDimensions.radiusXxl),
-        border: Border.all(
-          color: isDark ? const Color(0x14FFFFFF) : glassBorderLight,
-        ),
+        border: Border.all(color: isDark ? glassBorderDark : glassBorderLight),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -562,7 +546,7 @@ class _RewardCard extends StatelessWidget {
             ),
             child: Container(
               height: 128,
-              color: isDark ? const Color(0xFF0d1c2d) : mapVoid,
+              color: isDark ? surfaceMapDark : mapVoid,
               child: Stack(
                 children: [
                   Center(
@@ -593,7 +577,7 @@ class _RewardCard extends StatelessWidget {
                           l10n.newBadge.toUpperCase(),
                           style: theme.textTheme.labelSmall?.copyWith(
                             color: theme.brightness == Brightness.dark
-                                ? const Color(0xFF003739)
+                                ? theme.colorScheme.onPrimary
                                 : brandPrimary,
                             fontWeight: FontWeight.bold,
                           ),
@@ -651,7 +635,7 @@ class _RewardCard extends StatelessWidget {
                     child: LinearProgressIndicator(
                       value: 0.6,
                       backgroundColor: isDark
-                          ? Colors.white.withValues(alpha: 0.05)
+                          ? overlayWhite5
                           : brandPrimary.withValues(alpha: 0.1),
                       valueColor: AlwaysStoppedAnimation<Color>(accentColor),
                       minHeight: 6,
