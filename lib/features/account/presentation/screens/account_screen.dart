@@ -60,6 +60,7 @@ class _ProfileCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final email = ref.watch(currentUserEmailProvider).value;
     return Container(
       padding: const EdgeInsets.all(AppDimensions.containerPadding + 8),
       decoration: BoxDecoration(
@@ -90,13 +91,15 @@ class _ProfileCard extends ConsumerWidget {
               color: theme.colorScheme.onSurface,
             ),
           ),
-          const SizedBox(height: 4),
-          Text(
-            l10n.profileEmail,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.outline,
+          if (email != null && email.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            Text(
+              email,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.outline,
+              ),
             ),
-          ),
+          ],
           const SizedBox(height: AppDimensions.stackMd),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

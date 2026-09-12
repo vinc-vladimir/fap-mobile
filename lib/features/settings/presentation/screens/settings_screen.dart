@@ -207,6 +207,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
+    final email = ref.watch(currentUserEmailProvider).value;
     final isDark = theme.brightness == Brightness.dark;
     final accentColor = isDark ? accentCyanDark : vibrantCyan;
     final passkeyEnabled = ref.watch(passkeyEnabledProvider).value ?? false;
@@ -265,7 +266,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           _SettingsRow(
                             icon: Icons.mail_outline,
                             title: l10n.changeEmail,
-                            subtitle: l10n.profileEmail,
+                            subtitle: email ?? '—',
                           ),
                           const _RowDivider(),
                           _SettingsRow(
