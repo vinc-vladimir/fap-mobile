@@ -41,18 +41,14 @@ class _MainBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final accentColor = isDark ? const Color(0xFF00DCE5) : vibrantCyan;
+    final accentColor = isDark ? accentCyanDark : vibrantCyan;
     final l10n = AppLocalizations.of(context)!;
 
     return Container(
       decoration: BoxDecoration(
         color: theme.colorScheme.surface.withValues(alpha: 0.8),
         border: Border(
-          top: BorderSide(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.05)
-                : glassBorderLight,
-          ),
+          top: BorderSide(color: isDark ? overlayWhite5 : glassBorderLight),
         ),
       ),
       child: SafeArea(

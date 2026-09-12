@@ -19,6 +19,20 @@ const onSuccessContainerDark = Color(0xFFA5D6A7);
 const navySurface = Color(0xFF1A2130); // solid card surface (Velocity Blue)
 const pageBaseDark = Color(0xFF0B101A); // base background layer
 
+// ── Dark surface tiers (home cards / chips) ───────────────────────
+const surfaceRaisedDark = Color(0xFF273647); // raised chip/badge on dark glass
+const surfaceMapDark = Color(
+  0xFF0D1C2D,
+); // map/image placeholder backdrop (dark)
+const surfaceChipDark = Color(0xFF122131); // small chip fill (dark)
+
+// ── Overlays / scrims ─────────────────────────────────────────────
+const pureWhite = Color(0xFFFFFFFF); // opaque white
+const overlayWhite5 = Color(0x0DFFFFFF); // white @5%
+const overlayWhite10 = Color(0x1AFFFFFF); // white @10%
+const overlayWhite70 = Color(0xB3FFFFFF); // white @70% (avatar glyph)
+const scrimBlack50 = Color(0x80000000); // black @50% hero scrim
+
 // ── Icon tile / accent ────────────────────────────────────────────
 const iconTileBackgroundLight = Color(
   0x2500696E,
