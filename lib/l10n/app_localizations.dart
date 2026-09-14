@@ -764,6 +764,66 @@ abstract class AppLocalizations {
   /// **'Personal Details'**
   String get personalDetails;
 
+  /// No description provided for @personalDetailsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your contact and address details up to date.'**
+  String get personalDetailsSubtitle;
+
+  /// No description provided for @personalDetailsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Your personal details have been saved.'**
+  String get personalDetailsSaved;
+
+  /// No description provided for @profileNameFallback.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Profile'**
+  String get profileNameFallback;
+
+  /// No description provided for @firstName.
+  ///
+  /// In en, this message translates to:
+  /// **'First Name'**
+  String get firstName;
+
+  /// No description provided for @lastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Name'**
+  String get lastName;
+
+  /// No description provided for @phoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneNumber;
+
+  /// No description provided for @address.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get address;
+
+  /// No description provided for @city.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get city;
+
+  /// No description provided for @zipCode.
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP Code'**
+  String get zipCode;
+
+  /// No description provided for @country.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get country;
+
   /// No description provided for @organization.
   ///
   /// In en, this message translates to:

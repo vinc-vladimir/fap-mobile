@@ -16,6 +16,12 @@ back-compat.
 The Flutter side needed **no Dart change**: `DeepLinkHandler.routeForUri` already read
 `uri.path` for non-custom-scheme links and maps both forms to `/confirm-registration/<token>`.
 
+> **Important (added later):** `AndroidManifest.xml` sets
+> `<meta-data android:name="flutter_deeplinking_enabled" android:value="false" />`
+> (and `Info.plist` sets `FlutterDeepLinkingEnabled` = `false`) so Flutter's built-in
+> deep linking does not push the raw HTTPS URL into go_router ("Page Not Found"). See
+> [`05-email-confirm-deeplink-gorouter.md`](05-email-confirm-deeplink-gorouter.md), Lesson #8.
+
 > **Status:** implemented and verified end-to-end — tapping the link in Gmail opens the app and
 > reaches `ConfirmRegistrationScreen`. The `fap-service` email now carries the HTTPS App Link.
 > The same pattern was later reused for the **password-reset** link (`/set-new-password`); see
@@ -129,5 +135,9 @@ Confirmed: the HTTPS link opens the app and reaches `ConfirmRegistrationScreen`.
 4. ~~**Forgot-password App Link:** reuse this pattern for `forgotten-password-url`.~~ —
    **done:** `https://dev.fap.rs/set-new-password?token=…` (see
    [`07-forgot-password-deeplink.md`](07-forgot-password-deeplink.md)).
-5. **Cold-start from Gmail:** verify `getInitialLink` presents the confirm screen when the app
-   is not already running (see `05-email-confirm-deeplink-gorouter.md`, Lesson #5).
+5. ~~**Cold-start from Gmail:** verify `getInitialLink` presents the confirm screen when the app
+   is not already running (see `05-email-confirm-deeplink-gorouter.md`, Lesson #5).~~ —
+   **done:** `MainActivity` is now `singleTask` with an explicit `taskAffinity`
+   (`com.vincsoftware.fap_mobile`) so a `NEW_TASK` App Link reuses the running task and delivers
+   `onNewIntent` instead of spawning a second (black) activity; the cold-start push is deferred
+   to after the first frame. See `05-email-confirm-deeplink-gorouter.md`, Lessons #6/#7.

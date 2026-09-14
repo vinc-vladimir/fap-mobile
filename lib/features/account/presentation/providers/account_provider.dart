@@ -22,3 +22,21 @@ final accountRepositoryProvider = Provider<AccountRepository>((ref) {
 Future<AccountModel?> account(Ref ref) async {
   return ref.watch(accountRepositoryProvider).getAccount();
 }
+
+/// Handles saving the physical-user profile from the Personal Details screen.
+///
+/// On success the cached [accountProvider] is invalidated so the Account tab
+/// and Settings screen refetch and show the updated name/details.
+@riverpod
+class AccountFormController extends _$AccountFormController {
+  @override
+  FutureOr<void> build() {}
+
+  Future<void> save(AccountModel account) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref.read(accountRepositoryProvider).saveAccount(account);
+      ref.invalidate(accountProvider);
+    });
+  }
+}
