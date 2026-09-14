@@ -371,6 +371,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get personalDetails => 'Personal Details';
 
   @override
+  String get personalDetailsSubtitle =>
+      'Keep your contact and address details up to date.';
+
+  @override
+  String get personalDetailsSaved => 'Your personal details have been saved.';
+
+  @override
+  String get profileNameFallback => 'Your Profile';
+
+  @override
+  String get firstName => 'First Name';
+
+  @override
+  String get lastName => 'Last Name';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get address => 'Address';
+
+  @override
+  String get city => 'City';
+
+  @override
+  String get zipCode => 'ZIP Code';
+
+  @override
+  String get country => 'Country';
+
+  @override
   String get organization => 'Organization';
 
   @override

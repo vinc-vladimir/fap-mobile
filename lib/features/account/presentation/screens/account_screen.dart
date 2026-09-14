@@ -8,6 +8,7 @@ import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/widgets/screen_app_bar.dart';
 import '../../../auth/presentation/providers/auth_providers.dart';
 import '../../../auth/presentation/widgets/glass_card.dart';
+import '../providers/account_provider.dart';
 import '../providers/app_version_provider.dart';
 
 /// Account tab — the entry point for the logged-in user's profile, fleet
@@ -61,6 +62,21 @@ class _ProfileCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final email = ref.watch(currentUserEmailProvider).value;
+    final account = ref.watch(accountProvider).value;
+
+    final fullName = [
+      account?.firstName,
+      account?.lastName,
+    ].where((part) => part != null && part.trim().isNotEmpty).join(' ').trim();
+
+    final title = fullName.isNotEmpty
+        ? fullName
+        : (email != null && email.isNotEmpty
+              ? email
+              : l10n.profileNameFallback);
+    final showEmailSubtitle =
+        fullName.isNotEmpty && email != null && email.isNotEmpty;
+
     return Container(
       padding: const EdgeInsets.all(AppDimensions.containerPadding + 8),
       decoration: BoxDecoration(
@@ -86,12 +102,12 @@ class _ProfileCard extends ConsumerWidget {
           _Avatar(),
           const SizedBox(height: AppDimensions.stackMd),
           Text(
-            l10n.profileName,
+            title,
             style: theme.textTheme.headlineMedium?.copyWith(
               color: theme.colorScheme.onSurface,
             ),
           ),
-          if (email != null && email.isNotEmpty) ...[
+          if (showEmailSubtitle) ...[
             const SizedBox(height: 4),
             Text(
               email,
@@ -292,6 +308,7 @@ class _ManagementMenu extends ConsumerWidget {
                   icon: Icons.person_outline,
                   label: l10n.personalDetails,
                   theme: theme,
+                  onTap: () => context.push('/account/personal-details'),
                 ),
                 const _MenuDivider(theme: null),
                 _MenuRow(

@@ -136,6 +136,67 @@ Our deep-link tests were warm-start (`uriLinkStream`). The cold-start path
 isn't ready, `currentState` may be `null` and the code falls back to
 `router.go()` (which hijacks). Worth verifying with a truly cold start.
 
+### 6. `android:taskAffinity=""` + a NEW_TASK App Link intent spawns a second activity
+Tapping the HTTPS App Link while the app was already running produced a **black
+screen**. Logcat showed Gmail's VIEW intent (`flg=0x10090400`, i.e.
+`FLAG_ACTIVITY_NEW_TASK`) creating a **new Android task and a second
+`MainActivity` instance** because the activity had `android:taskAffinity=""`
+(the Flutter template default since PR #144018). The second instance started a
+second Flutter engine/surface (`Using the Impeller rendering backend`, then
+`FlutterRenderer: Width is zero`) that never rendered, and the existing Dart
+isolate's `uriLinkStream` never received the link (no `[DeepLink]` logs).
+
+Fix: give `MainActivity` a real affinity and make it the single task root:
+
+```xml
+android:launchMode="singleTask"
+android:taskAffinity="com.vincsoftware.fap_mobile"
+```
+
+`singleTask` + an explicit (non-empty) affinity makes the App Link route into
+the **existing** task and deliver `onNewIntent` to the running activity, so
+`app_links.uriLinkStream` emits and Dart presents the confirm screen. Cold start
+still uses `getInitialLink`. Keep the explicit affinity (rather than deleting the
+attribute) to preserve the anti-reparenting guard from #144018.
+
+### 7. Defer the cold-start push until the navigator exists
+`getInitialLink()` can resolve before the first frame, when
+`router.routerDelegate.navigatorKey.currentState` is still `null`. Schedule the
+presentation with `WidgetsBinding.instance.addPostFrameCallback`. Android's
+app_links also re-emits the launch intent on `uriLinkStream` once the stream is
+listened to, so record the cold-start URI and drop that single duplicate to
+avoid stacking two identical screens.
+
+### 8. Disable Flutter's built-in deep linking (`flutter_deeplinking_enabled`)
+Once the App Link reached the running activity (`onNewIntent`), go_router showed
+**"Page Not Found — GoException: no routes for location:
+https://dev.fap.rs/registration-confirm?token=…"**. The raw HTTPS URL was being
+fed to go_router by **Flutter's built-in deep linking**, not by `app_links`.
+
+`FlutterActivityAndFragmentDelegate.onNewIntent()` calls
+`NavigationChannel.pushRouteInformation(uri)` when `shouldHandleDeeplinking()` is
+true, and `FlutterActivityLaunchConfigs.deepLinkEnabled(Bundle)` **defaults to
+`true`** when the meta-data is absent. go_router then tries to match the full URL
+as an in-app location and fails.
+
+Fix — declare that the app handles deep links itself, so the built-in path is
+disabled:
+
+```xml
+<!-- AndroidManifest.xml, inside <activity> -->
+<meta-data android:name="flutter_deeplinking_enabled" android:value="false" />
+```
+```xml
+<!-- ios/Runner/Info.plist -->
+<key>FlutterDeepLinkingEnabled</key>
+<false/>
+```
+
+`app_links` registers its own `onNewIntent` listener, independent of the built-in
+channel, so warm starts still arrive on `uriLinkStream` and cold starts on
+`getInitialLink`. Add this meta-data to **any** Flutter app that handles links
+manually (app_links/uni_links) — otherwise the raw URL leaks into the router.
+
 ---
 
 ## Verification
@@ -160,8 +221,11 @@ Confirmed end-to-end: Sign Up → copy deep link from backend log → `adb` inje
    (verified HTTPS App Link); see
    [`06-app-links-registration-confirm.md`](06-app-links-registration-confirm.md).
    iOS `apple-app-site-association` + associated-domains entitlement remain.
-2. **Verify cold-start deep link** — confirm `getInitialLink` pushes the confirm
-   screen when the navigator is available (see Lesson #5 above).
+2. ~~**Verify cold-start deep link** — confirm `getInitialLink` pushes the confirm
+   screen when the navigator is available (see Lesson #5 above).~~ — **done:**
+   cold-start is deferred to after the first frame, and `MainActivity` is now
+   `singleTask` with an explicit `taskAffinity` so the App Link reuses the
+   running task (see Lessons #6/#7 above).
 3. **Prefer a cleaner go_router-native confirm navigation** once the
    `StatefulShellRoute` redirect quirk is better understood or upgraded away.
 4. ~~**Forgot-password deep link** (`fap://reset-password`)~~ — **done:** the same

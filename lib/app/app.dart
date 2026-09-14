@@ -26,6 +26,14 @@ class FapApp extends ConsumerStatefulWidget {
 class _FapAppState extends ConsumerState<FapApp> {
   StreamSubscription<Uri>? _linkSubscription;
 
+  /// The cold-start link already consumed via [AppLinks.getInitialLink].
+  ///
+  /// Android's app_links implementation re-emits the launch intent on the
+  /// `uriLinkStream` when the stream is first listened to, so the same URI can
+  /// arrive twice on a cold start. This records it so the stream listener can
+  /// drop that one duplicate (without blocking a later legitimate re-tap).
+  String? _initialLinkHandled;
+
   @override
   void initState() {
     super.initState();
@@ -36,11 +44,16 @@ class _FapAppState extends ConsumerState<FapApp> {
     final appLinks = AppLinks();
     final router = ref.read(routerProvider);
 
-    // Handle a deep link that launched a cold-started app.
+    // Handle a deep link that launched a cold-started app. Deferred to after the
+    // first frame so `router.routerDelegate.navigatorKey.currentState` is
+    // available when we push the screen (it is null during initState).
     final initialUri = await appLinks.getInitialLink();
     if (initialUri != null) {
       debugPrint('[DeepLink] cold-start initial link: $initialUri');
-      _handleDeepLink(router, initialUri);
+      _initialLinkHandled = initialUri.toString();
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _handleDeepLink(router, initialUri),
+      );
     } else {
       debugPrint('[DeepLink] no initial link on cold start');
     }
@@ -48,6 +61,11 @@ class _FapAppState extends ConsumerState<FapApp> {
     // Handle deep links received while the app is already running.
     _linkSubscription = appLinks.uriLinkStream.listen(
       (uri) {
+        if (_initialLinkHandled != null &&
+            uri.toString() == _initialLinkHandled) {
+          _initialLinkHandled = null;
+          return;
+        }
         debugPrint('[DeepLink] warm-start stream link: $uri');
         _handleDeepLink(router, uri);
       },

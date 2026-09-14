@@ -370,6 +370,37 @@ class AppLocalizationsSr extends AppLocalizations {
   String get personalDetails => 'Lični Podaci';
 
   @override
+  String get personalDetailsSubtitle =>
+      'Održavajte svoje kontakt i adresne podatke ažurnim.';
+
+  @override
+  String get personalDetailsSaved => 'Vaši lični podaci su sačuvani.';
+
+  @override
+  String get profileNameFallback => 'Vaš Profil';
+
+  @override
+  String get firstName => 'Ime';
+
+  @override
+  String get lastName => 'Prezime';
+
+  @override
+  String get phoneNumber => 'Broj Telefona';
+
+  @override
+  String get address => 'Adresa';
+
+  @override
+  String get city => 'Grad';
+
+  @override
+  String get zipCode => 'Poštanski Broj';
+
+  @override
+  String get country => 'Država';
+
+  @override
   String get organization => 'Organizacija';
 
   @override

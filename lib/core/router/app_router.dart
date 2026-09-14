@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/account/presentation/screens/account_screen.dart';
+import '../../features/account/presentation/screens/personal_details_screen.dart';
 import '../../features/auth/presentation/providers/auth_providers.dart';
 import '../../features/auth/presentation/screens/biometric_gate_screen.dart';
 import '../../features/auth/presentation/screens/confirm_registration_screen.dart';
@@ -169,6 +170,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                 path: '/account',
                 builder: (context, state) => const AccountScreen(),
                 routes: [
+                  GoRoute(
+                    path: 'personal-details',
+                    builder: (context, state) => const PersonalDetailsScreen(),
+                  ),
                   GoRoute(
                     path: 'settings',
                     builder: (context, state) => const SettingsScreen(),
