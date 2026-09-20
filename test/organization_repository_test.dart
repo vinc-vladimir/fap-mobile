@@ -132,6 +132,25 @@ void main() {
     });
   });
 
+  group('getOrganization', () {
+    test('GETs the organization by id and parses the profile', () async {
+      final adapter = _RecordingAdapter(
+        statusCode: 200,
+        body:
+            '{"id":"org-1","name":"Acme","crn":"123","active":false,'
+            '"createdAt":"2026-09-20T10:00:00Z"}',
+      );
+
+      final organization = await _repository(adapter).getOrganization('org-1');
+
+      expect(adapter.lastRequest!.method, 'GET');
+      expect(adapter.lastRequest!.path, '/v1/organizations/org-1');
+      expect(organization.id, 'org-1');
+      expect(organization.name, 'Acme');
+      expect(organization.active, isFalse);
+    });
+  });
+
   group('deactivateOrganization', () {
     test('POSTs to the deactivate path', () async {
       final adapter = _RecordingAdapter(statusCode: 200, body: '{}');
@@ -166,6 +185,26 @@ void main() {
                 'message',
                 'The caller already belongs to an organization.',
               ),
+        ),
+      );
+    });
+
+    test('maps a 404 on getOrganization to ApiException', () async {
+      final adapter = _RecordingAdapter(
+        statusCode: 404,
+        body: jsonEncode({
+          'title': 'Not Found',
+          'status': 404,
+          'detail': 'Organization not found.',
+        }),
+      );
+
+      expect(
+        () => _repository(adapter).getOrganization('missing'),
+        throwsA(
+          isA<ApiException>()
+              .having((e) => e.statusCode, 'statusCode', 404)
+              .having((e) => e.message, 'message', 'Organization not found.'),
         ),
       );
     });

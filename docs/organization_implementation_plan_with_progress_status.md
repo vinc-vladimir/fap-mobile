@@ -73,8 +73,9 @@ zip, country`; `id`, `active`, `createdAt` are server-managed and ignored if sen
 - [x] **P1-5** Screens — `organization_screen.dart`, `organization_form_screen.dart`; wire Account menu row
 - [x] **P1-6** Routing — nested `/account/organization`, `/create`, `/edit` in `app_router.dart`
 - [x] **P1-7** ARB strings (en + sr) + regen
-- [x] **P1-8** Tests — repository (Dio fake adapter) + widget (empty/populated/role gating)
-- [x] **P1-9** Verify — `build_runner` ✅, `flutter analyze` ✅ (0 issues), raw-color scan ✅, `flutter test` ✅ (11/11 passing)
+- [x] **P1-8** Tests — repository (Dio fake adapter) + widget (empty/populated/role gating/error+retry) + form (validation/prefill)
+- [x] **P1-9** Verify — `build_runner` ✅, `flutter analyze` ✅ (0 issues), raw-color scan ✅, `flutter test` ✅ (16/16 passing)
+- [x] **P1-10** Docs — README "Organization (Phase 1)" + "Testing" sections; `docs/lessons_learned/08-organization-phase1.md`
 
 ### Phase 1 definition of done
 
@@ -112,6 +113,17 @@ literals outside `lib/core/theme/`.
 ## Progress log
 
 > Newest first. Each entry: date — step — what was done — files — verification — blockers.
+
+- **2026-09-20 — Phase 1 test coverage expanded + docs added.**
+  - **What:** Closed test gaps and documented the phase.
+    - Tests: added `getOrganization` + 404 mapping to
+      `test/organization_repository_test.dart`; added an error+retry case to
+      `test/organization_screen_test.dart`; added `test/organization_form_screen_test.dart`
+      (create validation + edit prefill).
+    - Docs: README "Organization (Phase 1)" and "Testing" sections;
+      `docs/lessons_learned/08-organization-phase1.md`.
+  - **Verification:** `flutter test` ✅ 16/16; `flutter analyze` ✅ 0 issues.
+  - **Blockers:** none.
 
 - **2026-09-20 — Phase 1 accepted on device ✅.**
   - **What:** User tested Phase 1 end-to-end on device; all scoped behaviour works
