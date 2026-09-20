@@ -200,5 +200,17 @@
   "activeStatus": "Aktivna",
   "inactiveStatus": "Neaktivna",
   "roleOwner": "Vlasnik",
-  "roleMember": "Član"
+  "roleMember": "Član",
+  "organizationMembers": "Članovi",
+  "organizationMembersEmpty": "Nema članova za prikaz.",
+  "memberActions": "Radnje sa članom",
+  "removeMember": "Ukloni člana",
+  "remove": "Ukloni",
+  "removeMemberConfirmTitle": "Ukloniti člana?",
+  "removeMemberConfirmBody": "Ukloniti {name} iz organizacije? Ova radnja se ne može poništiti.",
+  "memberRemoved": "Član je uklonjen.",
+  "transferOwnership": "Prenesi vlasništvo",
+  "transferOwnershipConfirmTitle": "Preneti vlasništvo?",
+  "transferOwnershipConfirmBody": "Postaviti {name} za vlasnika organizacije? Bićete prebačeni u člana.",
+  "ownershipTransferred": "Vlasništvo je preneto."
 }

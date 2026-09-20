@@ -162,6 +162,79 @@ void main() {
     });
   });
 
+  group('getMembers', () {
+    test('GETs the members list and parses roles', () async {
+      final adapter = _RecordingAdapter(
+        statusCode: 200,
+        body: jsonEncode([
+          {
+            'id': 'm-1',
+            'organizationId': 'org-1',
+            'accountId': 'a-1',
+            'role': 'ORG_OWNER',
+            'firstName': 'Ada',
+            'lastName': 'Lovelace',
+            'email': 'ada@example.com',
+          },
+          {
+            'id': 'm-2',
+            'organizationId': 'org-1',
+            'accountId': 'a-2',
+            'role': 'ORG_MEMBER',
+            'firstName': 'Alan',
+            'lastName': 'Turing',
+            'email': 'alan@example.com',
+          },
+        ]),
+      );
+
+      final members = await _repository(adapter).getMembers('org-1');
+
+      expect(adapter.lastRequest!.method, 'GET');
+      expect(adapter.lastRequest!.path, '/v1/organizations/org-1/members');
+      expect(members, hasLength(2));
+      expect(members.first.isOwner, isTrue);
+      expect(members.first.displayName, 'Ada Lovelace');
+      expect(members.last.roleValue, OrganizationRole.orgMember);
+      expect(members.last.displayName, 'Alan Turing');
+    });
+
+    test('returns an empty list when the response is not a list', () async {
+      final adapter = _RecordingAdapter(statusCode: 200, body: '{}');
+
+      final members = await _repository(adapter).getMembers('org-1');
+
+      expect(members, isEmpty);
+    });
+  });
+
+  group('removeMember', () {
+    test('DELETEs the member path', () async {
+      final adapter = _RecordingAdapter(statusCode: 200, body: '{}');
+
+      await _repository(adapter).removeMember('org-1', 'm-2');
+
+      expect(adapter.lastRequest!.method, 'DELETE');
+      expect(adapter.lastRequest!.path, '/v1/organizations/org-1/members/m-2');
+    });
+  });
+
+  group('transferOwnership', () {
+    test('POSTs the memberId body to the transfer path', () async {
+      final adapter = _RecordingAdapter(statusCode: 200, body: '{}');
+
+      await _repository(adapter).transferOwnership('org-1', 'm-2');
+
+      expect(adapter.lastRequest!.method, 'POST');
+      expect(
+        adapter.lastRequest!.path,
+        '/v1/organizations/org-1/transfer-ownership',
+      );
+      final body = adapter.lastRequest!.data as Map<String, dynamic>;
+      expect(body['memberId'], 'm-2');
+    });
+  });
+
   group('error mapping', () {
     test('maps an RFC 7807 ProblemDetail to ApiException', () async {
       final adapter = _RecordingAdapter(
@@ -205,6 +278,30 @@ void main() {
           isA<ApiException>()
               .having((e) => e.statusCode, 'statusCode', 404)
               .having((e) => e.message, 'message', 'Organization not found.'),
+        ),
+      );
+    });
+
+    test('maps a 403 on removeMember to ApiException', () async {
+      final adapter = _RecordingAdapter(
+        statusCode: 403,
+        body: jsonEncode({
+          'title': 'Forbidden',
+          'status': 403,
+          'detail': 'The caller is not the ORG_OWNER of the organization.',
+        }),
+      );
+
+      expect(
+        () => _repository(adapter).removeMember('org-1', 'm-2'),
+        throwsA(
+          isA<ApiException>()
+              .having((e) => e.statusCode, 'statusCode', 403)
+              .having(
+                (e) => e.message,
+                'message',
+                'The caller is not the ORG_OWNER of the organization.',
+              ),
         ),
       );
     });

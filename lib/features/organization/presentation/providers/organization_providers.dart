@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/network/api_client.dart';
+import '../../data/models/organization_member_model.dart';
 import '../../data/models/organization_membership_model.dart';
 import '../../data/models/organization_model.dart';
 import '../../data/models/organization_request.dart';
@@ -32,6 +33,17 @@ Future<OrganizationModel?> organization(Ref ref) async {
   final id = membership?.organizationId;
   if (id == null || id.isEmpty) return null;
   return ref.watch(organizationRepositoryProvider).getOrganization(id);
+}
+
+/// The members of the caller's organization. Empty when the user has no
+/// organization. Requires membership on the backend (both owner and member can
+/// read the list).
+@Riverpod(keepAlive: false)
+Future<List<OrganizationMemberModel>> organizationMembers(Ref ref) async {
+  final membership = await ref.watch(organizationMembershipProvider.future);
+  final id = membership?.organizationId;
+  if (id == null || id.isEmpty) return const [];
+  return ref.watch(organizationRepositoryProvider).getMembers(id);
 }
 
 /// Handles creating and updating the organization profile.
@@ -82,6 +94,37 @@ class OrganizationLifecycleController
           .read(organizationRepositoryProvider)
           .deactivateOrganization(organizationId);
       ref.invalidate(organizationProvider);
+      ref.invalidate(organizationMembershipProvider);
+    });
+  }
+}
+
+/// Handles owner-only member mutations: remove a member and transfer ownership.
+///
+/// Both invalidate the members list; a transfer also changes the caller's role,
+/// so the membership (and thus the role-gated UI) is refreshed too.
+@riverpod
+class OrganizationMemberController extends _$OrganizationMemberController {
+  @override
+  FutureOr<void> build() {}
+
+  Future<void> remove(String organizationId, String memberId) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref
+          .read(organizationRepositoryProvider)
+          .removeMember(organizationId, memberId);
+      ref.invalidate(organizationMembersProvider);
+    });
+  }
+
+  Future<void> transferOwnership(String organizationId, String memberId) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref
+          .read(organizationRepositoryProvider)
+          .transferOwnership(organizationId, memberId);
+      ref.invalidate(organizationMembersProvider);
       ref.invalidate(organizationMembershipProvider);
     });
   }

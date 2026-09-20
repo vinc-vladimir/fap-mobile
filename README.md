@@ -86,6 +86,7 @@ as `ORG_MEMBER`.
 | `/account/organization` | Empty state (create CTA) or the profile; owner sees **Edit** + **Deactivate**, a member is read-only |
 | `/account/organization/create` | Create the organization profile |
 | `/account/organization/edit` | Edit the organization profile (owner only) |
+| `/account/organization/members` | Member list; owner can remove a member or transfer ownership (per-row menu) |
 
 Endpoints (source of truth: `fap-service/doc/openapi/organization-api.yaml`):
 
@@ -96,8 +97,11 @@ Endpoints (source of truth: `fap-service/doc/openapi/organization-api.yaml`):
 | GET | `/v1/organizations/{id}` | Organization profile |
 | PUT | `/v1/organizations/{id}` | Update writable fields (owner) |
 | POST | `/v1/organizations/{id}/deactivate` | Soft delete (owner) |
+| GET | `/v1/organizations/{id}/members` | List members (any member) |
+| DELETE | `/v1/organizations/{id}/members/{memberId}` | Remove a member (owner; owner cannot be removed) |
+| POST | `/v1/organizations/{id}/transfer-ownership` | Transfer ownership (owner) |
 
-Members, fleet vehicles, fleet payment cards and invitations are later phases. Full plan and
+Fleet vehicles, fleet payment cards and invitations are later phases. Full plan and
 progress: [`docs/organization_implementation_plan_with_progress_status.md`](docs/organization_implementation_plan_with_progress_status.md).
 
 ## Testing

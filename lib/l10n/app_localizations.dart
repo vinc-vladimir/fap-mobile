@@ -1303,6 +1303,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Member'**
   String get roleMember;
+
+  /// Title of the organization members screen and the button that opens it
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get organizationMembers;
+
+  /// Shown when the organization member list is empty
+  ///
+  /// In en, this message translates to:
+  /// **'No members to show.'**
+  String get organizationMembersEmpty;
+
+  /// Tooltip for the owner-only member action menu
+  ///
+  /// In en, this message translates to:
+  /// **'Member actions'**
+  String get memberActions;
+
+  /// Owner action to remove a member from the organization
+  ///
+  /// In en, this message translates to:
+  /// **'Remove member'**
+  String get removeMember;
+
+  /// Generic remove action label
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// Title of the remove member confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Remove member?'**
+  String get removeMemberConfirmTitle;
+
+  /// Body of the remove member confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name} from the organization? This cannot be undone.'**
+  String removeMemberConfirmBody(String name);
+
+  /// Success message after removing a member
+  ///
+  /// In en, this message translates to:
+  /// **'Member removed.'**
+  String get memberRemoved;
+
+  /// Owner action to transfer organization ownership to a member
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer ownership'**
+  String get transferOwnership;
+
+  /// Title of the transfer ownership confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer ownership?'**
+  String get transferOwnershipConfirmTitle;
+
+  /// Body of the transfer ownership confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Make {name} the organization owner? You will be demoted to a member.'**
+  String transferOwnershipConfirmBody(String name);
+
+  /// Success message after transferring organization ownership
+  ///
+  /// In en, this message translates to:
+  /// **'Ownership transferred.'**
+  String get ownershipTransferred;
 }
 
 class _AppLocalizationsDelegate

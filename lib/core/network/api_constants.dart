@@ -67,4 +67,13 @@ abstract final class ApiConstants {
 
   static String organizationDeactivate(String organizationId) =>
       '/v1/organizations/$organizationId/deactivate';
+
+  static String organizationMembers(String organizationId) =>
+      '/v1/organizations/$organizationId/members';
+
+  static String organizationMember(String organizationId, String memberId) =>
+      '/v1/organizations/$organizationId/members/$memberId';
+
+  static String organizationTransferOwnership(String organizationId) =>
+      '/v1/organizations/$organizationId/transfer-ownership';
 }

@@ -661,4 +661,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get roleMember => 'Member';
+
+  @override
+  String get organizationMembers => 'Members';
+
+  @override
+  String get organizationMembersEmpty => 'No members to show.';
+
+  @override
+  String get memberActions => 'Member actions';
+
+  @override
+  String get removeMember => 'Remove member';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get removeMemberConfirmTitle => 'Remove member?';
+
+  @override
+  String removeMemberConfirmBody(String name) {
+    return 'Remove $name from the organization? This cannot be undone.';
+  }
+
+  @override
+  String get memberRemoved => 'Member removed.';
+
+  @override
+  String get transferOwnership => 'Transfer ownership';
+
+  @override
+  String get transferOwnershipConfirmTitle => 'Transfer ownership?';
+
+  @override
+  String transferOwnershipConfirmBody(String name) {
+    return 'Make $name the organization owner? You will be demoted to a member.';
+  }
+
+  @override
+  String get ownershipTransferred => 'Ownership transferred.';
 }

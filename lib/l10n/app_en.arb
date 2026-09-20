@@ -266,5 +266,63 @@
   "roleMember": "Member",
   "@roleMember": {
     "description": "Role chip label for ORG_MEMBER"
+  },
+  "organizationMembers": "Members",
+  "@organizationMembers": {
+    "description": "Title of the organization members screen and the button that opens it"
+  },
+  "organizationMembersEmpty": "No members to show.",
+  "@organizationMembersEmpty": {
+    "description": "Shown when the organization member list is empty"
+  },
+  "memberActions": "Member actions",
+  "@memberActions": {
+    "description": "Tooltip for the owner-only member action menu"
+  },
+  "removeMember": "Remove member",
+  "@removeMember": {
+    "description": "Owner action to remove a member from the organization"
+  },
+  "remove": "Remove",
+  "@remove": {
+    "description": "Generic remove action label"
+  },
+  "removeMemberConfirmTitle": "Remove member?",
+  "@removeMemberConfirmTitle": {
+    "description": "Title of the remove member confirmation dialog"
+  },
+  "removeMemberConfirmBody": "Remove {name} from the organization? This cannot be undone.",
+  "@removeMemberConfirmBody": {
+    "description": "Body of the remove member confirmation dialog",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "memberRemoved": "Member removed.",
+  "@memberRemoved": {
+    "description": "Success message after removing a member"
+  },
+  "transferOwnership": "Transfer ownership",
+  "@transferOwnership": {
+    "description": "Owner action to transfer organization ownership to a member"
+  },
+  "transferOwnershipConfirmTitle": "Transfer ownership?",
+  "@transferOwnershipConfirmTitle": {
+    "description": "Title of the transfer ownership confirmation dialog"
+  },
+  "transferOwnershipConfirmBody": "Make {name} the organization owner? You will be demoted to a member.",
+  "@transferOwnershipConfirmBody": {
+    "description": "Body of the transfer ownership confirmation dialog",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "ownershipTransferred": "Ownership transferred.",
+  "@ownershipTransferred": {
+    "description": "Success message after transferring organization ownership"
   }
 }
