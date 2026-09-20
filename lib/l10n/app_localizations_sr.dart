@@ -663,4 +663,44 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get roleMember => 'Član';
+
+  @override
+  String get organizationMembers => 'Članovi';
+
+  @override
+  String get organizationMembersEmpty => 'Nema članova za prikaz.';
+
+  @override
+  String get memberActions => 'Radnje sa članom';
+
+  @override
+  String get removeMember => 'Ukloni člana';
+
+  @override
+  String get remove => 'Ukloni';
+
+  @override
+  String get removeMemberConfirmTitle => 'Ukloniti člana?';
+
+  @override
+  String removeMemberConfirmBody(String name) {
+    return 'Ukloniti $name iz organizacije? Ova radnja se ne može poništiti.';
+  }
+
+  @override
+  String get memberRemoved => 'Član je uklonjen.';
+
+  @override
+  String get transferOwnership => 'Prenesi vlasništvo';
+
+  @override
+  String get transferOwnershipConfirmTitle => 'Preneti vlasništvo?';
+
+  @override
+  String transferOwnershipConfirmBody(String name) {
+    return 'Postaviti $name za vlasnika organizacije? Bićete prebačeni u člana.';
+  }
+
+  @override
+  String get ownershipTransferred => 'Vlasništvo je preneto.';
 }

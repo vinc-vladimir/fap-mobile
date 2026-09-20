@@ -2,9 +2,11 @@ import 'package:dio/dio.dart';
 
 import '../../../../core/network/api_constants.dart';
 import '../../../../core/network/api_exceptions.dart';
+import '../models/organization_member_model.dart';
 import '../models/organization_membership_model.dart';
 import '../models/organization_model.dart';
 import '../models/organization_request.dart';
+import '../models/transfer_ownership_request.dart';
 
 /// Repository for the organization (B2B fleet) domain, backed by the live
 /// OpenAPI spec (`fap-service/doc/openapi/organization-api.yaml`).
@@ -67,6 +69,51 @@ class OrganizationRepository {
   Future<void> deactivateOrganization(String organizationId) async {
     try {
       await _dio.post(ApiConstants.organizationDeactivate(organizationId));
+    } on DioException catch (e) {
+      throw ApiException.fromDio(e);
+    }
+  }
+
+  /// GET /v1/organizations/{id}/members — lists the organization's members.
+  /// Requires the caller to be a member.
+  Future<List<OrganizationMemberModel>> getMembers(
+    String organizationId,
+  ) async {
+    try {
+      final response = await _dio.get(
+        ApiConstants.organizationMembers(organizationId),
+      );
+      final data = response.data;
+      if (data is! List) return const [];
+      return data
+          .whereType<Map<String, dynamic>>()
+          .map(OrganizationMemberModel.fromJson)
+          .toList();
+    } on DioException catch (e) {
+      throw ApiException.fromDio(e);
+    }
+  }
+
+  /// DELETE /v1/organizations/{id}/members/{memberId} — removes a member.
+  /// Requires `ORG_OWNER`; the owner cannot be removed.
+  Future<void> removeMember(String organizationId, String memberId) async {
+    try {
+      await _dio.delete(
+        ApiConstants.organizationMember(organizationId, memberId),
+      );
+    } on DioException catch (e) {
+      throw ApiException.fromDio(e);
+    }
+  }
+
+  /// POST /v1/organizations/{id}/transfer-ownership — promotes [memberId] to
+  /// `ORG_OWNER` and demotes the current owner. Requires `ORG_OWNER`.
+  Future<void> transferOwnership(String organizationId, String memberId) async {
+    try {
+      await _dio.post(
+        ApiConstants.organizationTransferOwnership(organizationId),
+        data: TransferOwnershipRequest(memberId: memberId).toJson(),
+      );
     } on DioException catch (e) {
       throw ApiException.fromDio(e);
     }

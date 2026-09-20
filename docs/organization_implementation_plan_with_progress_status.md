@@ -57,7 +57,7 @@ zip, country`; `id`, `active`, `createdAt` are server-managed and ignored if sen
 | Phase | Description | Status | Key deliverable |
 |---|---|---|---|
 | 1 | Org profile CRUD (create/read/update/deactivate) + membership + Account entry + routing + l10n + tests | ✅ Done — verified on device | Organization area reachable from Account |
-| 2 | Members & ownership (list, remove, transfer) — owner-gated | ⏳ Pending | Member management screen |
+| 2 | Members & ownership (list, remove, transfer) — owner-gated | ✅ Done — verified (automated) | Member management screen |
 | 3 | Fleet vehicles (list, add) | ⏳ Pending | Fleet vehicles screen |
 | 4 | Fleet payment cards (list/add/edit/delete/primary; masked display) | ⏳ Pending | Fleet cards screen |
 | 5 | Invitations (invite/list/revoke) + invitee deep-link & registration flow | ⏳ Pending | End-to-end invite flow |
@@ -88,8 +88,7 @@ literals outside `lib/core/theme/`.
 
 ## Phases 2–5 outline (stubbed)
 
-- **Phase 2 — Members & ownership.** `getMembers`, `removeMember`, `transferOwnership`;
-  members list screen (member-visible), remove + transfer owner-gated with confirmation.
+- **Phase 2 — Members & ownership.** ✅ Done — see checklist below.
 - **Phase 3 — Fleet vehicles.** `getVehicles`, `addVehicle`; list (member), add (owner).
 - **Phase 4 — Fleet payment cards.** `getCards`, `addCard`, `updateCard`, `deleteCard`;
   masked display (issuer + primary + last-4), primary semantics.
@@ -97,6 +96,26 @@ literals outside `lib/core/theme/`.
   `getInvitationDetails`, `acceptInvitation`; `org-invitation` deep link; invited sign-up
   with `invitationToken` (auth registration change). Requires `fap-infra` assetlinks
   hand-off.
+
+## Phase 2 checklist (fap-mobile)
+
+- [x] **P2-1** Network constants — `organizationMembers`, `organizationMember`, `organizationTransferOwnership`
+- [x] **P2-2** Models (freezed) — `organization_member_model.dart` (+ `roleValue`/`isOwner`/`displayName`), `transfer_ownership_request.dart`
+- [x] **P2-3** Repository — `getMembers`, `removeMember`, `transferOwnership`
+- [x] **P2-4** Providers — `organizationMembersProvider`, `OrganizationMemberController` (`remove` / `transferOwnership`)
+- [x] **P2-5** Screen — `organization_members_screen.dart`; **Members** entry on `OrganizationScreen`
+- [x] **P2-6** Routing — nested `/account/organization/members`
+- [x] **P2-7** ARB strings (en + sr) + regen
+- [x] **P2-8** Tests — repository (getMembers/remove/transfer/403), screen (render/role gating/empty/remove/transfer)
+- [x] **P2-9** Verify — `build_runner` ✅, `flutter analyze` ✅ 0 issues, raw-color scan ✅, `flutter test` ✅ 27/27
+- [x] **P2-10** Docs — README members section; `docs/lessons_learned/09-organization-phase2-members.md`
+
+### Phase 2 definition of done
+
+A member or owner can view the organization member list; the owner can remove a non-owner
+member and transfer ownership (with confirmation); a plain member sees no management
+actions; `flutter analyze` and `flutter test` are green; no raw color literals outside
+`lib/core/theme/`.
 
 ## Decisions & open questions
 
@@ -109,10 +128,32 @@ literals outside `lib/core/theme/`.
 | D5 | Screens match the existing account / personal-details patterns (no Stitch export) | Accepted |
 | D6 | Fleet cards display: issuer + primary + last-4 only (Phase 4) | Accepted |
 | D7 | Stale `AccountModel.organizationId` left untouched for now | Accepted |
+| D8 | Members list readable by all members; remove/transfer are owner-only actions in a per-row overflow menu; the owner's own row has no actions | Accepted |
+| D9 | After a successful ownership transfer, invalidate the membership so the caller's role (and the role-gated UI) refreshes | Accepted |
 
 ## Progress log
 
 > Newest first. Each entry: date — step — what was done — files — verification — blockers.
+
+- **2026-09-20 — Phase 2 (Members & ownership) implemented and verified ✅.**
+  - **What:** Member list + owner-only remove/transfer.
+    - Constants: `organizationMembers(id)`, `organizationMember(id, memberId)`,
+      `organizationTransferOwnership(id)`.
+    - Models: `OrganizationMemberModel` (`roleValue`/`isOwner`/`displayName`),
+      `TransferOwnershipRequest`.
+    - Repository: `getMembers`, `removeMember`, `transferOwnership`.
+    - Providers: `organizationMembersProvider`; `OrganizationMemberController`
+      (`remove`, `transferOwnership` — the latter also invalidates the membership).
+    - Screen: `OrganizationMembersScreen` (member-visible list; per-row overflow menu with
+      remove/transfer for owner, hidden on the owner's own row); **Members** secondary
+      button added to `OrganizationScreen`.
+    - Routing: `/account/organization/members`.
+    - l10n: 12 new keys (en + sr).
+    - Tests: repository (+4: getMembers ×2, remove, transfer, 403 mapping), screen (+5:
+      render, empty, owner menu, member no-menu, remove flow, transfer flow).
+  - **Verification:** `build_runner` ✅ · `flutter analyze` ✅ 0 issues · raw-color scan ✅ ·
+    `flutter test` ✅ 27/27.
+  - **Blockers:** none.
 
 - **2026-09-20 — Phase 1 test coverage expanded + docs added.**
   - **What:** Closed test gaps and documented the phase.

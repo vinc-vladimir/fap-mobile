@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/account/presentation/screens/account_screen.dart';
 import '../../features/account/presentation/screens/personal_details_screen.dart';
 import '../../features/organization/presentation/screens/organization_form_screen.dart';
+import '../../features/organization/presentation/screens/organization_members_screen.dart';
 import '../../features/organization/presentation/screens/organization_screen.dart';
 import '../../features/auth/presentation/providers/auth_providers.dart';
 import '../../features/auth/presentation/screens/biometric_gate_screen.dart';
@@ -197,6 +198,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                         path: 'edit',
                         builder: (context, state) =>
                             const OrganizationFormScreen(isEdit: true),
+                      ),
+                      GoRoute(
+                        path: 'members',
+                        builder: (context, state) =>
+                            const OrganizationMembersScreen(),
                       ),
                     ],
                   ),
