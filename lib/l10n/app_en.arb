@@ -178,5 +178,93 @@
   "accountDeletedSuccess": "Your account has been deactivated.",
   "back": "Back",
   "save": "Save",
-  "comingSoon": "Coming soon"
+  "comingSoon": "Coming soon",
+  "organizationName": "Company Name",
+  "@organizationName": {
+    "description": "Label for the organization legal/display name field"
+  },
+  "crn": "Company Registration Number",
+  "@crn": {
+    "description": "Label for the company registration number (CRN) field"
+  },
+  "vat": "VAT Number",
+  "@vat": {
+    "description": "Label for the company VAT/PIB number field"
+  },
+  "companyEmail": "Company Email",
+  "@companyEmail": {
+    "description": "Label for the organization contact email field"
+  },
+  "organizationCreateSubtitle": "Create your company profile to manage a fleet and enable automatic fuel payments.",
+  "@organizationCreateSubtitle": {
+    "description": "Helper text at the top of the create organization form"
+  },
+  "organizationEditSubtitle": "Update your company profile details.",
+  "@organizationEditSubtitle": {
+    "description": "Helper text at the top of the edit organization form"
+  },
+  "createOrganization": "CREATE ORGANIZATION",
+  "@createOrganization": {
+    "description": "Primary button on the empty organization state"
+  },
+  "editOrganization": "EDIT ORGANIZATION",
+  "@editOrganization": {
+    "description": "Primary button to edit the organization profile (owner only)"
+  },
+  "organizationCreated": "Organization created.",
+  "@organizationCreated": {
+    "description": "Success message after creating an organization"
+  },
+  "organizationSaved": "Organization updated.",
+  "@organizationSaved": {
+    "description": "Success message after updating the organization profile"
+  },
+  "organizationDeactivated": "Organization deactivated.",
+  "@organizationDeactivated": {
+    "description": "Success message after deactivating the organization"
+  },
+  "organizationEmptyTitle": "No Organization",
+  "@organizationEmptyTitle": {
+    "description": "Title of the empty organization state"
+  },
+  "organizationEmptyBody": "You are not part of an organization yet. Create one to manage a fleet and invite members.",
+  "@organizationEmptyBody": {
+    "description": "Body of the empty organization state"
+  },
+  "organizationMemberReadOnly": "You are a member of this organization. Only the owner can edit its details.",
+  "@organizationMemberReadOnly": {
+    "description": "Shown to ORG_MEMBER users instead of edit/deactivate actions"
+  },
+  "deactivateOrganization": "DEACTIVATE ORGANIZATION",
+  "@deactivateOrganization": {
+    "description": "Destructive button to deactivate the organization (owner only)"
+  },
+  "deactivate": "Deactivate",
+  "@deactivate": {
+    "description": "Confirm action in the deactivate organization dialog"
+  },
+  "deactivateOrganizationConfirmTitle": "Deactivate Organization?",
+  "@deactivateOrganizationConfirmTitle": {
+    "description": "Title of the deactivate organization confirmation dialog"
+  },
+  "deactivateOrganizationConfirmBody": "This will deactivate the organization. A scheduled job permanently deletes deactivated organizations after the retention window. This action cannot be undone.",
+  "@deactivateOrganizationConfirmBody": {
+    "description": "Body of the deactivate organization confirmation dialog"
+  },
+  "activeStatus": "Active",
+  "@activeStatus": {
+    "description": "Organization status chip when the organization is active"
+  },
+  "inactiveStatus": "Inactive",
+  "@inactiveStatus": {
+    "description": "Organization status chip when the organization is deactivated"
+  },
+  "roleOwner": "Owner",
+  "@roleOwner": {
+    "description": "Role chip label for ORG_OWNER"
+  },
+  "roleMember": "Member",
+  "@roleMember": {
+    "description": "Role chip label for ORG_MEMBER"
+  }
 }

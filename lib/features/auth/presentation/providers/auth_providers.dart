@@ -8,6 +8,7 @@ import '../../../../core/network/api_exceptions.dart';
 import '../../../../core/storage/secure_storage.dart';
 import '../../data/repositories/auth_repository.dart';
 import '../../../account/presentation/providers/account_provider.dart';
+import '../../../organization/presentation/providers/organization_providers.dart';
 
 part 'auth_providers.g.dart';
 
@@ -112,8 +113,10 @@ class LoginController extends _$LoginController {
         await storage.writeRefreshToken(refreshToken);
       }
       ref.read(authStateProvider.notifier).setAuthenticated(true);
-      // Fresh session → drop any cached account data from a previous session.
+      // Fresh session → drop any cached account/organization data from a
+      // previous session.
       ref.invalidate(accountProvider);
+      ref.invalidate(organizationMembershipProvider);
       ref.invalidate(currentUserEmailProvider);
     });
   }
@@ -128,6 +131,7 @@ class LoginController extends _$LoginController {
     }
     await ref.read(secureStorageProvider).clearTokens();
     ref.invalidate(currentUserEmailProvider);
+    ref.invalidate(organizationMembershipProvider);
     ref.read(authStateProvider.notifier).setAuthenticated(false);
     state = const AsyncData<void>(null);
   }

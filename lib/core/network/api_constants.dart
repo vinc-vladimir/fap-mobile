@@ -54,8 +54,17 @@ abstract final class ApiConstants {
 
   // ── Account endpoints ──────────────────────────────────────────
   static const String account = '/v1/account';
-  static const String organization = '/v1/account/{accountId}/organization';
   static const String vehicleRegistrationPlate =
       '/v1/account/vehicle-registration-plate';
   static const String paymentCards = '/v1/account/payment-cards';
+
+  // ── Organization endpoints ─────────────────────────────────────
+  static const String organizations = '/v1/organizations';
+  static const String organizationMe = '/v1/organizations/me';
+
+  static String organization(String organizationId) =>
+      '/v1/organizations/$organizationId';
+
+  static String organizationDeactivate(String organizationId) =>
+      '/v1/organizations/$organizationId/deactivate';
 }

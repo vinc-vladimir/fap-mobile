@@ -315,6 +315,7 @@ class _ManagementMenu extends ConsumerWidget {
                   icon: Icons.corporate_fare_outlined,
                   label: l10n.organization,
                   theme: theme,
+                  onTap: () => context.push('/account/organization'),
                 ),
                 const _MenuDivider(theme: null),
                 _MenuRow(
