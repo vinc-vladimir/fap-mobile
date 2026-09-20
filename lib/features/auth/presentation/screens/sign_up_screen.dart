@@ -12,6 +12,7 @@ import '../../data/validation_constants.dart';
 import '../providers/auth_providers.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/hero_background.dart';
+import '../widgets/password_requirements_checklist.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
@@ -27,11 +28,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
-  bool _hasLength = false;
-  bool _hasUppercase = false;
-  bool _hasLowercase = false;
-  bool _hasDigit = false;
-  bool _hasSpecial = false;
 
   @override
   void dispose() {
@@ -39,16 +35,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
-  }
-
-  void _onPasswordChanged(String value) {
-    setState(() {
-      _hasLength = value.length >= 8;
-      _hasUppercase = uppercaseRegex.hasMatch(value);
-      _hasLowercase = lowercaseRegex.hasMatch(value);
-      _hasDigit = digitRegex.hasMatch(value);
-      _hasSpecial = specialCharRegex.hasMatch(value);
-    });
   }
 
   Future<void> _onCreateAccount() async {
@@ -200,7 +186,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
         TextFormField(
           controller: _passwordController,
           obscureText: _obscurePassword,
-          onChanged: _onPasswordChanged,
+          onChanged: (_) => setState(() {}),
           decoration: InputDecoration(
             labelText: l10n.createPassword,
             prefixIcon: Icon(
@@ -227,53 +213,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
           },
         ),
         const SizedBox(height: AppDimensions.stackSm),
-        _buildPasswordRequirements(theme, l10n),
-      ],
-    );
-  }
-
-  Widget _buildPasswordRequirements(ThemeData theme, AppLocalizations l10n) {
-    return Container(
-      padding: const EdgeInsets.all(AppDimensions.stackSm),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
-        border: Border.all(
-          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.3),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _requirementItem(l10n.passwordReqLength, _hasLength, theme),
-          const SizedBox(height: 4),
-          _requirementItem(l10n.passwordReqUppercase, _hasUppercase, theme),
-          const SizedBox(height: 4),
-          _requirementItem(l10n.passwordReqLowercase, _hasLowercase, theme),
-          const SizedBox(height: 4),
-          _requirementItem(l10n.passwordReqDigit, _hasDigit, theme),
-          const SizedBox(height: 4),
-          _requirementItem(l10n.passwordReqSpecial, _hasSpecial, theme),
-        ],
-      ),
-    );
-  }
-
-  Widget _requirementItem(String label, bool isMet, ThemeData theme) {
-    return Row(
-      children: [
-        Icon(
-          isMet ? Icons.check_circle : Icons.radio_button_unchecked,
-          size: 16,
-          color: isMet ? brandPrimary : theme.colorScheme.outline,
-        ),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: theme.textTheme.labelSmall?.copyWith(
-            color: isMet ? brandPrimary : theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
+        PasswordRequirementsChecklist(password: _passwordController.text),
       ],
     );
   }

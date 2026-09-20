@@ -76,4 +76,18 @@ abstract final class ApiConstants {
 
   static String organizationTransferOwnership(String organizationId) =>
       '/v1/organizations/$organizationId/transfer-ownership';
+
+  static String organizationInvitations(String organizationId) =>
+      '/v1/organizations/$organizationId/invitations';
+
+  static String organizationInvitation(
+    String organizationId,
+    String invitationId,
+  ) => '/v1/organizations/$organizationId/invitations/$invitationId';
+
+  // Public invitation endpoints (no auth required for details).
+  static String invitationDetails(String token) => '/v1/invitations/$token';
+
+  static String invitationAccept(String token) =>
+      '/v1/invitations/$token/accept';
 }

@@ -2,6 +2,9 @@ import 'package:dio/dio.dart';
 
 import '../../../../core/network/api_constants.dart';
 import '../../../../core/network/api_exceptions.dart';
+import '../models/create_invitation_request.dart';
+import '../models/organization_invitation_details_model.dart';
+import '../models/organization_invitation_model.dart';
 import '../models/organization_member_model.dart';
 import '../models/organization_membership_model.dart';
 import '../models/organization_model.dart';
@@ -117,6 +120,89 @@ class OrganizationRepository {
     } on DioException catch (e) {
       throw ApiException.fromDio(e);
     }
+  }
+
+  /// POST /v1/organizations/{id}/invitations — invites a not-yet-registered
+  /// email to the organization and sends the invitation email. Requires
+  /// `ORG_OWNER`.
+  Future<OrganizationInvitationModel> inviteMember(
+    String organizationId,
+    String email,
+  ) async {
+    try {
+      final response = await _dio.post(
+        ApiConstants.organizationInvitations(organizationId),
+        data: CreateInvitationRequest(email: email).toJson(),
+      );
+      final data = response.data;
+      if (data is! Map<String, dynamic>) {
+        throw const ApiException(message: 'Unexpected response from server.');
+      }
+      return OrganizationInvitationModel.fromJson(data);
+    } on DioException catch (e) {
+      throw ApiException.fromDio(e);
+    }
+  }
+
+  /// GET /v1/organizations/{id}/invitations — lists the organization's
+  /// invitations. Requires `ORG_OWNER`.
+  Future<List<OrganizationInvitationModel>> getInvitations(
+    String organizationId,
+  ) async {
+    try {
+      final response = await _dio.get(
+        ApiConstants.organizationInvitations(organizationId),
+      );
+      final data = response.data;
+      if (data is! List) return const [];
+      return data
+          .whereType<Map<String, dynamic>>()
+          .map(OrganizationInvitationModel.fromJson)
+          .toList();
+    } on DioException catch (e) {
+      throw ApiException.fromDio(e);
+    }
+  }
+
+  /// DELETE /v1/organizations/{id}/invitations/{invitationId} — revokes an
+  /// invitation. Requires `ORG_OWNER`.
+  Future<void> revokeInvitation(
+    String organizationId,
+    String invitationId,
+  ) async {
+    try {
+      await _dio.delete(
+        ApiConstants.organizationInvitation(organizationId, invitationId),
+      );
+    } on DioException catch (e) {
+      throw ApiException.fromDio(e);
+    }
+  }
+
+  /// GET /v1/invitations/{token} — public invitation details used to display
+  /// the invitation and prefill the invited sign-up. No auth required.
+  Future<OrganizationInvitationDetailsModel> getInvitationDetails(
+    String token,
+  ) async {
+    try {
+      final response = await _dio.get(ApiConstants.invitationDetails(token));
+      final data = response.data;
+      if (data is! Map<String, dynamic>) {
+        throw const ApiException(message: 'Unexpected response from server.');
+      }
+      return OrganizationInvitationDetailsModel.fromJson(data);
+    } on DioException catch (e) {
+      throw ApiException.fromDio(e);
+    }
+  }
+
+  /// POST /v1/invitations/{token}/accept — joins the authenticated invitee to
+  /// the organization as `ORG_MEMBER`. The caller's email must match the
+  /// invitation.
+  Future<OrganizationModel> acceptInvitation(String token) async {
+    return _organizationCall(
+      () => _dio.post(ApiConstants.invitationAccept(token)),
+    );
   }
 
   Future<OrganizationModel> _organizationCall(

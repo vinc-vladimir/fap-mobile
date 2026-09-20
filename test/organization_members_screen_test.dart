@@ -154,6 +154,57 @@ void main() {
     expect(find.byIcon(Icons.more_vert), findsNothing);
   });
 
+  testWidgets('the owner sees the invite member button', (tester) async {
+    await tester.pumpWidget(
+      _app(
+        members: const [_owner, _member],
+        membership: const OrganizationMembershipModel(
+          organizationId: 'org-1',
+          role: 'ORG_OWNER',
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('INVITE MEMBER'), findsOneWidget);
+  });
+
+  testWidgets('a plain member does not see the invite member button', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _app(
+        members: const [_owner, _member],
+        membership: const OrganizationMembershipModel(
+          organizationId: 'org-1',
+          role: 'ORG_MEMBER',
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('INVITE MEMBER'), findsNothing);
+  });
+
+  testWidgets('tapping invite member opens the invite dialog', (tester) async {
+    await tester.pumpWidget(
+      _app(
+        members: const [_owner, _member],
+        membership: const OrganizationMembershipModel(
+          organizationId: 'org-1',
+          role: 'ORG_OWNER',
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('INVITE MEMBER'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Invite Member'), findsOneWidget);
+    expect(find.text('Invite'), findsOneWidget);
+  });
+
   testWidgets('owner can remove a member', (tester) async {
     final adapter = _FakeAdapter();
     await tester.pumpWidget(

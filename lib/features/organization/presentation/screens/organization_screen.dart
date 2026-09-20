@@ -176,6 +176,8 @@ class _OrganizationDetails extends ConsumerWidget {
           const _MembersButton(),
           const SizedBox(height: AppDimensions.stackMd),
           if (isOwner) ...[
+            const _InvitationsButton(),
+            const SizedBox(height: AppDimensions.stackMd),
             _EditButton(
               onPressed: () => context.push('/account/organization/edit'),
             ),
@@ -417,6 +419,40 @@ class _MembersButton extends StatelessWidget {
           const SizedBox(width: AppDimensions.stackSm),
           Text(
             l10n.organizationMembers,
+            style: theme.textTheme.displaySmall?.copyWith(
+              color: theme.colorScheme.onSurface,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InvitationsButton extends StatelessWidget {
+  const _InvitationsButton();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+    return OutlinedButton(
+      onPressed: () => context.push('/account/organization/invitations'),
+      style: OutlinedButton.styleFrom(
+        foregroundColor: theme.colorScheme.onSurface,
+        backgroundColor: theme.colorScheme.surfaceContainerLow,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.mail_outline, color: theme.colorScheme.onSurface),
+          const SizedBox(width: AppDimensions.stackSm),
+          Text(
+            l10n.invitations,
             style: theme.textTheme.displaySmall?.copyWith(
               color: theme.colorScheme.onSurface,
             ),

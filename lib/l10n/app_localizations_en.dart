@@ -701,4 +701,103 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ownershipTransferred => 'Ownership transferred.';
+
+  @override
+  String get inviteMember => 'INVITE MEMBER';
+
+  @override
+  String get invite => 'Invite';
+
+  @override
+  String get inviteMemberTitle => 'Invite Member';
+
+  @override
+  String get inviteMemberBody =>
+      'Send an invitation email. The person joins as a member after they register.';
+
+  @override
+  String get invitationSent => 'Invitation sent.';
+
+  @override
+  String get invitations => 'Invitations';
+
+  @override
+  String get invitationsEmpty => 'No invitations.';
+
+  @override
+  String get invitationStatusPending => 'Pending';
+
+  @override
+  String get invitationStatusAccepted => 'Accepted';
+
+  @override
+  String get invitationStatusRevoked => 'Revoked';
+
+  @override
+  String get invitationStatusExpired => 'Expired';
+
+  @override
+  String get invitationStatusUnknown => 'Unknown';
+
+  @override
+  String get revokeInvitation => 'Revoke';
+
+  @override
+  String get revokeInvitationConfirmTitle => 'Revoke invitation?';
+
+  @override
+  String get revokeInvitationConfirmBody =>
+      'Revoke this invitation? The link in the email will stop working.';
+
+  @override
+  String get invitationRevoked => 'Invitation revoked.';
+
+  @override
+  String invitationExpiresOn(String date) {
+    return 'Expires $date';
+  }
+
+  @override
+  String get invitationTitle => 'Join Organization';
+
+  @override
+  String invitationSubtitle(String organization) {
+    return 'You have been invited to join $organization.';
+  }
+
+  @override
+  String get invitationSubtitleFallback =>
+      'You have been invited to join an organization.';
+
+  @override
+  String get invitationJoin => 'JOIN ORGANIZATION';
+
+  @override
+  String get invitationExpiredTitle => 'Invitation Expired';
+
+  @override
+  String get invitationExpiredBody =>
+      'This invitation has expired. Ask the organization owner to send a new one.';
+
+  @override
+  String get invitationInvalidTitle => 'Invalid Invitation';
+
+  @override
+  String get invitationInvalidBody =>
+      'This invitation link is not valid or has already been used.';
+
+  @override
+  String get invitationErrorTitle => 'Something Went Wrong';
+
+  @override
+  String get invitationErrorBody =>
+      'We could not load this invitation. Please try again later.';
+
+  @override
+  String get invitationNotAvailableTitle => 'Invitation Not Available';
+
+  @override
+  String invitationNotAvailableBody(String status) {
+    return 'This invitation is $status.';
+  }
 }

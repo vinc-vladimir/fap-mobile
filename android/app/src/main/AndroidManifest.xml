@@ -47,6 +47,9 @@
                 <data android:scheme="https"
                       android:host="dev.fap.rs"
                       android:pathPrefix="/set-new-password"/>
+                <data android:scheme="https"
+                      android:host="dev.fap.rs"
+                      android:pathPrefix="/org-invitation"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
