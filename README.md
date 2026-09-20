@@ -75,6 +75,44 @@ Notes:
   Links are not configured yet.
 - Watch the app log for the `[DeepLinkHandler]` line to confirm the URI was parsed and routed.
 
+## Organization (Phase 1)
+
+The Account tab → **Organization** opens the organization area. A user belongs to **at most
+one** organization; the account that creates one becomes its `ORG_OWNER`, invited users join
+as `ORG_MEMBER`.
+
+| Route | Screen |
+|---|---|
+| `/account/organization` | Empty state (create CTA) or the profile; owner sees **Edit** + **Deactivate**, a member is read-only |
+| `/account/organization/create` | Create the organization profile |
+| `/account/organization/edit` | Edit the organization profile (owner only) |
+
+Endpoints (source of truth: `fap-service/doc/openapi/organization-api.yaml`):
+
+| Method | Path | Notes |
+|---|---|---|
+| GET | `/v1/organizations/me` | Membership `{ organizationId, role }`; both `null` when the user has none |
+| POST | `/v1/organizations` | Create; caller becomes `ORG_OWNER` (`409` if already in one) |
+| GET | `/v1/organizations/{id}` | Organization profile |
+| PUT | `/v1/organizations/{id}` | Update writable fields (owner) |
+| POST | `/v1/organizations/{id}/deactivate` | Soft delete (owner) |
+
+Members, fleet vehicles, fleet payment cards and invitations are later phases. Full plan and
+progress: [`docs/organization_implementation_plan_with_progress_status.md`](docs/organization_implementation_plan_with_progress_status.md).
+
+## Testing
+
+```bash
+flutter test                                          # all tests
+flutter test test/organization_repository_test.dart   # a single file
+```
+
+> **macOS prerequisite:** if `flutter test` fails while *"Building assets for package:
+> objective_c"* with *"You have not agreed to the Xcode license agreements."*, accept the
+> license once with `sudo xcodebuild -license accept` (or `sudo xcodebuild -runFirstLaunch`).
+> The passkeys/`objective_c` native-assets build invokes `xcrun`/`clang`, which are gated
+> behind the Xcode license.
+
 ## Emulator internal storage full
 
 Symptom: `flutter run` fails during install with:

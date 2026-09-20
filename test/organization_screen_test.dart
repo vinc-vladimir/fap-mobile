@@ -83,4 +83,29 @@ void main() {
     expect(find.text('DEACTIVATE ORGANIZATION'), findsNothing);
     expect(find.textContaining('Only the owner can edit'), findsOneWidget);
   });
+
+  testWidgets('shows an error state with retry when loading fails', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          organizationProvider.overrideWith(
+            (ref) => Future<OrganizationModel?>.error(Exception('boom')),
+          ),
+          organizationMembershipProvider.overrideWith((ref) async => null),
+        ],
+        child: const MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: Locale('en'),
+          home: OrganizationScreen(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('boom'), findsOneWidget);
+    expect(find.text('RETRY'), findsOneWidget);
+  });
 }
