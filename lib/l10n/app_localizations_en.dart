@@ -591,4 +591,74 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get comingSoon => 'Coming soon';
+
+  @override
+  String get organizationName => 'Company Name';
+
+  @override
+  String get crn => 'Company Registration Number';
+
+  @override
+  String get vat => 'VAT Number';
+
+  @override
+  String get companyEmail => 'Company Email';
+
+  @override
+  String get organizationCreateSubtitle =>
+      'Create your company profile to manage a fleet and enable automatic fuel payments.';
+
+  @override
+  String get organizationEditSubtitle => 'Update your company profile details.';
+
+  @override
+  String get createOrganization => 'CREATE ORGANIZATION';
+
+  @override
+  String get editOrganization => 'EDIT ORGANIZATION';
+
+  @override
+  String get organizationCreated => 'Organization created.';
+
+  @override
+  String get organizationSaved => 'Organization updated.';
+
+  @override
+  String get organizationDeactivated => 'Organization deactivated.';
+
+  @override
+  String get organizationEmptyTitle => 'No Organization';
+
+  @override
+  String get organizationEmptyBody =>
+      'You are not part of an organization yet. Create one to manage a fleet and invite members.';
+
+  @override
+  String get organizationMemberReadOnly =>
+      'You are a member of this organization. Only the owner can edit its details.';
+
+  @override
+  String get deactivateOrganization => 'DEACTIVATE ORGANIZATION';
+
+  @override
+  String get deactivate => 'Deactivate';
+
+  @override
+  String get deactivateOrganizationConfirmTitle => 'Deactivate Organization?';
+
+  @override
+  String get deactivateOrganizationConfirmBody =>
+      'This will deactivate the organization. A scheduled job permanently deletes deactivated organizations after the retention window. This action cannot be undone.';
+
+  @override
+  String get activeStatus => 'Active';
+
+  @override
+  String get inactiveStatus => 'Inactive';
+
+  @override
+  String get roleOwner => 'Owner';
+
+  @override
+  String get roleMember => 'Member';
 }

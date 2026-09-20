@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/account/presentation/screens/account_screen.dart';
 import '../../features/account/presentation/screens/personal_details_screen.dart';
+import '../../features/organization/presentation/screens/organization_form_screen.dart';
+import '../../features/organization/presentation/screens/organization_screen.dart';
 import '../../features/auth/presentation/providers/auth_providers.dart';
 import '../../features/auth/presentation/screens/biometric_gate_screen.dart';
 import '../../features/auth/presentation/screens/confirm_registration_screen.dart';
@@ -181,6 +183,22 @@ final routerProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     path: 'change-password',
                     builder: (context, state) => const ChangePasswordScreen(),
+                  ),
+                  GoRoute(
+                    path: 'organization',
+                    builder: (context, state) => const OrganizationScreen(),
+                    routes: [
+                      GoRoute(
+                        path: 'create',
+                        builder: (context, state) =>
+                            const OrganizationFormScreen(isEdit: false),
+                      ),
+                      GoRoute(
+                        path: 'edit',
+                        builder: (context, state) =>
+                            const OrganizationFormScreen(isEdit: true),
+                      ),
+                    ],
                   ),
                 ],
               ),

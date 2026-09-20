@@ -1171,6 +1171,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coming soon'**
   String get comingSoon;
+
+  /// Label for the organization legal/display name field
+  ///
+  /// In en, this message translates to:
+  /// **'Company Name'**
+  String get organizationName;
+
+  /// Label for the company registration number (CRN) field
+  ///
+  /// In en, this message translates to:
+  /// **'Company Registration Number'**
+  String get crn;
+
+  /// Label for the company VAT/PIB number field
+  ///
+  /// In en, this message translates to:
+  /// **'VAT Number'**
+  String get vat;
+
+  /// Label for the organization contact email field
+  ///
+  /// In en, this message translates to:
+  /// **'Company Email'**
+  String get companyEmail;
+
+  /// Helper text at the top of the create organization form
+  ///
+  /// In en, this message translates to:
+  /// **'Create your company profile to manage a fleet and enable automatic fuel payments.'**
+  String get organizationCreateSubtitle;
+
+  /// Helper text at the top of the edit organization form
+  ///
+  /// In en, this message translates to:
+  /// **'Update your company profile details.'**
+  String get organizationEditSubtitle;
+
+  /// Primary button on the empty organization state
+  ///
+  /// In en, this message translates to:
+  /// **'CREATE ORGANIZATION'**
+  String get createOrganization;
+
+  /// Primary button to edit the organization profile (owner only)
+  ///
+  /// In en, this message translates to:
+  /// **'EDIT ORGANIZATION'**
+  String get editOrganization;
+
+  /// Success message after creating an organization
+  ///
+  /// In en, this message translates to:
+  /// **'Organization created.'**
+  String get organizationCreated;
+
+  /// Success message after updating the organization profile
+  ///
+  /// In en, this message translates to:
+  /// **'Organization updated.'**
+  String get organizationSaved;
+
+  /// Success message after deactivating the organization
+  ///
+  /// In en, this message translates to:
+  /// **'Organization deactivated.'**
+  String get organizationDeactivated;
+
+  /// Title of the empty organization state
+  ///
+  /// In en, this message translates to:
+  /// **'No Organization'**
+  String get organizationEmptyTitle;
+
+  /// Body of the empty organization state
+  ///
+  /// In en, this message translates to:
+  /// **'You are not part of an organization yet. Create one to manage a fleet and invite members.'**
+  String get organizationEmptyBody;
+
+  /// Shown to ORG_MEMBER users instead of edit/deactivate actions
+  ///
+  /// In en, this message translates to:
+  /// **'You are a member of this organization. Only the owner can edit its details.'**
+  String get organizationMemberReadOnly;
+
+  /// Destructive button to deactivate the organization (owner only)
+  ///
+  /// In en, this message translates to:
+  /// **'DEACTIVATE ORGANIZATION'**
+  String get deactivateOrganization;
+
+  /// Confirm action in the deactivate organization dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate'**
+  String get deactivate;
+
+  /// Title of the deactivate organization confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate Organization?'**
+  String get deactivateOrganizationConfirmTitle;
+
+  /// Body of the deactivate organization confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'This will deactivate the organization. A scheduled job permanently deletes deactivated organizations after the retention window. This action cannot be undone.'**
+  String get deactivateOrganizationConfirmBody;
+
+  /// Organization status chip when the organization is active
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get activeStatus;
+
+  /// Organization status chip when the organization is deactivated
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get inactiveStatus;
+
+  /// Role chip label for ORG_OWNER
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get roleOwner;
+
+  /// Role chip label for ORG_MEMBER
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get roleMember;
 }
 
 class _AppLocalizationsDelegate

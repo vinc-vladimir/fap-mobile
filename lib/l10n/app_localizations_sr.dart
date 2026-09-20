@@ -592,4 +592,75 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get comingSoon => 'Uskoro';
+
+  @override
+  String get organizationName => 'Naziv Kompanije';
+
+  @override
+  String get crn => 'Matični Broj';
+
+  @override
+  String get vat => 'PIB';
+
+  @override
+  String get companyEmail => 'Email Kompanije';
+
+  @override
+  String get organizationCreateSubtitle =>
+      'Kreirajte profil kompanije da biste upravljali voznim parkom i omogućili automatsko plaćanje goriva.';
+
+  @override
+  String get organizationEditSubtitle =>
+      'Ažurirajte podatke profila kompanije.';
+
+  @override
+  String get createOrganization => 'KREIRAJ ORGANIZACIJU';
+
+  @override
+  String get editOrganization => 'IZMENI ORGANIZACIJU';
+
+  @override
+  String get organizationCreated => 'Organizacija je kreirana.';
+
+  @override
+  String get organizationSaved => 'Organizacija je ažurirana.';
+
+  @override
+  String get organizationDeactivated => 'Organizacija je deaktivirana.';
+
+  @override
+  String get organizationEmptyTitle => 'Nema Organizacije';
+
+  @override
+  String get organizationEmptyBody =>
+      'Još uvek niste deo organizacije. Kreirajte je da biste upravljali voznim parkom i pozvali članove.';
+
+  @override
+  String get organizationMemberReadOnly =>
+      'Član ste ove organizacije. Samo vlasnik može da menja njene podatke.';
+
+  @override
+  String get deactivateOrganization => 'DEAKTIVIRAJ ORGANIZACIJU';
+
+  @override
+  String get deactivate => 'Deaktiviraj';
+
+  @override
+  String get deactivateOrganizationConfirmTitle => 'Deaktivirati Organizaciju?';
+
+  @override
+  String get deactivateOrganizationConfirmBody =>
+      'Ovo će deaktivirati organizaciju. Zakazani posao trajno briše deaktivirane organizacije nakon perioda zadržavanja. Ova radnja se ne može poništiti.';
+
+  @override
+  String get activeStatus => 'Aktivna';
+
+  @override
+  String get inactiveStatus => 'Neaktivna';
+
+  @override
+  String get roleOwner => 'Vlasnik';
+
+  @override
+  String get roleMember => 'Član';
 }
