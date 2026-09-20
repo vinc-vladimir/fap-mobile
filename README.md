@@ -87,6 +87,7 @@ as `ORG_MEMBER`.
 | `/account/organization/create` | Create the organization profile |
 | `/account/organization/edit` | Edit the organization profile (owner only) |
 | `/account/organization/members` | Member list; owner can remove a member or transfer ownership (per-row menu) |
+| `/account/organization/invitations` | Invitation list; owner can revoke a pending invitation |
 
 Endpoints (source of truth: `fap-service/doc/openapi/organization-api.yaml`):
 
@@ -100,9 +101,37 @@ Endpoints (source of truth: `fap-service/doc/openapi/organization-api.yaml`):
 | GET | `/v1/organizations/{id}/members` | List members (any member) |
 | DELETE | `/v1/organizations/{id}/members/{memberId}` | Remove a member (owner; owner cannot be removed) |
 | POST | `/v1/organizations/{id}/transfer-ownership` | Transfer ownership (owner) |
+| POST | `/v1/organizations/{id}/invitations` | Invite an unregistered email (owner); sends the invitation email |
+| GET | `/v1/organizations/{id}/invitations` | List invitations (owner) |
+| DELETE | `/v1/organizations/{id}/invitations/{invitationId}` | Revoke an invitation (owner) |
+| GET | `/v1/invitations/{token}` | Public invitation details (no auth) |
+| POST | `/v1/invitations/{token}/accept` | Invitee joins as `ORG_MEMBER` |
 
-Fleet vehicles, fleet payment cards and invitations are later phases. Full plan and
-progress: [`docs/organization_implementation_plan_with_progress_status.md`](docs/organization_implementation_plan_with_progress_status.md).
+Fleet vehicles and fleet payment cards are later phases. Full plan and progress:
+[`docs/organization_implementation_plan_with_progress_status.md`](docs/organization_implementation_plan_with_progress_status.md).
+
+## Accepting an organization invitation locally
+
+The invitation email contains an HTTPS App Link. As with registration confirmation,
+both URI forms are routed by `lib/core/deep_links/deep_link_handler.dart` to the in-app
+route `/org-invitation/<token>`:
+
+| URI | Purpose |
+|---|---|
+| `fap://org-invitation?token=<TOKEN>` | Manual `adb` testing / back-compat (custom scheme) |
+| `https://dev.fap.rs/org-invitation?token=<TOKEN>` | Tappable link in the invitation email (Android App Link) |
+
+```bash
+# Custom scheme (manual adb testing)
+adb shell am start -a android.intent.action.VIEW -d "fap://org-invitation?token=<TOKEN>"
+
+# HTTPS App Link (the form sent in the invitation email)
+adb shell am start -a android.intent.action.VIEW -d "https://dev.fap.rs/org-invitation?token=<TOKEN>"
+```
+
+The invitee sets a password; the account is created already verified/active and the user
+joins the organization as `ORG_MEMBER`. HTTPS App Links are **Android-only** for now (iOS
+Universal Links are not configured).
 
 ## Testing
 
@@ -171,6 +200,7 @@ Then start the emulator again from IntelliJ and verify the freed space with
 | `adb uninstall com.vincsoftware.fap_mobile` | Uninstall the app. |
 | `adb logcat -s flutter` | Stream Flutter app logs. |
 | `adb shell am start -a android.intent.action.VIEW -d "fap://registration-confirm?token=<TOKEN>"` | Fire the registration-confirm deep link manually. |
+| `adb shell am start -a android.intent.action.VIEW -d "https://dev.fap.rs/org-invitation?token=e4a0aaaa-e460-4a59-9749-ef8548e6b163"` | Fire the organization-invitation App Link manually (opens `InvitationAcceptScreen` with the given token). |
 
 ## Common Flutter commands
 

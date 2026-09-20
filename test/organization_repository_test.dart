@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:fap_mobile/core/network/api_exceptions.dart';
+import 'package:fap_mobile/features/organization/data/models/organization_invitation_status.dart';
 import 'package:fap_mobile/features/organization/data/models/organization_request.dart';
 import 'package:fap_mobile/features/organization/data/models/organization_role.dart';
 import 'package:fap_mobile/features/organization/data/repositories/organization_repository.dart';
@@ -235,6 +236,109 @@ void main() {
     });
   });
 
+  group('inviteMember', () {
+    test('POSTs the email body to the invitations path', () async {
+      final adapter = _RecordingAdapter(
+        statusCode: 200,
+        body:
+            '{"id":"inv-1","organizationId":"org-1","email":"new@example.com",'
+            '"status":"PENDING","expiresAt":"2026-09-23T10:00:00Z"}',
+      );
+
+      final invitation = await _repository(
+        adapter,
+      ).inviteMember('org-1', 'new@example.com');
+
+      expect(adapter.lastRequest!.method, 'POST');
+      expect(adapter.lastRequest!.path, '/v1/organizations/org-1/invitations');
+      final body = adapter.lastRequest!.data as Map<String, dynamic>;
+      expect(body['email'], 'new@example.com');
+      expect(invitation.id, 'inv-1');
+      expect(invitation.isPending, isTrue);
+    });
+  });
+
+  group('getInvitations', () {
+    test('GETs the invitations list and parses statuses', () async {
+      final adapter = _RecordingAdapter(
+        statusCode: 200,
+        body: jsonEncode([
+          {
+            'id': 'inv-1',
+            'organizationId': 'org-1',
+            'email': 'pending@example.com',
+            'status': 'PENDING',
+          },
+          {
+            'id': 'inv-2',
+            'organizationId': 'org-1',
+            'email': 'accepted@example.com',
+            'status': 'ACCEPTED',
+          },
+        ]),
+      );
+
+      final invitations = await _repository(adapter).getInvitations('org-1');
+
+      expect(adapter.lastRequest!.method, 'GET');
+      expect(adapter.lastRequest!.path, '/v1/organizations/org-1/invitations');
+      expect(invitations, hasLength(2));
+      expect(invitations.first.isPending, isTrue);
+      expect(
+        invitations.last.statusValue,
+        OrganizationInvitationStatus.accepted,
+      );
+    });
+  });
+
+  group('revokeInvitation', () {
+    test('DELETEs the invitation path', () async {
+      final adapter = _RecordingAdapter(statusCode: 200, body: '{}');
+
+      await _repository(adapter).revokeInvitation('org-1', 'inv-1');
+
+      expect(adapter.lastRequest!.method, 'DELETE');
+      expect(
+        adapter.lastRequest!.path,
+        '/v1/organizations/org-1/invitations/inv-1',
+      );
+    });
+  });
+
+  group('getInvitationDetails', () {
+    test('GETs the public invitation details', () async {
+      final adapter = _RecordingAdapter(
+        statusCode: 200,
+        body:
+            '{"email":"new@example.com","organizationName":"Acme",'
+            '"status":"PENDING","expiresAt":"2026-09-23T10:00:00Z"}',
+      );
+
+      final details = await _repository(adapter).getInvitationDetails('tok-1');
+
+      expect(adapter.lastRequest!.method, 'GET');
+      expect(adapter.lastRequest!.path, '/v1/invitations/tok-1');
+      expect(details.email, 'new@example.com');
+      expect(details.organizationName, 'Acme');
+      expect(details.statusValue, OrganizationInvitationStatus.pending);
+    });
+  });
+
+  group('acceptInvitation', () {
+    test('POSTs to the accept path and parses the organization', () async {
+      final adapter = _RecordingAdapter(
+        statusCode: 200,
+        body: '{"id":"org-1","name":"Acme","active":true}',
+      );
+
+      final organization = await _repository(adapter).acceptInvitation('tok-1');
+
+      expect(adapter.lastRequest!.method, 'POST');
+      expect(adapter.lastRequest!.path, '/v1/invitations/tok-1/accept');
+      expect(organization.id, 'org-1');
+    });
+  });
+
   group('error mapping', () {
     test('maps an RFC 7807 ProblemDetail to ApiException', () async {
       final adapter = _RecordingAdapter(
@@ -302,6 +406,26 @@ void main() {
                 'message',
                 'The caller is not the ORG_OWNER of the organization.',
               ),
+        ),
+      );
+    });
+
+    test('maps a 400 on inviteMember to ApiException', () async {
+      final adapter = _RecordingAdapter(
+        statusCode: 400,
+        body: jsonEncode({
+          'title': 'Bad Request',
+          'status': 400,
+          'detail': 'Email already registered.',
+        }),
+      );
+
+      expect(
+        () => _repository(adapter).inviteMember('org-1', 'taken@example.com'),
+        throwsA(
+          isA<ApiException>()
+              .having((e) => e.statusCode, 'statusCode', 400)
+              .having((e) => e.message, 'message', 'Email already registered.'),
         ),
       );
     });

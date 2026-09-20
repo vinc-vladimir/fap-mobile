@@ -31,6 +31,29 @@ class AuthRepository {
     }
   }
 
+  /// POST /v1/auth/registration with an `invitationToken` — the invited sign-up.
+  ///
+  /// The email is taken from the invitation; the account is created already
+  /// verified and active (no confirmation email) and the response contains the
+  /// access/refresh tokens, so the invitee is authenticated immediately.
+  Future<AuthResponse> registerInvited({
+    required String password,
+    required String invitationToken,
+  }) async {
+    try {
+      final response = await _dio.post(
+        ApiConstants.registration,
+        data: InvitedRegistrationRequest(
+          password: password,
+          invitationToken: invitationToken,
+        ).toJson(),
+      );
+      return AuthResponse.fromJson(response.data as Map<String, dynamic>);
+    } on DioException catch (e) {
+      throw ApiException.fromDio(e);
+    }
+  }
+
   /// POST /v1/auth/confirm/registration — confirms email with a one-time token.
   Future<void> confirmRegistration({required String token}) async {
     try {

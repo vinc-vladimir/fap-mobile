@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/account/presentation/screens/account_screen.dart';
 import '../../features/account/presentation/screens/personal_details_screen.dart';
+import '../../features/organization/presentation/screens/invitation_accept_screen.dart';
 import '../../features/organization/presentation/screens/organization_form_screen.dart';
+import '../../features/organization/presentation/screens/organization_invitations_screen.dart';
 import '../../features/organization/presentation/screens/organization_members_screen.dart';
 import '../../features/organization/presentation/screens/organization_screen.dart';
 import '../../features/auth/presentation/providers/auth_providers.dart';
@@ -115,6 +117,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             ResetPasswordScreen(token: state.pathParameters['token'] ?? ''),
       ),
       GoRoute(
+        path: '/org-invitation/:token',
+        builder: (context, state) =>
+            InvitationAcceptScreen(token: state.pathParameters['token'] ?? ''),
+      ),
+      GoRoute(
         path: '/privacy-policy',
         builder: (context, state) => const PrivacyPolicyScreen(),
       ),
@@ -203,6 +210,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                         path: 'members',
                         builder: (context, state) =>
                             const OrganizationMembersScreen(),
+                      ),
+                      GoRoute(
+                        path: 'invitations',
+                        builder: (context, state) =>
+                            const OrganizationInvitationsScreen(),
                       ),
                     ],
                   ),

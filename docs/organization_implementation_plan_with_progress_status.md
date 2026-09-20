@@ -57,11 +57,11 @@ zip, country`; `id`, `active`, `createdAt` are server-managed and ignored if sen
 | Phase | Description | Status | Key deliverable |
 |---|---|---|---|
 | 1 | Org profile CRUD (create/read/update/deactivate) + membership + Account entry + routing + l10n + tests | ✅ Done — verified on device | Organization area reachable from Account |
-| 2 | Members & ownership (list, remove, transfer) — owner-gated | ✅ Done — verified (automated) | Member management screen |
+| 2 | Members & ownership (list, remove, transfer) — owner-gated | ✅ Done — verified on device | Member management screen |
 | 3 | Fleet vehicles (list, add) | ⏳ Pending | Fleet vehicles screen |
 | 4 | Fleet payment cards (list/add/edit/delete/primary; masked display) | ⏳ Pending | Fleet cards screen |
-| 5 | Invitations (invite/list/revoke) + invitee deep-link & registration flow | ⏳ Pending | End-to-end invite flow |
-| 6 | `fap-infra` hand-off: `assetlinks.json` for `/org-invitation` | ⏳ Pending | App Link verified (with Phase 5) |
+| 5 | Invitations (invite/list/revoke) + invitee deep-link & registration flow | ✅ Done — verified on device | End-to-end invite flow |
+| 6 | `fap-infra` hand-off: `assetlinks.json` for `/org-invitation` | ✅ Closed — not required (`handle_all_urls` already covers all paths) | — |
 
 ## Phase 1 checklist (fap-mobile)
 
@@ -92,10 +92,31 @@ literals outside `lib/core/theme/`.
 - **Phase 3 — Fleet vehicles.** `getVehicles`, `addVehicle`; list (member), add (owner).
 - **Phase 4 — Fleet payment cards.** `getCards`, `addCard`, `updateCard`, `deleteCard`;
   masked display (issuer + primary + last-4), primary semantics.
-- **Phase 5 — Invitations.** `inviteMember`, `getInvitations`, `revokeInvitation`, public
-  `getInvitationDetails`, `acceptInvitation`; `org-invitation` deep link; invited sign-up
-  with `invitationToken` (auth registration change). Requires `fap-infra` assetlinks
-  hand-off.
+- **Phase 5 — Invitations.** ✅ Done — see checklist below.
+
+## Phase 5 checklist (fap-mobile)
+
+- [x] **P5-1** Constants — `organizationInvitations`, `organizationInvitation`, `invitationDetails`, `invitationAccept`
+- [x] **P5-2** Models — `OrganizationInvitationModel`, `OrganizationInvitationStatus`, `CreateInvitationRequest`, `OrganizationInvitationDetailsModel`, `InvitedRegistrationRequest`
+- [x] **P5-3** Repository — `inviteMember`, `getInvitations`, `revokeInvitation`, `getInvitationDetails`, `acceptInvitation`; `AuthRepository.registerInvited`
+- [x] **P5-4** Providers — `organizationInvitationsProvider`, `OrganizationInvitationController`, `invitationDetailsProvider`, `InvitationAcceptController`
+- [x] **P5-5** Screens — invite dialog (Members), `OrganizationInvitationsScreen`, `InvitationAcceptScreen`; owner **Invitations** entry
+- [x] **P5-6** Routing — `/account/organization/invitations`, public `/org-invitation/:token`
+- [x] **P5-7** Deep link + platform — `DeepLinkHandler`, `app.dart` presenter, AndroidManifest `pathPrefix`
+- [x] **P5-8** Shared `PasswordRequirementsChecklist` + sign-up refactor
+- [x] **P5-9** ARB strings (en + sr) + regen
+- [x] **P5-10** Tests — repository/auth/deep-link/screens/controller (50/50 total)
+- [x] **P5-11** Verify — `build_runner` ✅, `flutter analyze` ✅ 0 issues, raw-color scan ✅, `flutter test` ✅ 50/50
+- [x] **P5-12** Docs — README invitations section; `docs/lessons_learned/10-organization-phase5-invitations.md`
+
+### Phase 5 definition of done
+
+An owner can invite an unregistered email, list and revoke invitations; the invitee opens
+the email deep link, sees the invitation, sets a password, is registered verified/active,
+joins as `ORG_MEMBER` and lands in the app; owner/member gating intact; analyze + tests
+green; no raw colors. Android-only App Link (iOS Universal Links still absent).
+
+**Status: met.** Confirmed by the user on device.
 
 ## Phase 2 checklist (fap-mobile)
 
@@ -117,6 +138,8 @@ member and transfer ownership (with confirmation); a plain member sees no manage
 actions; `flutter analyze` and `flutter test` are green; no raw color literals outside
 `lib/core/theme/`.
 
+**Status: met.** Confirmed by the user on device (ownership transfer tested).
+
 ## Decisions & open questions
 
 | # | Decision / question | Status |
@@ -130,10 +153,43 @@ actions; `flutter analyze` and `flutter test` are green; no raw color literals o
 | D7 | Stale `AccountModel.organizationId` left untouched for now | Accepted |
 | D8 | Members list readable by all members; remove/transfer are owner-only actions in a per-row overflow menu; the owner's own row has no actions | Accepted |
 | D9 | After a successful ownership transfer, invalidate the membership so the caller's role (and the role-gated UI) refreshes | Accepted |
+| D10 | Invite is a modal dialog (email only) from the Members screen; invitations list + revoke is a separate `/account/organization/invitations` screen | Accepted |
+| D11 | Invitee acceptance is Android-only (HTTPS App Link); iOS Universal Links remain unconfigured | Accepted |
+| D12 | `InvitationAcceptController` lives in its own provider file to avoid an auth↔organization provider import cycle | Accepted |
+| D13 | No `fap-infra` change for `/org-invitation` — `assetlinks.json` already declares `handle_all_urls` | Accepted |
 
 ## Progress log
 
 > Newest first. Each entry: date — step — what was done — files — verification — blockers.
+
+- **2026-09-20 — Phase 2 & Phase 5 accepted on device ✅.**
+  - **What:** User tested the member ownership transfer (Phase 2) and the full invitation
+    flow (Phase 5) end-to-end on device — all scoped behaviour works.
+  - **Verification:** manual device test — passed. Automated: `flutter test` 50/50,
+    `flutter analyze` 0 issues.
+  - **Blockers:** none. Both phases closed.
+
+- **2026-09-20 — Phase 5 (Invitations & invitee acceptance) implemented and verified ✅.**
+  - **What:** Owner invites/list/revoke + public invitee acceptance.
+    - Constants: invitation paths (org-scoped + public details/accept).
+    - Models: `OrganizationInvitationModel`, `OrganizationInvitationStatus`,
+      `CreateInvitationRequest`, `OrganizationInvitationDetailsModel`,
+      `InvitedRegistrationRequest`.
+    - Repository: `inviteMember`, `getInvitations`, `revokeInvitation`,
+      `getInvitationDetails`, `acceptInvitation`; `AuthRepository.registerInvited`.
+    - Providers: `organizationInvitationsProvider`, `OrganizationInvitationController`,
+      `invitationDetailsProvider`, `InvitationAcceptController` (register → persist tokens →
+      accept).
+    - Screens: invite dialog (Members), `OrganizationInvitationsScreen`,
+      `InvitationAcceptScreen`; owner **Invitations** entry.
+    - Routing: `/account/organization/invitations`, public `/org-invitation/:token`.
+    - Deep link: `DeepLinkHandler` + `app.dart` presenter + AndroidManifest `pathPrefix`.
+    - Shared `PasswordRequirementsChecklist` extracted; sign-up refactored to use it.
+    - l10n: ~30 keys (en + sr).
+    - Tests: +23 across repository/auth/deep-link/invitations/accept/controller/members.
+  - **Verification:** `build_runner` ✅ · `flutter analyze` ✅ 0 issues · raw-color scan ✅ ·
+    `flutter test` ✅ 50/50.
+  - **Blockers:** none. Phase 6 closed as not required (no infra change).
 
 - **2026-09-20 — Phase 2 (Members & ownership) implemented and verified ✅.**
   - **What:** Member list + owner-only remove/transfer.

@@ -121,5 +121,4 @@ Phase 2 test additions:
 3. **Phase 5 — Invitations:** owner invite/list/revoke + invitee deep link
    (`https://dev.fap.rs/org-invitation?token=…`), invited sign-up with `invitationToken`,
    and a `fap-infra` `assetlinks.json` hand-off.
-4. **Manual device check:** the automated suite covers the flows; a device pass (owner vs
-   member) is still worthwhile before shipping.
+4. **Manual device check:** ✅ done — owner vs member and ownership transfer verified on device.

@@ -1375,6 +1375,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ownership transferred.'**
   String get ownershipTransferred;
+
+  /// Owner button on the members screen that opens the invite dialog
+  ///
+  /// In en, this message translates to:
+  /// **'INVITE MEMBER'**
+  String get inviteMember;
+
+  /// Confirm action in the invite member dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Invite'**
+  String get invite;
+
+  /// Title of the invite member dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Invite Member'**
+  String get inviteMemberTitle;
+
+  /// Body of the invite member dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Send an invitation email. The person joins as a member after they register.'**
+  String get inviteMemberBody;
+
+  /// Success message after sending an invitation
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation sent.'**
+  String get invitationSent;
+
+  /// Title of the invitations screen and the button that opens it
+  ///
+  /// In en, this message translates to:
+  /// **'Invitations'**
+  String get invitations;
+
+  /// Shown when there are no invitations
+  ///
+  /// In en, this message translates to:
+  /// **'No invitations.'**
+  String get invitationsEmpty;
+
+  /// No description provided for @invitationStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get invitationStatusPending;
+
+  /// No description provided for @invitationStatusAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted'**
+  String get invitationStatusAccepted;
+
+  /// No description provided for @invitationStatusRevoked.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoked'**
+  String get invitationStatusRevoked;
+
+  /// No description provided for @invitationStatusExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get invitationStatusExpired;
+
+  /// No description provided for @invitationStatusUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get invitationStatusUnknown;
+
+  /// Action to revoke a pending invitation
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke'**
+  String get revokeInvitation;
+
+  /// Title of the revoke invitation confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke invitation?'**
+  String get revokeInvitationConfirmTitle;
+
+  /// Body of the revoke invitation confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke this invitation? The link in the email will stop working.'**
+  String get revokeInvitationConfirmBody;
+
+  /// Success message after revoking an invitation
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation revoked.'**
+  String get invitationRevoked;
+
+  /// Invitation expiry line on the invitations list
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {date}'**
+  String invitationExpiresOn(String date);
+
+  /// Title of the public invitation accept screen
+  ///
+  /// In en, this message translates to:
+  /// **'Join Organization'**
+  String get invitationTitle;
+
+  /// Subtitle of the invitation accept screen when the organization name is known
+  ///
+  /// In en, this message translates to:
+  /// **'You have been invited to join {organization}.'**
+  String invitationSubtitle(String organization);
+
+  /// Subtitle of the invitation accept screen when the organization name is unknown
+  ///
+  /// In en, this message translates to:
+  /// **'You have been invited to join an organization.'**
+  String get invitationSubtitleFallback;
+
+  /// Primary button on the invitation accept screen
+  ///
+  /// In en, this message translates to:
+  /// **'JOIN ORGANIZATION'**
+  String get invitationJoin;
+
+  /// Title shown when the invitation has expired (410)
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation Expired'**
+  String get invitationExpiredTitle;
+
+  /// Body shown when the invitation has expired
+  ///
+  /// In en, this message translates to:
+  /// **'This invitation has expired. Ask the organization owner to send a new one.'**
+  String get invitationExpiredBody;
+
+  /// Title shown when the invitation token is not found (404)
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Invitation'**
+  String get invitationInvalidTitle;
+
+  /// Body shown when the invitation token is not found
+  ///
+  /// In en, this message translates to:
+  /// **'This invitation link is not valid or has already been used.'**
+  String get invitationInvalidBody;
+
+  /// Generic title when the invitation could not be loaded
+  ///
+  /// In en, this message translates to:
+  /// **'Something Went Wrong'**
+  String get invitationErrorTitle;
+
+  /// Generic body when the invitation could not be loaded
+  ///
+  /// In en, this message translates to:
+  /// **'We could not load this invitation. Please try again later.'**
+  String get invitationErrorBody;
+
+  /// Title shown when the invitation is not in a PENDING state
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation Not Available'**
+  String get invitationNotAvailableTitle;
+
+  /// Body shown when the invitation is not pending
+  ///
+  /// In en, this message translates to:
+  /// **'This invitation is {status}.'**
+  String invitationNotAvailableBody(String status);
 }
 
 class _AppLocalizationsDelegate

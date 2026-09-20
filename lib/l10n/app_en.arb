@@ -324,5 +324,121 @@
   "ownershipTransferred": "Ownership transferred.",
   "@ownershipTransferred": {
     "description": "Success message after transferring organization ownership"
+  },
+  "inviteMember": "INVITE MEMBER",
+  "@inviteMember": {
+    "description": "Owner button on the members screen that opens the invite dialog"
+  },
+  "invite": "Invite",
+  "@invite": {
+    "description": "Confirm action in the invite member dialog"
+  },
+  "inviteMemberTitle": "Invite Member",
+  "@inviteMemberTitle": {
+    "description": "Title of the invite member dialog"
+  },
+  "inviteMemberBody": "Send an invitation email. The person joins as a member after they register.",
+  "@inviteMemberBody": {
+    "description": "Body of the invite member dialog"
+  },
+  "invitationSent": "Invitation sent.",
+  "@invitationSent": {
+    "description": "Success message after sending an invitation"
+  },
+  "invitations": "Invitations",
+  "@invitations": {
+    "description": "Title of the invitations screen and the button that opens it"
+  },
+  "invitationsEmpty": "No invitations.",
+  "@invitationsEmpty": {
+    "description": "Shown when there are no invitations"
+  },
+  "invitationStatusPending": "Pending",
+  "invitationStatusAccepted": "Accepted",
+  "invitationStatusRevoked": "Revoked",
+  "invitationStatusExpired": "Expired",
+  "invitationStatusUnknown": "Unknown",
+  "revokeInvitation": "Revoke",
+  "@revokeInvitation": {
+    "description": "Action to revoke a pending invitation"
+  },
+  "revokeInvitationConfirmTitle": "Revoke invitation?",
+  "@revokeInvitationConfirmTitle": {
+    "description": "Title of the revoke invitation confirmation dialog"
+  },
+  "revokeInvitationConfirmBody": "Revoke this invitation? The link in the email will stop working.",
+  "@revokeInvitationConfirmBody": {
+    "description": "Body of the revoke invitation confirmation dialog"
+  },
+  "invitationRevoked": "Invitation revoked.",
+  "@invitationRevoked": {
+    "description": "Success message after revoking an invitation"
+  },
+  "invitationExpiresOn": "Expires {date}",
+  "@invitationExpiresOn": {
+    "description": "Invitation expiry line on the invitations list",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invitationTitle": "Join Organization",
+  "@invitationTitle": {
+    "description": "Title of the public invitation accept screen"
+  },
+  "invitationSubtitle": "You have been invited to join {organization}.",
+  "@invitationSubtitle": {
+    "description": "Subtitle of the invitation accept screen when the organization name is known",
+    "placeholders": {
+      "organization": {
+        "type": "String"
+      }
+    }
+  },
+  "invitationSubtitleFallback": "You have been invited to join an organization.",
+  "@invitationSubtitleFallback": {
+    "description": "Subtitle of the invitation accept screen when the organization name is unknown"
+  },
+  "invitationJoin": "JOIN ORGANIZATION",
+  "@invitationJoin": {
+    "description": "Primary button on the invitation accept screen"
+  },
+  "invitationExpiredTitle": "Invitation Expired",
+  "@invitationExpiredTitle": {
+    "description": "Title shown when the invitation has expired (410)"
+  },
+  "invitationExpiredBody": "This invitation has expired. Ask the organization owner to send a new one.",
+  "@invitationExpiredBody": {
+    "description": "Body shown when the invitation has expired"
+  },
+  "invitationInvalidTitle": "Invalid Invitation",
+  "@invitationInvalidTitle": {
+    "description": "Title shown when the invitation token is not found (404)"
+  },
+  "invitationInvalidBody": "This invitation link is not valid or has already been used.",
+  "@invitationInvalidBody": {
+    "description": "Body shown when the invitation token is not found"
+  },
+  "invitationErrorTitle": "Something Went Wrong",
+  "@invitationErrorTitle": {
+    "description": "Generic title when the invitation could not be loaded"
+  },
+  "invitationErrorBody": "We could not load this invitation. Please try again later.",
+  "@invitationErrorBody": {
+    "description": "Generic body when the invitation could not be loaded"
+  },
+  "invitationNotAvailableTitle": "Invitation Not Available",
+  "@invitationNotAvailableTitle": {
+    "description": "Title shown when the invitation is not in a PENDING state"
+  },
+  "invitationNotAvailableBody": "This invitation is {status}.",
+  "@invitationNotAvailableBody": {
+    "description": "Body shown when the invitation is not pending",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
   }
 }

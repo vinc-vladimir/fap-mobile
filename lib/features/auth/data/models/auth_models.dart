@@ -15,6 +15,21 @@ abstract class RegisterRequest with _$RegisterRequest {
       _$RegisterRequestFromJson(json);
 }
 
+/// Body for the invited sign-up (`POST /v1/auth/registration` with an
+/// `invitationToken`). The backend takes the email from the invitation, so it
+/// is not sent; the account is created already verified and active, and tokens
+/// are returned.
+@freezed
+abstract class InvitedRegistrationRequest with _$InvitedRegistrationRequest {
+  const factory InvitedRegistrationRequest({
+    @JsonKey(name: 'password') required String password,
+    @JsonKey(name: 'invitationToken') required String invitationToken,
+  }) = _InvitedRegistrationRequest;
+
+  factory InvitedRegistrationRequest.fromJson(Map<String, dynamic> json) =>
+      _$InvitedRegistrationRequestFromJson(json);
+}
+
 @freezed
 abstract class LoginRequest with _$LoginRequest {
   const factory LoginRequest({

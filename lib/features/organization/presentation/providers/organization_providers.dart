@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/network/api_client.dart';
+import '../../data/models/organization_invitation_model.dart';
 import '../../data/models/organization_member_model.dart';
 import '../../data/models/organization_membership_model.dart';
 import '../../data/models/organization_model.dart';
@@ -44,6 +45,18 @@ Future<List<OrganizationMemberModel>> organizationMembers(Ref ref) async {
   final id = membership?.organizationId;
   if (id == null || id.isEmpty) return const [];
   return ref.watch(organizationRepositoryProvider).getMembers(id);
+}
+
+/// The organization's invitations (owner-only on the backend). Empty when the
+/// user has no organization.
+@Riverpod(keepAlive: false)
+Future<List<OrganizationInvitationModel>> organizationInvitations(
+  Ref ref,
+) async {
+  final membership = await ref.watch(organizationMembershipProvider.future);
+  final id = membership?.organizationId;
+  if (id == null || id.isEmpty) return const [];
+  return ref.watch(organizationRepositoryProvider).getInvitations(id);
 }
 
 /// Handles creating and updating the organization profile.
@@ -126,6 +139,35 @@ class OrganizationMemberController extends _$OrganizationMemberController {
           .transferOwnership(organizationId, memberId);
       ref.invalidate(organizationMembersProvider);
       ref.invalidate(organizationMembershipProvider);
+    });
+  }
+}
+
+/// Handles owner-only invitation mutations: invite a new email and revoke a
+/// pending invitation. Both invalidate the invitations list.
+@riverpod
+class OrganizationInvitationController
+    extends _$OrganizationInvitationController {
+  @override
+  FutureOr<void> build() {}
+
+  Future<void> invite(String organizationId, String email) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref
+          .read(organizationRepositoryProvider)
+          .inviteMember(organizationId, email);
+      ref.invalidate(organizationInvitationsProvider);
+    });
+  }
+
+  Future<void> revoke(String organizationId, String invitationId) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref
+          .read(organizationRepositoryProvider)
+          .revokeInvitation(organizationId, invitationId);
+      ref.invalidate(organizationInvitationsProvider);
     });
   }
 }

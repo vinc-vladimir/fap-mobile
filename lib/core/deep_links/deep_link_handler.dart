@@ -8,6 +8,10 @@ class DeepLinkHandler {
 
   static const String _registrationConfirmPath = 'registration-confirm';
 
+  /// Organization-invitation path. The backend emits `org-invitation` in the
+  /// invitation email (`https://dev.fap.rs/org-invitation?token=…`).
+  static const String _orgInvitationPath = 'org-invitation';
+
   /// Password-reset paths. The backend emits `set-new-password` in the reset
   /// email; `reset-password` is accepted as an alias for manual testing.
   static const List<String> _resetPasswordPaths = [
@@ -28,6 +32,8 @@ class DeepLinkHandler {
     if (token != null && token.isNotEmpty) {
       if (path.contains(_registrationConfirmPath)) {
         route = '/confirm-registration/$token';
+      } else if (path.contains(_orgInvitationPath)) {
+        route = '/org-invitation/$token';
       } else if (_resetPasswordPaths.any(path.contains)) {
         route = '/reset-password/$token';
       } else {

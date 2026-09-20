@@ -14,6 +14,7 @@ import '../core/theme/app_theme.dart';
 import '../core/theme/theme_provider.dart';
 import '../features/auth/presentation/screens/confirm_registration_screen.dart';
 import '../features/auth/presentation/screens/reset_password_screen.dart';
+import '../features/organization/presentation/screens/invitation_accept_screen.dart';
 
 /// MaterialApp wired to go_router and the theme/locale providers.
 class FapApp extends ConsumerStatefulWidget {
@@ -93,6 +94,8 @@ class _FapAppState extends ConsumerState<FapApp> {
         builder = (_) => ConfirmRegistrationScreen(token: token);
       } else if (route.startsWith('/reset-password')) {
         builder = (_) => ResetPasswordScreen(token: token);
+      } else if (route.startsWith('/org-invitation')) {
+        builder = (_) => InvitationAcceptScreen(token: token);
       } else {
         builder = null;
       }

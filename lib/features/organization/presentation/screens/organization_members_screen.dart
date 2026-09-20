@@ -9,6 +9,7 @@ import '../../../../core/widgets/screen_app_bar.dart';
 import '../../../auth/presentation/widgets/glass_card.dart';
 import '../../data/models/organization_member_model.dart';
 import '../providers/organization_providers.dart';
+import '../widgets/invite_member_dialog.dart';
 
 /// Lists the organization's members.
 ///
@@ -115,7 +116,7 @@ class _MembersList extends ConsumerWidget {
     final isOwner = membership?.roleValue.isOwner ?? false;
     final organizationId = membership?.organizationId;
 
-    return ListView.separated(
+    final list = ListView.separated(
       padding: EdgeInsets.fromLTRB(
         AppDimensions.marginMain,
         AppDimensions.stackLg,
@@ -132,6 +133,61 @@ class _MembersList extends ConsumerWidget {
           canManage: isOwner && !member.isOwner,
         );
       },
+    );
+
+    if (!isOwner || organizationId == null || organizationId.isEmpty) {
+      return list;
+    }
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            AppDimensions.marginMain,
+            AppDimensions.stackLg,
+            AppDimensions.marginMain,
+            0,
+          ),
+          child: _InviteMemberButton(organizationId: organizationId),
+        ),
+        Expanded(child: list),
+      ],
+    );
+  }
+}
+
+class _InviteMemberButton extends StatelessWidget {
+  const _InviteMemberButton({required this.organizationId});
+
+  final String organizationId;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+    return ElevatedButton(
+      onPressed: () =>
+          showInviteMemberDialog(context, organizationId: organizationId),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: vibrantCyan,
+        foregroundColor: brandPrimary,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
+        ),
+        elevation: 0,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.person_add_alt_1_outlined, color: brandPrimary),
+          const SizedBox(width: AppDimensions.stackSm),
+          Text(
+            l10n.inviteMember,
+            style: theme.textTheme.displaySmall?.copyWith(color: brandPrimary),
+          ),
+        ],
+      ),
     );
   }
 }

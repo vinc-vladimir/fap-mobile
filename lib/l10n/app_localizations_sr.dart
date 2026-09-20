@@ -703,4 +703,103 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get ownershipTransferred => 'Vlasništvo je preneto.';
+
+  @override
+  String get inviteMember => 'POZOVI ČLANA';
+
+  @override
+  String get invite => 'Pozovi';
+
+  @override
+  String get inviteMemberTitle => 'Pozovi Člana';
+
+  @override
+  String get inviteMemberBody =>
+      'Pošaljite email pozivnicu. Osoba postaje član nakon registracije.';
+
+  @override
+  String get invitationSent => 'Pozivnica je poslata.';
+
+  @override
+  String get invitations => 'Pozivnice';
+
+  @override
+  String get invitationsEmpty => 'Nema pozivnica.';
+
+  @override
+  String get invitationStatusPending => 'Na čekanju';
+
+  @override
+  String get invitationStatusAccepted => 'Prihvaćena';
+
+  @override
+  String get invitationStatusRevoked => 'Opozvana';
+
+  @override
+  String get invitationStatusExpired => 'Istekla';
+
+  @override
+  String get invitationStatusUnknown => 'Nepoznato';
+
+  @override
+  String get revokeInvitation => 'Opozovi';
+
+  @override
+  String get revokeInvitationConfirmTitle => 'Opozivati pozivnicu?';
+
+  @override
+  String get revokeInvitationConfirmBody =>
+      'Opozovite ovu pozivnicu? Link u emailu više neće raditi.';
+
+  @override
+  String get invitationRevoked => 'Pozivnica je opozvana.';
+
+  @override
+  String invitationExpiresOn(String date) {
+    return 'Ističe $date';
+  }
+
+  @override
+  String get invitationTitle => 'Pridruži se Organizaciji';
+
+  @override
+  String invitationSubtitle(String organization) {
+    return 'Pozvani ste da se pridružite $organization.';
+  }
+
+  @override
+  String get invitationSubtitleFallback =>
+      'Pozvani ste da se pridružite organizaciji.';
+
+  @override
+  String get invitationJoin => 'PRIDRUŽI SE ORGANIZACIJI';
+
+  @override
+  String get invitationExpiredTitle => 'Pozivnica je Istekla';
+
+  @override
+  String get invitationExpiredBody =>
+      'Ova pozivnica je istekla. Zamolite vlasnika organizacije da pošalje novu.';
+
+  @override
+  String get invitationInvalidTitle => 'Nevažeća Pozivnica';
+
+  @override
+  String get invitationInvalidBody =>
+      'Ovaj link pozivnice nije važeći ili je već iskorišćen.';
+
+  @override
+  String get invitationErrorTitle => 'Nešto je Pošlo naopako';
+
+  @override
+  String get invitationErrorBody =>
+      'Nismo mogli da učitamo ovu pozivnicu. Pokušajte ponovo kasnije.';
+
+  @override
+  String get invitationNotAvailableTitle => 'Pozivnica Nije Dostupna';
+
+  @override
+  String invitationNotAvailableBody(String status) {
+    return 'Ova pozivnica je $status.';
+  }
 }
