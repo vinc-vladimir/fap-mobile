@@ -25,7 +25,7 @@ dependencies:
   dio: ^5.10.0
 
   # Secure Storage
-  flutter_secure_storage: ^10.3.0
+  flutter_secure_storage: ^11.2.0
 
   # Passkeys / WebAuthn
   passkeys: ^2.22.0
