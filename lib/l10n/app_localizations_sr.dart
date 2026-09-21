@@ -802,4 +802,110 @@ class AppLocalizationsSr extends AppLocalizations {
   String invitationNotAvailableBody(String status) {
     return 'Ova pozivnica je $status.';
   }
+
+  @override
+  String get licensePlatesSubtitle =>
+      'Upravljajte registracijom vozila za automatsku autorizaciju na pumpi.';
+
+  @override
+  String get plateStatusActive => 'Aktivna';
+
+  @override
+  String get plateStatusExpiringSoon => 'Ističe uskoro';
+
+  @override
+  String get corporateFleet => 'Korporativna flota';
+
+  @override
+  String get addLicensePlate => 'DODAJ REGISTARSKU TABLICU';
+
+  @override
+  String get editPlate => 'Izmeni tablicu';
+
+  @override
+  String get deletePlate => 'Obriši tablicu';
+
+  @override
+  String get deletePlateConfirmTitle => 'Obrisati registarsku tablicu?';
+
+  @override
+  String deletePlateConfirmBody(String number) {
+    return 'Ukloniti tablicu $number? Ova radnja se ne može poništiti.';
+  }
+
+  @override
+  String get plateDeleted => 'Registarska tablica je obrisana.';
+
+  @override
+  String get plateCreated => 'Registarska tablica je dodata.';
+
+  @override
+  String get plateUpdated => 'Registarska tablica je ažurirana.';
+
+  @override
+  String get platesEmptyTitle => 'Nema Registarskih Tablica';
+
+  @override
+  String get platesEmptyBody =>
+      'Dodajte registarsku tablicu vozila da omogućite automatsku autorizaciju na pumpi.';
+
+  @override
+  String get anprTitle => 'ANPR Detekcija Kamere';
+
+  @override
+  String get anprBody =>
+      'Optički skeneri visoke rezolucije automatski verifikuju tablice dok se približavate pumpi ili rampi.';
+
+  @override
+  String get plateMemberReadOnly =>
+      'Član ste ove organizacije. Samo vlasnik može da upravlja njenim voznim parkom.';
+
+  @override
+  String get addPlateTitle => 'Dodaj Registarsku Tablicu';
+
+  @override
+  String get editPlateTitle => 'Izmeni Registarsku Tablicu';
+
+  @override
+  String get plateNumber => 'Broj Tablice';
+
+  @override
+  String get plateNumberHint => 'npr. NS846TA';
+
+  @override
+  String get plateNumberRequired => 'Broj tablice je obavezan.';
+
+  @override
+  String get plateNumberTooLong =>
+      'Broj tablice može imati najviše 20 znakova.';
+
+  @override
+  String get registrationDate => 'Datum Registracije';
+
+  @override
+  String get registrationDateHint => 'Izaberite datum registracije';
+
+  @override
+  String get expiryDate => 'Datum Isteka';
+
+  @override
+  String get expiryDateHint => 'Izaberite datum isteka';
+
+  @override
+  String get clearDate => 'Očisti';
+
+  @override
+  String plateExpiresOn(String date) {
+    return 'Ističe $date';
+  }
+
+  @override
+  String plateValidUntil(String date) {
+    return 'Važi do $date';
+  }
+
+  @override
+  String plateRegisteredOn(String date) {
+    return 'Registrovano $date';
+  }
 }

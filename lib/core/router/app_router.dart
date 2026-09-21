@@ -22,6 +22,8 @@ import '../../features/auth/presentation/screens/terms_of_service_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/settings/presentation/screens/change_password_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
+import '../../features/registrationplate/presentation/screens/registration_plates_screen.dart';
+import '../../features/registrationplate/presentation/screens/registration_plate_form_screen.dart';
 import '../widgets/main_shell.dart';
 import '../widgets/screen_app_bar.dart';
 
@@ -215,6 +217,25 @@ final routerProvider = Provider<GoRouter>((ref) {
                         path: 'invitations',
                         builder: (context, state) =>
                             const OrganizationInvitationsScreen(),
+                      ),
+                    ],
+                  ),
+                  GoRoute(
+                    path: 'plates',
+                    builder: (context, state) =>
+                        const RegistrationPlatesScreen(),
+                    routes: [
+                      GoRoute(
+                        path: 'add',
+                        builder: (context, state) =>
+                            const RegistrationPlateFormScreen(),
+                      ),
+                      GoRoute(
+                        path: ':id/edit',
+                        builder: (context, state) =>
+                            RegistrationPlateFormScreen(
+                              plateId: state.pathParameters['id'],
+                            ),
                       ),
                     ],
                   ),

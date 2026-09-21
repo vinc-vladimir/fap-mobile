@@ -9,6 +9,7 @@ import '../../../../core/storage/secure_storage.dart';
 import '../../data/repositories/auth_repository.dart';
 import '../../../account/presentation/providers/account_provider.dart';
 import '../../../organization/presentation/providers/organization_providers.dart';
+import '../../../registrationplate/presentation/providers/registration_plate_providers.dart';
 
 part 'auth_providers.g.dart';
 
@@ -117,6 +118,7 @@ class LoginController extends _$LoginController {
       // previous session.
       ref.invalidate(accountProvider);
       ref.invalidate(organizationMembershipProvider);
+      ref.invalidate(registrationPlatesProvider);
       ref.invalidate(currentUserEmailProvider);
     });
   }
@@ -132,6 +134,7 @@ class LoginController extends _$LoginController {
     await ref.read(secureStorageProvider).clearTokens();
     ref.invalidate(currentUserEmailProvider);
     ref.invalidate(organizationMembershipProvider);
+    ref.invalidate(registrationPlatesProvider);
     ref.read(authStateProvider.notifier).setAuthenticated(false);
     state = const AsyncData<void>(null);
   }
