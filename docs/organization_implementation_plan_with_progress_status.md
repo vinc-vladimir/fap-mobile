@@ -58,7 +58,7 @@ zip, country`; `id`, `active`, `createdAt` are server-managed and ignored if sen
 |---|---|---|---|
 | 1 | Org profile CRUD (create/read/update/deactivate) + membership + Account entry + routing + l10n + tests | ✅ Done — verified on device | Organization area reachable from Account |
 | 2 | Members & ownership (list, remove, transfer) — owner-gated | ✅ Done — verified on device | Member management screen |
-| 3 | Fleet vehicles (list, add) | ⏳ Pending | Fleet vehicles screen |
+| 3 | Fleet vehicles (list, add) | ✅ Done — verified on device | Fleet vehicles screen |
 | 4 | Fleet payment cards (list/add/edit/delete/primary; masked display) | ⏳ Pending | Fleet cards screen |
 | 5 | Invitations (invite/list/revoke) + invitee deep-link & registration flow | ✅ Done — verified on device | End-to-end invite flow |
 | 6 | `fap-infra` hand-off: `assetlinks.json` for `/org-invitation` | ✅ Closed — not required (`handle_all_urls` already covers all paths) | — |
@@ -89,10 +89,65 @@ literals outside `lib/core/theme/`.
 ## Phases 2–5 outline (stubbed)
 
 - **Phase 2 — Members & ownership.** ✅ Done — see checklist below.
-- **Phase 3 — Fleet vehicles.** `getVehicles`, `addVehicle`; list (member), add (owner).
+- **Phase 3 — Fleet vehicles (Licence Plates).** ✅ Done — see checklist below. Delivered
+  against the **unified `/v1/registration-plates` API** (see the API-change note below),
+  covering both organization fleet plates and personal plates from one Account →
+  Licence Plates screen.
 - **Phase 4 — Fleet payment cards.** `getCards`, `addCard`, `updateCard`, `deleteCard`;
   masked display (issuer + primary + last-4), primary semantics.
 - **Phase 5 — Invitations.** ✅ Done — see checklist below.
+
+> **Phase 3 API change (2026-09-21).** `fap-service` replaced the separate
+> `/v1/account/vehicle-registration-plate*` and `/v1/organizations/{id}/vehicles`
+> endpoints with a single `/v1/registration-plates` resource. `GET /v1/registration-plates`
+> resolves the scope server-side: fleet plates when the caller belongs to an
+> organization (any member), otherwise personal plates. `POST` creates a fleet plate when
+> `organizationId` is supplied (caller must be `ORG_OWNER`), else a personal plate.
+> `GET/PUT/DELETE /v1/registration-plates/{id}` are owner / `ORG_OWNER` gated. The DTO
+> gained `expiresAt` and server-computed `expiresSoon` (default 30-day window). This
+> **removed the need for the previously planned `fap-service` fleet-delete hand-off** —
+> delete already exists in the unified API.
+
+## Phase 3 checklist (fap-mobile) — Licence Plates
+
+- [x] **P3-1** Network constants — `registrationPlates`, `registrationPlate(id)`; removed the
+  stale `vehicleRegistrationPlate` path
+- [x] **P3-2** Models (freezed) — `registration_plate_model.dart` (`isFleet`,
+  `registrationDateValue`, `expiresAtValue`, `isExpiringSoon`),
+  `registration_plate_request.dart` + codegen
+- [x] **P3-3** Repository — `registration_plate_repository.dart` (`getRegistrationPlates`,
+  `createRegistrationPlate`, `updateRegistrationPlate`, `deleteRegistrationPlate`)
+- [x] **P3-4** Providers — `registrationPlateRepositoryProvider`, `registrationPlatesProvider`,
+  `RegistrationPlateController` (`create` / `updatePlate` / `delete`) + login/logout invalidation
+- [x] **P3-5** Screen — `registration_plates_screen.dart` implementing both Stitch designs
+  (`../design/registration_plates_screen` + `/organization`): status chips
+  (Active / Expiring Soon / Corporate Fleet), plate box with country badge, registration
+  date + expiry metadata, ANPR hint callout, add button; owner-gated edit/delete; member
+  read-only
+- [x] **P3-6** Form — `registration_plate_form_screen.dart` (create/edit; number required ≤20,
+  registration + expiry date pickers, city/country; owner sends `organizationId` on create)
+- [x] **P3-7** Routing — nested `/account/plates`, `/account/plates/add`,
+  `/account/plates/:id/edit`
+- [x] **P3-8** Account entry — `Licence Plates` row navigates; removed the no-op
+  `Add New Plate` button (management lives on the Licence Plates screen only)
+- [x] **P3-9** ARB strings (en + sr) + regen
+- [x] **P3-10** Tests — repository (list/create personal & fleet/update/delete, 403/404/409),
+  screen (private/owner/member gating, expiring-soon, empty, error), form (validation,
+  uppercase, prefill) — 18 new
+- [x] **P3-11** Verify — `build_runner` ✅, `flutter analyze` ✅ 0 issues, raw-color scan ✅,
+  `flutter test` ✅ 68/68
+- [x] **P3-12** Docs — this checklist + progress log;
+  `docs/lessons_learned/11-registration-plates-phase3.md`
+
+### Phase 3 definition of done
+
+A private user manages their personal plates and an `ORG_OWNER` manages the fleet from the
+same Account → Licence Plates screen; an `ORG_MEMBER` sees the fleet read-only; plates can
+be listed, added, edited (personal + fleet) and deleted (personal + fleet); the design
+matches the private/organization Stitch exports; `flutter analyze` and `flutter test` are
+green; no raw color literals outside `lib/core/theme/`.
+
+**Status: met.** Automated verification green; pending on-device acceptance.
 
 ## Phase 5 checklist (fap-mobile)
 
@@ -157,10 +212,42 @@ actions; `flutter analyze` and `flutter test` are green; no raw color literals o
 | D11 | Invitee acceptance is Android-only (HTTPS App Link); iOS Universal Links remain unconfigured | Accepted |
 | D12 | `InvitationAcceptController` lives in its own provider file to avoid an auth↔organization provider import cycle | Accepted |
 | D13 | No `fap-infra` change for `/org-invitation` — `assetlinks.json` already declares `handle_all_urls` | Accepted |
+| D14 | Phase 3 built against the unified `/v1/registration-plates` API; personal vs fleet resolved server-side on list, and by optional `organizationId` on create | Accepted |
+| D15 | Licence Plates management lives only on the Licence Plates screen (Account `Add New Plate` button removed); `ORG_MEMBER` sees fleet read-only | Accepted |
+| D16 | Fleet design's vehicle model + "Autocharge On" omitted (not in the API DTO); registration date shown instead | Accepted |
 
 ## Progress log
 
 > Newest first. Each entry: date — step — what was done — files — verification — blockers.
+
+- **2026-09-21 — Phase 3 (Licence Plates) implemented and verified ✅.**
+  - **What:** Unified Account → Licence Plates screen covering personal and fleet plates.
+    - **API change discovered:** `fap-service` consolidated the old
+      `/v1/account/vehicle-registration-plate*` and `/v1/organizations/{id}/vehicles`
+      endpoints into `/v1/registration-plates` (list resolves fleet vs personal
+      server-side; create takes optional `organizationId`; get/update/delete are
+      owner/`ORG_OWNER` gated). Added `expiresAt` + `expiresSoon`. **The planned
+      `fap-service` fleet-delete hand-off is no longer needed.**
+    - Constants: `registrationPlates`, `registrationPlate(id)`; removed stale
+      `vehicleRegistrationPlate`.
+    - Models: `RegistrationPlateModel`, `RegistrationPlateRequest` (freezed).
+    - Repository: `RegistrationPlateRepository` (`getRegistrationPlates`,
+      `createRegistrationPlate`, `updateRegistrationPlate`, `deleteRegistrationPlate`).
+    - Providers: `registrationPlateRepositoryProvider`, `registrationPlatesProvider`,
+      `RegistrationPlateController`; login/logout invalidation.
+    - Screens: `RegistrationPlatesScreen` (both Stitch designs — private + corporate fleet),
+      `RegistrationPlateFormScreen` (create/edit, date pickers).
+    - Routing: `/account/plates`, `/add`, `/:id/edit`; Account entry wired; removed the
+      no-op Add New Plate button.
+    - l10n: ~30 new keys (en + sr).
+    - Tests: +18 (`registration_repository_test`, `registration_plates_screen_test`,
+      `registration_plate_form_screen_test`).
+  - **Verification:** `build_runner` ✅ · `flutter analyze` ✅ 0 issues · raw-color scan ✅ ·
+    `flutter test` ✅ 68/68.
+  - **Blockers:** none. On-device acceptance pending.
+  - **Note:** the fleet design mock shows a vehicle model ("Mercedes EQS") and
+    "Autocharge On"; neither exists in the API DTO, so they were omitted. Registration
+    date is shown instead of the model.
 
 - **2026-09-20 — Phase 2 & Phase 5 accepted on device ✅.**
   - **What:** User tested the member ownership transfer (Phase 2) and the full invitation

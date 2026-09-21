@@ -800,4 +800,110 @@ class AppLocalizationsEn extends AppLocalizations {
   String invitationNotAvailableBody(String status) {
     return 'This invitation is $status.';
   }
+
+  @override
+  String get licensePlatesSubtitle =>
+      'Manage your vehicle registration for automatic fuel pump authorization.';
+
+  @override
+  String get plateStatusActive => 'Active';
+
+  @override
+  String get plateStatusExpiringSoon => 'Expiring Soon';
+
+  @override
+  String get corporateFleet => 'Corporate Fleet';
+
+  @override
+  String get addLicensePlate => 'ADD LICENSE PLATE';
+
+  @override
+  String get editPlate => 'Edit plate';
+
+  @override
+  String get deletePlate => 'Delete plate';
+
+  @override
+  String get deletePlateConfirmTitle => 'Delete Licence Plate?';
+
+  @override
+  String deletePlateConfirmBody(String number) {
+    return 'Remove plate $number? This cannot be undone.';
+  }
+
+  @override
+  String get plateDeleted => 'Licence plate deleted.';
+
+  @override
+  String get plateCreated => 'Licence plate added.';
+
+  @override
+  String get plateUpdated => 'Licence plate updated.';
+
+  @override
+  String get platesEmptyTitle => 'No Licence Plates';
+
+  @override
+  String get platesEmptyBody =>
+      'Add a vehicle registration plate to enable automatic fuel authorization.';
+
+  @override
+  String get anprTitle => 'ANPR Camera Detection';
+
+  @override
+  String get anprBody =>
+      'High-definition optical toll scanners verify plates automatically as you approach the station or highway gantry.';
+
+  @override
+  String get plateMemberReadOnly =>
+      'You are a member of this organization. Only the owner can manage its fleet vehicles.';
+
+  @override
+  String get addPlateTitle => 'Add Licence Plate';
+
+  @override
+  String get editPlateTitle => 'Edit Licence Plate';
+
+  @override
+  String get plateNumber => 'Plate Number';
+
+  @override
+  String get plateNumberHint => 'e.g. NS846TA';
+
+  @override
+  String get plateNumberRequired => 'Plate number is required.';
+
+  @override
+  String get plateNumberTooLong =>
+      'Plate number must be 20 characters or fewer.';
+
+  @override
+  String get registrationDate => 'Registration Date';
+
+  @override
+  String get registrationDateHint => 'Select registration date';
+
+  @override
+  String get expiryDate => 'Expiry Date';
+
+  @override
+  String get expiryDateHint => 'Select expiry date';
+
+  @override
+  String get clearDate => 'Clear';
+
+  @override
+  String plateExpiresOn(String date) {
+    return 'Expires $date';
+  }
+
+  @override
+  String plateValidUntil(String date) {
+    return 'Valid until $date';
+  }
+
+  @override
+  String plateRegisteredOn(String date) {
+    return 'Registered $date';
+  }
 }

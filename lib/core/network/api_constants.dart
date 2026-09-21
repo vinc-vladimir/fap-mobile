@@ -54,9 +54,14 @@ abstract final class ApiConstants {
 
   // ── Account endpoints ──────────────────────────────────────────
   static const String account = '/v1/account';
-  static const String vehicleRegistrationPlate =
-      '/v1/account/vehicle-registration-plate';
   static const String paymentCards = '/v1/account/payment-cards';
+
+  // ── Registration plate endpoints ───────────────────────────────
+  // Unified: lists the organization's fleet plates when the caller belongs
+  // to an organization (any member), otherwise the caller's personal plates.
+  static const String registrationPlates = '/v1/registration-plates';
+
+  static String registrationPlate(String id) => '/v1/registration-plates/$id';
 
   // ── Organization endpoints ─────────────────────────────────────
   static const String organizations = '/v1/organizations';

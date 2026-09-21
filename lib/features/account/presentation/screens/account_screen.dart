@@ -38,8 +38,6 @@ class AccountScreen extends ConsumerWidget {
                 children: [
                   _ProfileCard(theme: theme),
                   const SizedBox(height: AppDimensions.stackLg),
-                  _AddPlateButton(theme: theme, l10n: l10n),
-                  const SizedBox(height: AppDimensions.stackLg),
                   _ManagementMenu(theme: theme),
                   const SizedBox(height: AppDimensions.stackLg),
                   _LogoutSection(theme: theme),
@@ -241,40 +239,6 @@ class _RoleChip extends StatelessWidget {
   }
 }
 
-class _AddPlateButton extends StatelessWidget {
-  const _AddPlateButton({required this.theme, required this.l10n});
-
-  final ThemeData theme;
-  final AppLocalizations l10n;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(
-        backgroundColor: vibrantCyan,
-        foregroundColor: brandPrimary,
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppDimensions.radiusXl),
-        ),
-        elevation: 0,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.add_circle_outline, color: brandPrimary),
-          const SizedBox(width: AppDimensions.stackSm),
-          Text(
-            l10n.addNewPlate,
-            style: theme.textTheme.displaySmall?.copyWith(color: brandPrimary),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _ManagementMenu extends ConsumerWidget {
   const _ManagementMenu({required this.theme});
 
@@ -322,6 +286,7 @@ class _ManagementMenu extends ConsumerWidget {
                   icon: Icons.directions_car_outlined,
                   label: l10n.licencePlates,
                   theme: theme,
+                  onTap: () => context.push('/account/plates'),
                 ),
                 const _MenuDivider(theme: null),
                 _MenuRow(

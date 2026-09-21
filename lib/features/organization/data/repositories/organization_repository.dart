@@ -15,7 +15,7 @@ import '../models/transfer_ownership_request.dart';
 /// OpenAPI spec (`fap-service/doc/openapi/organization-api.yaml`).
 ///
 /// Authenticated via the shared [Dio]'s JWT interceptor. Phase 1 covers the
-/// organization profile lifecycle only — members, vehicles, payment cards and
+/// organization profile lifecycle only — members, registrationplate, payment cards and
 /// invitations are added in later phases.
 class OrganizationRepository {
   OrganizationRepository(this._dio);

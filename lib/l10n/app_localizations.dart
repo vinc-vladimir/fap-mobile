@@ -1549,6 +1549,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This invitation is {status}.'**
   String invitationNotAvailableBody(String status);
+
+  /// Subtitle under the Licence Plates screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your vehicle registration for automatic fuel pump authorization.'**
+  String get licensePlatesSubtitle;
+
+  /// Status chip for a plate that is not expiring soon
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get plateStatusActive;
+
+  /// Status chip for a plate nearing expiry
+  ///
+  /// In en, this message translates to:
+  /// **'Expiring Soon'**
+  String get plateStatusExpiringSoon;
+
+  /// Chip shown on organization fleet plates
+  ///
+  /// In en, this message translates to:
+  /// **'Corporate Fleet'**
+  String get corporateFleet;
+
+  /// Primary button to add a registration plate
+  ///
+  /// In en, this message translates to:
+  /// **'ADD LICENSE PLATE'**
+  String get addLicensePlate;
+
+  /// Accessibility label for the edit plate action
+  ///
+  /// In en, this message translates to:
+  /// **'Edit plate'**
+  String get editPlate;
+
+  /// Accessibility label for the delete plate action
+  ///
+  /// In en, this message translates to:
+  /// **'Delete plate'**
+  String get deletePlate;
+
+  /// Confirmation dialog title for deleting a plate
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Licence Plate?'**
+  String get deletePlateConfirmTitle;
+
+  /// Confirmation dialog body for deleting a plate
+  ///
+  /// In en, this message translates to:
+  /// **'Remove plate {number}? This cannot be undone.'**
+  String deletePlateConfirmBody(String number);
+
+  /// SnackBar shown after a plate is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Licence plate deleted.'**
+  String get plateDeleted;
+
+  /// SnackBar shown after a plate is created
+  ///
+  /// In en, this message translates to:
+  /// **'Licence plate added.'**
+  String get plateCreated;
+
+  /// SnackBar shown after a plate is updated
+  ///
+  /// In en, this message translates to:
+  /// **'Licence plate updated.'**
+  String get plateUpdated;
+
+  /// Empty state title on the Licence Plates screen
+  ///
+  /// In en, this message translates to:
+  /// **'No Licence Plates'**
+  String get platesEmptyTitle;
+
+  /// Empty state body on the Licence Plates screen
+  ///
+  /// In en, this message translates to:
+  /// **'Add a vehicle registration plate to enable automatic fuel authorization.'**
+  String get platesEmptyBody;
+
+  /// Hint callout title on the Licence Plates screen
+  ///
+  /// In en, this message translates to:
+  /// **'ANPR Camera Detection'**
+  String get anprTitle;
+
+  /// Hint callout body on the Licence Plates screen
+  ///
+  /// In en, this message translates to:
+  /// **'High-definition optical toll scanners verify plates automatically as you approach the station or highway gantry.'**
+  String get anprBody;
+
+  /// Hint shown to organization members on the Licence Plates screen
+  ///
+  /// In en, this message translates to:
+  /// **'You are a member of this organization. Only the owner can manage its fleet vehicles.'**
+  String get plateMemberReadOnly;
+
+  /// Title of the add plate form
+  ///
+  /// In en, this message translates to:
+  /// **'Add Licence Plate'**
+  String get addPlateTitle;
+
+  /// Title of the edit plate form
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Licence Plate'**
+  String get editPlateTitle;
+
+  /// Label for the plate number field
+  ///
+  /// In en, this message translates to:
+  /// **'Plate Number'**
+  String get plateNumber;
+
+  /// Hint text for the plate number field
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. NS846TA'**
+  String get plateNumberHint;
+
+  /// Validation error when the plate number is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Plate number is required.'**
+  String get plateNumberRequired;
+
+  /// Validation error when the plate number exceeds 20 characters
+  ///
+  /// In en, this message translates to:
+  /// **'Plate number must be 20 characters or fewer.'**
+  String get plateNumberTooLong;
+
+  /// Label for the registration date field
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Date'**
+  String get registrationDate;
+
+  /// Placeholder for the registration date picker
+  ///
+  /// In en, this message translates to:
+  /// **'Select registration date'**
+  String get registrationDateHint;
+
+  /// Label for the plate expiry date field
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry Date'**
+  String get expiryDate;
+
+  /// Placeholder for the expiry date picker
+  ///
+  /// In en, this message translates to:
+  /// **'Select expiry date'**
+  String get expiryDateHint;
+
+  /// Action to clear a selected date
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clearDate;
+
+  /// Expiry line on a personal plate card
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {date}'**
+  String plateExpiresOn(String date);
+
+  /// Expiry line on a fleet plate card
+  ///
+  /// In en, this message translates to:
+  /// **'Valid until {date}'**
+  String plateValidUntil(String date);
+
+  /// Registration date line on a plate card
+  ///
+  /// In en, this message translates to:
+  /// **'Registered {date}'**
+  String plateRegisteredOn(String date);
 }
 
 class _AppLocalizationsDelegate

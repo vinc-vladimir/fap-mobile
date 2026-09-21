@@ -440,5 +440,149 @@
         "type": "String"
       }
     }
+  },
+  "licensePlatesSubtitle": "Manage your vehicle registration for automatic fuel pump authorization.",
+  "@licensePlatesSubtitle": {
+    "description": "Subtitle under the Licence Plates screen title"
+  },
+  "plateStatusActive": "Active",
+  "@plateStatusActive": {
+    "description": "Status chip for a plate that is not expiring soon"
+  },
+  "plateStatusExpiringSoon": "Expiring Soon",
+  "@plateStatusExpiringSoon": {
+    "description": "Status chip for a plate nearing expiry"
+  },
+  "corporateFleet": "Corporate Fleet",
+  "@corporateFleet": {
+    "description": "Chip shown on organization fleet plates"
+  },
+  "addLicensePlate": "ADD LICENSE PLATE",
+  "@addLicensePlate": {
+    "description": "Primary button to add a registration plate"
+  },
+  "editPlate": "Edit plate",
+  "@editPlate": {
+    "description": "Accessibility label for the edit plate action"
+  },
+  "deletePlate": "Delete plate",
+  "@deletePlate": {
+    "description": "Accessibility label for the delete plate action"
+  },
+  "deletePlateConfirmTitle": "Delete Licence Plate?",
+  "@deletePlateConfirmTitle": {
+    "description": "Confirmation dialog title for deleting a plate"
+  },
+  "deletePlateConfirmBody": "Remove plate {number}? This cannot be undone.",
+  "@deletePlateConfirmBody": {
+    "description": "Confirmation dialog body for deleting a plate",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "plateDeleted": "Licence plate deleted.",
+  "@plateDeleted": {
+    "description": "SnackBar shown after a plate is deleted"
+  },
+  "plateCreated": "Licence plate added.",
+  "@plateCreated": {
+    "description": "SnackBar shown after a plate is created"
+  },
+  "plateUpdated": "Licence plate updated.",
+  "@plateUpdated": {
+    "description": "SnackBar shown after a plate is updated"
+  },
+  "platesEmptyTitle": "No Licence Plates",
+  "@platesEmptyTitle": {
+    "description": "Empty state title on the Licence Plates screen"
+  },
+  "platesEmptyBody": "Add a vehicle registration plate to enable automatic fuel authorization.",
+  "@platesEmptyBody": {
+    "description": "Empty state body on the Licence Plates screen"
+  },
+  "anprTitle": "ANPR Camera Detection",
+  "@anprTitle": {
+    "description": "Hint callout title on the Licence Plates screen"
+  },
+  "anprBody": "High-definition optical toll scanners verify plates automatically as you approach the station or highway gantry.",
+  "@anprBody": {
+    "description": "Hint callout body on the Licence Plates screen"
+  },
+  "plateMemberReadOnly": "You are a member of this organization. Only the owner can manage its fleet vehicles.",
+  "@plateMemberReadOnly": {
+    "description": "Hint shown to organization members on the Licence Plates screen"
+  },
+  "addPlateTitle": "Add Licence Plate",
+  "@addPlateTitle": {
+    "description": "Title of the add plate form"
+  },
+  "editPlateTitle": "Edit Licence Plate",
+  "@editPlateTitle": {
+    "description": "Title of the edit plate form"
+  },
+  "plateNumber": "Plate Number",
+  "@plateNumber": {
+    "description": "Label for the plate number field"
+  },
+  "plateNumberHint": "e.g. NS846TA",
+  "@plateNumberHint": {
+    "description": "Hint text for the plate number field"
+  },
+  "plateNumberRequired": "Plate number is required.",
+  "@plateNumberRequired": {
+    "description": "Validation error when the plate number is empty"
+  },
+  "plateNumberTooLong": "Plate number must be 20 characters or fewer.",
+  "@plateNumberTooLong": {
+    "description": "Validation error when the plate number exceeds 20 characters"
+  },
+  "registrationDate": "Registration Date",
+  "@registrationDate": {
+    "description": "Label for the registration date field"
+  },
+  "registrationDateHint": "Select registration date",
+  "@registrationDateHint": {
+    "description": "Placeholder for the registration date picker"
+  },
+  "expiryDate": "Expiry Date",
+  "@expiryDate": {
+    "description": "Label for the plate expiry date field"
+  },
+  "expiryDateHint": "Select expiry date",
+  "@expiryDateHint": {
+    "description": "Placeholder for the expiry date picker"
+  },
+  "clearDate": "Clear",
+  "@clearDate": {
+    "description": "Action to clear a selected date"
+  },
+  "plateExpiresOn": "Expires {date}",
+  "@plateExpiresOn": {
+    "description": "Expiry line on a personal plate card",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "plateValidUntil": "Valid until {date}",
+  "@plateValidUntil": {
+    "description": "Expiry line on a fleet plate card",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "plateRegisteredOn": "Registered {date}",
+  "@plateRegisteredOn": {
+    "description": "Registration date line on a plate card",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   }
 }
