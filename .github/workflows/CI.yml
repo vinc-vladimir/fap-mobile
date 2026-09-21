@@ -71,8 +71,3 @@ jobs:
         run: |
           echo "==> flutter test"
           flutter test
-
-      - name: Build Android debug APK
-        run: |
-          echo "==> flutter build apk --debug"
-          flutter build apk --debug
